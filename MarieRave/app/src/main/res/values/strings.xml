@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">MarieRave</string>
+    <string-array name="student_names">
+            <item>Alice</item>
+            <item>Benjamin</item>
+            <item>Cédric</item>
+            <item>Camille</item>
+            <item>Eva</item>
+            <item>Théo</item>
+            <item>Thomas</item>
+            <item>Rayan</item>
+    </string-array>
 </resources>
