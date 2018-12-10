@@ -6,7 +6,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class StudentAssessment2 extends Fragment
 {
@@ -20,14 +24,32 @@ public class StudentAssessment2 extends Fragment
     public void onViewCreated(@NonNull final View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
+        Bundle args = getArguments();
+        TextView textWelcome =view.findViewById(R.id.welcome);
+        textWelcome.setText("Bienvenue " + args.getString("Prénom"));
+        final AutoCompleteTextView textView = view.findViewById(R.id.skill);
+        String[] skills = getResources().getStringArray(R.array.skills);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_dropdown_item_1line, skills);
+        textView.setAdapter(adapter);
 
-        Button btnGoTo = view.findViewById(R.id.btnGoTo);
-        btnGoTo.setOnClickListener(new View.OnClickListener() {
+        ImageView imageView = view.findViewById(R.id.back);
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
                 Bundle bundle = new Bundle();
-                bundle.putString("myParameterText", "I got my text from Hello World 1 !");
+                Utils.replaceFragments(StudentAssessment1.class, getActivity(), bundle, true);
+            }
+        });
+
+        ImageView imageView2 = view.findViewById(R.id.group);
+        imageView2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Bundle bundle = new Bundle();
+                TextView textView = view.findViewById(R.id.skillName);
+                bundle.putString("Skill",textView.getText().toString());
                 Utils.replaceFragments(StudentAssessment3.class, getActivity(), bundle, true);
             }
         });

@@ -10,4 +10,14 @@
             <item>Thomas</item>
             <item>Rayan</item>
     </string-array>
+    <string-array name="skills">
+        <item>GR001</item>
+        <item>GR002</item>
+        <item>GR003</item>
+        <item>H001</item>
+        <item>H002</item>
+        <item>M001</item>
+        <item>M002</item>
+        <item>M003</item>
+    </string-array>
 </resources>

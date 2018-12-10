@@ -5,6 +5,76 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="250dp"
+        android:src="@drawable/images"/>
 
+    <TextView
+        android:id="@+id/skillChoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="250dp"
+        android:text="Tu vas évaluer la compétence :"/>
+
+    <TextView
+        android:id="@+id/skill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="200dp"/>
+
+    <CheckBox
+        android:id="@+id/darkGreen"
+        android:buttonTint="#088A08"
+        android:scaleX="3"
+        android:scaleY="3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="150dp"
+        android:layout_marginBottom="62dp" />
+    <CheckBox
+        android:id="@+id/green"
+        android:buttonTint="#00FF40"
+        android:scaleX="3"
+        android:scaleY="3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="250dp"
+        android:layout_marginBottom="62dp" />
+    <CheckBox
+        android:id="@+id/yellow"
+        android:buttonTint="#FFFF00"
+        android:scaleX="3"
+        android:scaleY="3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="350dp"
+        android:layout_marginBottom="62dp" />
+    <CheckBox
+        android:id="@+id/red"
+        android:buttonTint="#FF0000"
+        android:drawableTint="#FF0000"
+        android:backgroundTint="#FF0000"
+        android:scaleX="3"
+        android:scaleY="3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="450dp"
+        android:layout_marginBottom="62dp" />
 
 </RelativeLayout>
