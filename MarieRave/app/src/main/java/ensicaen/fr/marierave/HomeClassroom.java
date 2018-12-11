@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +20,12 @@ public class HomeClassroom extends Fragment
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		Log.d("myapp", "3");
 		return inflater.inflate(R.layout.welcome_classe, container, false);
 	}
 	
 	@Override
 	public void onViewCreated(@NonNull final View view, Bundle savedInstanceState)
 	{
-		Log.d("myapp", "4");
 		super.onViewCreated(view, savedInstanceState);
 		
 		
@@ -48,10 +45,12 @@ public class HomeClassroom extends Fragment
 		
 		a.notifyDataSetChanged();
 		
-		v.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		v.setOnItemClickListener(new AdapterView.OnItemClickListener()
+		{
 			
 			@Override
-			public void onItemClick(AdapterView parent, View view, int position, long id) {
+			public void onItemClick(AdapterView parent, View view, int position, long id)
+			{
 				Utils.replaceFragments(PersonnalProfile.class, getActivity(), null, true);
 			}
 		});
@@ -63,35 +62,41 @@ public class HomeClassroom extends Fragment
 		private ArrayList<Model2> productList;
 		private Activity activity;
 		
-		public GridViewAdapter(Activity activity, ArrayList<Model2> productList) {
+		public GridViewAdapter(Activity activity, ArrayList<Model2> productList)
+		{
 			super();
 			this.activity = activity;
 			this.productList = productList;
 		}
 		
 		@Override
-		public int getCount() {
+		public int getCount()
+		{
 			return productList.size();
 		}
 		
 		@Override
-		public Object getItem(int position) {
+		public Object getItem(int position)
+		{
 			return productList.get(position);
 		}
 		
 		@Override
-		public long getItemId(int position) {
+		public long getItemId(int position)
+		{
 			return position;
 		}
 		
-		private class ViewHolder {
+		private class ViewHolder
+		{
 			ImageView profilePic;
 			TextView txtName;
 			TextView txtSurname;
 		}
 		
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(int position, View convertView, ViewGroup parent)
+		{
 			
 			ViewHolder holder;
 			LayoutInflater inflater = activity.getLayoutInflater();
@@ -108,7 +113,8 @@ public class HomeClassroom extends Fragment
 				holder.txtSurname.setText(productList.get(position).getSurname());
 				
 				convertView.setTag(holder);
-			} else {
+			}
+			else {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			

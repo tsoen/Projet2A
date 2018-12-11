@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -80,6 +81,26 @@ public class PersonnalProfile extends Fragment
 				}
 			}
 		});
+		
+		Button btnResults = view.findViewById(R.id.btnBilan);
+		btnResults.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Utils.replaceFragments(PersonnalProfileResults.class, getActivity(), null, true);
+			}
+		});
+		
+		Button btnBack = view.findViewById(R.id.button2);
+		btnBack.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				getActivity().getSupportFragmentManager().popBackStack();
+			}
+		});
 	}
 	
 	public class ListviewCompetenceAdapter extends BaseAdapter
@@ -91,6 +112,7 @@ public class PersonnalProfile extends Fragment
 		private ArrayList<Object> mData = new ArrayList<>();
 		private TreeSet<Integer> bigSectionHeader = new TreeSet<>();
 		private TreeSet<Integer> littleSectionHeader = new TreeSet<>();
+		
 		private Activity activity;
 		
 		public ListviewCompetenceAdapter(Activity activity)

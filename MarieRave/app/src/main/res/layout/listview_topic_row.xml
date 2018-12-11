@@ -7,7 +7,7 @@
         android:id="@+id/txtTopic"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/cell_shape_r"
+        android:background="@drawable/cell_shape_notop"
         android:ellipsize="end"
         android:padding="5dp"
         android:singleLine="true">

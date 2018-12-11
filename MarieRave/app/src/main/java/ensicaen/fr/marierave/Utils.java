@@ -12,30 +12,29 @@ public class Utils
 	/**
 	 * Switchs the fragment displayed in the application
 	 * Can be called from inside a FragmentClass
+	 *
 	 * @param fragmentClass Fragment class to display
-	 * @param activity Reference to the activity containing fragments
-	 * @param bundle Variables to pass to the fragment
+	 * @param activity      Reference to the activity containing fragments
+	 * @param bundle        Variables to pass to the fragment
 	 */
-	public static void replaceFragments(Class fragmentClass, FragmentActivity activity,
-										@Nullable Bundle bundle, Boolean addToBackStack)
+	public static void replaceFragments(Class fragmentClass, FragmentActivity activity, @Nullable Bundle bundle, Boolean addToBackStack)
 	{
 		try {
 			Fragment fragment = (Fragment) fragmentClass.newInstance();
 			
-			if(bundle != null){
+			if (bundle != null) {
 				fragment.setArguments(bundle);
 			}
 			
 			FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment);
 			
-			if(addToBackStack){
+			if (addToBackStack) {
 				transaction.addToBackStack(null);
 			}
 			
 			transaction.commit();
-		}
-		catch (Exception e) {
-			Log.d("myapp", "replaceFragments: "  + e.toString());
+		} catch (Exception e) {
+			Log.d("myapp", "replaceFragments: " + e.toString());
 		}
 	}
 }
