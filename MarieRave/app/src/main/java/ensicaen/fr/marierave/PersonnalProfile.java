@@ -30,59 +30,53 @@ public class PersonnalProfile extends Fragment
 	{
 		super.onViewCreated(view, savedInstanceState);
 		
+		Skill item1 = new Skill("FRL1", "Lire des mots", "A");
+		Skill item2 = new Skill("FRE1", "Recopier un texte court", "D");
+		Skill item3 = new Skill("FRL10", "Reconnaître les pronoms personnels", "C");
 		
-		Model item1, item2, item3;
-		item1 = new Model("FRL1", "Lire des mots", "A");
+		ListviewSkillAdapter skillsAdapter = new ListviewSkillAdapter(getActivity());
+		skillsAdapter.addBigSectionHeaderItem("FRANCAIS");
+		skillsAdapter.addLittleSectionHeaderItem("Lire et écrire");
+		skillsAdapter.addItem(item1);
+		skillsAdapter.addItem(item2);
+		skillsAdapter.addItem(item3);
+		skillsAdapter.addBigSectionHeaderItem("MATHS");
+		skillsAdapter.addLittleSectionHeaderItem("Numération");
+		skillsAdapter.addItem(new Skill("MAN5", "Additionner", "B"));
+		skillsAdapter.addBigSectionHeaderItem("SPORT");
+		skillsAdapter.addLittleSectionHeaderItem("Courir");
 		
-		item2 = new Model("FRE1", "Recopier un texte court", "D");
-		
-		item3 = new Model("FRL10", "Reconnaître les pronoms personnels", "C");
-		
-		ListView lview = view.findViewById(R.id.listview);
-		ListviewCompetenceAdapter adapter = new ListviewCompetenceAdapter(getActivity());
-		
-		adapter.addBigSectionHeaderItem("FRANCAIS");
-		adapter.addLittleSectionHeaderItem("Lire et écrire");
-		adapter.addItem(item1);
-		adapter.addItem(item2);
-		adapter.addItem(item3);
-		adapter.addBigSectionHeaderItem("MATHS");
-		adapter.addLittleSectionHeaderItem("Numération");
-		adapter.addItem(new Model("MAN5", "Additionner", "B"));
-		adapter.addBigSectionHeaderItem("SPORT");
-		adapter.addLittleSectionHeaderItem("Courir");
-		
-		lview.setAdapter(adapter);
-		adapter.notifyDataSetChanged();
+		ListView skillsListview = view.findViewById(R.id.listSkills);
+		skillsListview.setAdapter(skillsAdapter);
+		skillsAdapter.notifyDataSetChanged();
 		
 		ArrayList<String> subjectList = new ArrayList<>();
 		subjectList.add("Français");
 		subjectList.add("Maths");
 		subjectList.add("Histoire");
-		ListviewTopicsAdapter a = new ListviewTopicsAdapter(getActivity(), subjectList);
+		ListviewTopicsAdapter topicsAdapter = new ListviewTopicsAdapter(getActivity(), subjectList);
 		
-		ListView v = view.findViewById(R.id.listSubjects);
-		v.setAdapter(a);
+		ListView topicListview = view.findViewById(R.id.listTopics);
+		topicListview.setAdapter(topicsAdapter);
+		topicsAdapter.notifyDataSetChanged();
 		
-		a.notifyDataSetChanged();
-		
-		lview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+		skillsListview.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
 			@Override
 			public void onItemClick(AdapterView parent, View view, int position, long id)
 			{
 				if (parent.getAdapter().getItemViewType(position) == 0) {
 					
-					String sno = ((TextView) view.findViewById(R.id.sNo)).getText().toString();
-					String product = ((TextView) view.findViewById(R.id.product)).getText().toString();
-					String price = ((TextView) view.findViewById(R.id.price)).getText().toString();
+					String code = ((TextView) view.findViewById(R.id.txtCode)).getText().toString();
+					String result = ((TextView) view.findViewById(R.id.txtResult)).getText().toString();
+					String skill = ((TextView) view.findViewById(R.id.txtSkill)).getText().toString();
 					
-					Toast.makeText(getContext(), "Code : " + sno + "\n" + "Compétence : " + product + "\n" + "Evaluation : " + price, Toast.LENGTH_SHORT).show();
+					Toast.makeText(getContext(), "Code : " + code + "\n" + "Compétence : " + result + "\n" + "Evaluation : " + skill, Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
 		
-		Button btnResults = view.findViewById(R.id.btnBilan);
+		Button btnResults = view.findViewById(R.id.btnResults);
 		btnResults.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -92,7 +86,7 @@ public class PersonnalProfile extends Fragment
 			}
 		});
 		
-		Button btnBack = view.findViewById(R.id.button2);
+		Button btnBack = view.findViewById(R.id.btnBack);
 		btnBack.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -103,52 +97,52 @@ public class PersonnalProfile extends Fragment
 		});
 	}
 	
-	public class ListviewCompetenceAdapter extends BaseAdapter
+	private class ListviewSkillAdapter extends BaseAdapter
 	{
 		private static final int TYPE_ITEM = 0;
 		private static final int TYPE_BIG_SEPARATOR = 1;
 		private static final int TYPE_LITTLE_SEPARATOR = 2;
 		
-		private ArrayList<Object> mData = new ArrayList<>();
-		private TreeSet<Integer> bigSectionHeader = new TreeSet<>();
-		private TreeSet<Integer> littleSectionHeader = new TreeSet<>();
+		private ArrayList<Object> _skillsAndHeaders = new ArrayList<>();
+		private TreeSet<Integer> _bigHeaders = new TreeSet<>();
+		private TreeSet<Integer> _littleHeaders = new TreeSet<>();
 		
-		private Activity activity;
+		private Activity _activity;
 		
-		public ListviewCompetenceAdapter(Activity activity)
+		ListviewSkillAdapter(Activity activity)
 		{
 			super();
-			this.activity = activity;
+			_activity = activity;
 		}
 		
-		public void addItem(final Model item)
+		void addItem(final Skill item)
 		{
-			mData.add(item);
+			_skillsAndHeaders.add(item);
 			notifyDataSetChanged();
 		}
 		
-		public void addBigSectionHeaderItem(final String item)
+		void addBigSectionHeaderItem(final String item)
 		{
-			mData.add(item);
-			bigSectionHeader.add(mData.size() - 1);
+			_skillsAndHeaders.add(item);
+			_bigHeaders.add(_skillsAndHeaders.size() - 1);
 			notifyDataSetChanged();
 		}
 		
-		public void addLittleSectionHeaderItem(final String item)
+		void addLittleSectionHeaderItem(final String item)
 		{
-			mData.add(item);
-			littleSectionHeader.add(mData.size() - 1);
+			_skillsAndHeaders.add(item);
+			_littleHeaders.add(_skillsAndHeaders.size() - 1);
 			notifyDataSetChanged();
 		}
 		
 		@Override
 		public int getItemViewType(int position)
 		{
-			if (bigSectionHeader.contains(position)) {
+			if (_bigHeaders.contains(position)) {
 				return TYPE_BIG_SEPARATOR;
 			}
 			
-			if (littleSectionHeader.contains(position)) {
+			if (_littleHeaders.contains(position)) {
 				return TYPE_LITTLE_SEPARATOR;
 			}
 			
@@ -164,13 +158,13 @@ public class PersonnalProfile extends Fragment
 		@Override
 		public int getCount()
 		{
-			return mData.size();
+			return _skillsAndHeaders.size();
 		}
 		
 		@Override
 		public Object getItem(int position)
 		{
-			return mData.get(position);
+			return _skillsAndHeaders.get(position);
 		}
 		
 		@Override
@@ -181,52 +175,48 @@ public class PersonnalProfile extends Fragment
 		
 		private class ViewHolder
 		{
-			TextView mSNo;
-			TextView mProduct;
-			TextView mPrice;
+			private TextView _code;
+			private TextView _result;
+			private TextView _name;
 		}
 		
 		private class HeaderHolder
 		{
-			TextView header;
+			private TextView _header;
 		}
 		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent)
 		{
+			LayoutInflater mInflater = _activity.getLayoutInflater();
 			
-			LayoutInflater mInflater = activity.getLayoutInflater();
-			int rowType = getItemViewType(position);
-			
-			switch (rowType) {
+			switch (getItemViewType(position)) {
 				case TYPE_ITEM:
 					ViewHolder holder = new ViewHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_row, null);
+					convertView = mInflater.inflate(R.layout.listview_skill_item, null);
 					
-					holder.mSNo = convertView.findViewById(R.id.sNo);
-					holder.mProduct = convertView.findViewById(R.id.product);
-					holder.mPrice = convertView.findViewById(R.id.price);
+					holder._code = convertView.findViewById(R.id.txtCode);
+					holder._result = convertView.findViewById(R.id.txtResult);
+					holder._name = convertView.findViewById(R.id.txtSkill);
 					
-					Model item = (Model) mData.get(position);
-					holder.mSNo.setText(item.getsNo());
-					holder.mProduct.setText(item.getProduct());
-					holder.mPrice.setText(item.getPrice());
-					
+					Skill item = (Skill) _skillsAndHeaders.get(position);
+					holder._code.setText(item.getCode());
+					holder._result.setText(item.getResult());
+					holder._name.setText(item.getName());
 					break;
+					
 				case TYPE_BIG_SEPARATOR:
 					HeaderHolder holderBigHeader = new HeaderHolder();
-					convertView = mInflater.inflate(R.layout.skill_big_header, null);
-					holderBigHeader.header = convertView.findViewById(R.id.textView4);
-					holderBigHeader.header.setText((String) mData.get(position));
+					convertView = mInflater.inflate(R.layout.listview_skill_big_header_item, null);
+					holderBigHeader._header = convertView.findViewById(R.id.txtBigHeader);
+					holderBigHeader._header.setText((String) _skillsAndHeaders.get(position));
 					break;
 				
 				case TYPE_LITTLE_SEPARATOR:
-					
-					
 					HeaderHolder holderHeader = new HeaderHolder();
-					convertView = mInflater.inflate(R.layout.skill_little_header, null);
-					holderHeader.header = convertView.findViewById(R.id.textView5);
-					holderHeader.header.setText((String) mData.get(position));
+					convertView = mInflater.inflate(R.layout.listview_skill_little_header, null);
+					holderHeader._header = convertView.findViewById(R.id.txtLittleHeader);
+					holderHeader._header.setText((String) _skillsAndHeaders.get(position));
 					convertView.setTag(holderHeader);
 					break;
 				
@@ -238,28 +228,28 @@ public class PersonnalProfile extends Fragment
 		}
 	}
 	
-	public class ListviewTopicsAdapter extends BaseAdapter
+	private class ListviewTopicsAdapter extends BaseAdapter
 	{
-		private ArrayList<String> productList;
-		private Activity activity;
+		private ArrayList<String> _topicList;
+		private Activity _activity;
 		
-		public ListviewTopicsAdapter(Activity activity, ArrayList<String> productList)
+		ListviewTopicsAdapter(Activity activity, ArrayList<String> productList)
 		{
 			super();
-			this.activity = activity;
-			this.productList = productList;
+			_activity = activity;
+			_topicList = productList;
 		}
 		
 		@Override
 		public int getCount()
 		{
-			return productList.size();
+			return _topicList.size();
 		}
 		
 		@Override
 		public Object getItem(int position)
 		{
-			return productList.get(position);
+			return _topicList.get(position);
 		}
 		
 		@Override
@@ -270,28 +260,18 @@ public class PersonnalProfile extends Fragment
 		
 		private class ViewHolder
 		{
-			TextView txtTopic;
+			private TextView _txtTopic;
 		}
 		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent)
 		{
-			
-			ViewHolder holder;
-			LayoutInflater inflater = activity.getLayoutInflater();
-			
 			if (convertView == null) {
-				convertView = inflater.inflate(R.layout.listview_topic_row, null);
-				holder = new ViewHolder();
-				holder.txtTopic = convertView.findViewById(R.id.txtTopic);
-				convertView.setTag(holder);
+				ViewHolder holder = new ViewHolder();
+				convertView =  _activity.getLayoutInflater().inflate(R.layout.listview_topic_item, null);
+				holder._txtTopic = convertView.findViewById(R.id.txtTopic);
+				holder._txtTopic.setText(_topicList.get(position));
 			}
-			else {
-				holder = (ViewHolder) convertView.getTag();
-			}
-			
-			String item = productList.get(position);
-			holder.txtTopic.setText(item);
 			
 			return convertView;
 		}

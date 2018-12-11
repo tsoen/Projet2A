@@ -20,7 +20,7 @@ public class HomeClassroom extends Fragment
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		return inflater.inflate(R.layout.welcome_classe, container, false);
+		return inflater.inflate(R.layout.home_classroom, container, false);
 	}
 	
 	@Override
@@ -28,57 +28,53 @@ public class HomeClassroom extends Fragment
 	{
 		super.onViewCreated(view, savedInstanceState);
 		
+		ArrayList<Enfant> subjectList = new ArrayList<>();
+		subjectList.add(new Enfant("", "Rey", "Raphael"));
+		subjectList.add(new Enfant("", "Soen", "Timothee"));
+		subjectList.add(new Enfant("", "Rey", "Raphael"));
+		subjectList.add(new Enfant("", "Soen", "Timothee"));
+		subjectList.add(new Enfant("", "Rey", "Raphael"));
+		subjectList.add(new Enfant("", "Soen", "Timothee"));
+		subjectList.add(new Enfant("", "Rey", "Raphael"));
+		subjectList.add(new Enfant("", "Soen", "Timothee"));
 		
-		ArrayList<Model2> subjectList = new ArrayList<>();
-		subjectList.add(new Model2("", "Rey", "Raphael"));
-		subjectList.add(new Model2("", "Soen", "Timothee"));
-		subjectList.add(new Model2("", "Rey", "Raphael"));
-		subjectList.add(new Model2("", "Soen", "Timothee"));
-		subjectList.add(new Model2("", "Rey", "Raphael"));
-		subjectList.add(new Model2("", "Soen", "Timothee"));
-		subjectList.add(new Model2("", "Rey", "Raphael"));
-		subjectList.add(new Model2("", "Soen", "Timothee"));
+		GridViewAdapter adapter = new GridViewAdapter(getActivity(), subjectList);
+		GridView gridview = view.findViewById(R.id.gridviewProfiles);
+		gridview.setAdapter(adapter);
+		adapter.notifyDataSetChanged();
 		
-		GridView v = view.findViewById(R.id.gridviewProfiles);
-		GridViewAdapter a = new GridViewAdapter(getActivity(), subjectList);
-		v.setAdapter(a);
-		
-		a.notifyDataSetChanged();
-		
-		v.setOnItemClickListener(new AdapterView.OnItemClickListener()
+		gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
-			
 			@Override
 			public void onItemClick(AdapterView parent, View view, int position, long id)
 			{
 				Utils.replaceFragments(PersonnalProfile.class, getActivity(), null, true);
 			}
 		});
-		
 	}
 	
-	public class GridViewAdapter extends BaseAdapter
+	private class GridViewAdapter extends BaseAdapter
 	{
-		private ArrayList<Model2> productList;
-		private Activity activity;
+		private ArrayList<Enfant> _productList;
+		private Activity _activity;
 		
-		public GridViewAdapter(Activity activity, ArrayList<Model2> productList)
+		GridViewAdapter(Activity activity, ArrayList<Enfant> productList)
 		{
 			super();
-			this.activity = activity;
-			this.productList = productList;
+			_activity = activity;
+			_productList = productList;
 		}
 		
 		@Override
 		public int getCount()
 		{
-			return productList.size();
+			return _productList.size();
 		}
 		
 		@Override
 		public Object getItem(int position)
 		{
-			return productList.get(position);
+			return _productList.get(position);
 		}
 		
 		@Override
@@ -89,33 +85,24 @@ public class HomeClassroom extends Fragment
 		
 		private class ViewHolder
 		{
-			ImageView profilePic;
-			TextView txtName;
-			TextView txtSurname;
+			private ImageView _profilePic;
+			private TextView _txtName;
+			private TextView _txtSurname;
 		}
 		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent)
 		{
-			
-			ViewHolder holder;
-			LayoutInflater inflater = activity.getLayoutInflater();
-			
 			if (convertView == null) {
-				convertView = inflater.inflate(R.layout.gridview_item, null);
-				holder = new ViewHolder();
-				holder.profilePic = convertView.findViewById(R.id.imageView);
-				holder.txtName = convertView.findViewById(R.id.textView7);
-				holder.txtSurname = convertView.findViewById(R.id.textView8);
+				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_classroom_item, null);
+				ViewHolder holder = new ViewHolder();
+				holder._profilePic = convertView.findViewById(R.id.imgProfilePicture);
+				holder._txtName = convertView.findViewById(R.id.txtName);
+				holder._txtSurname = convertView.findViewById(R.id.txtSurname);
 				
-				holder.profilePic.setImageResource(R.mipmap.ic_launcher_round);
-				holder.txtName.setText(productList.get(position).getName());
-				holder.txtSurname.setText(productList.get(position).getSurname());
-				
-				convertView.setTag(holder);
-			}
-			else {
-				holder = (ViewHolder) convertView.getTag();
+				holder._profilePic.setImageResource(R.mipmap.ic_launcher_round);
+				holder._txtName.setText(_productList.get(position).getName());
+				holder._txtSurname.setText(_productList.get(position).getSurname());
 			}
 			
 			return convertView;

@@ -5,7 +5,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,20 +30,19 @@ public class PersonnalProfileResults extends Fragment
 	{
 		super.onViewCreated(view, savedInstanceState);
 		
-		SkillListViewAdapter a = new SkillListViewAdapter(getActivity());
+		SkillListViewAdapter adapter = new SkillListViewAdapter(getActivity());
+		adapter.addBigSectionHeaderItem("Français");
+		adapter.addLittleSectionHeaderItem("Lire et écrire");
+		adapter.addBigSectionHeaderItem("Maths");
+		adapter.addLittleSectionHeaderItem("Numération");
+		adapter.addBigSectionHeaderItem("Sport");
+		adapter.addLittleSectionHeaderItem("Courir");
 		
-		a.addBigSectionHeaderItem("Français");
-		a.addLittleSectionHeaderItem("Lire et écrire");
-		a.addBigSectionHeaderItem("Maths");
-		a.addLittleSectionHeaderItem("Numération");
-		a.addBigSectionHeaderItem("Histoire");
-		a.addLittleSectionHeaderItem("Courir");
+		ListView listView = view.findViewById(R.id.listviewResults);
+		listView.setAdapter(adapter);
+		adapter.notifyDataSetChanged();
 		
-		ListView v = view.findViewById(R.id.listviewResults);
-		v.setAdapter(a);
-		a.notifyDataSetChanged();
-		
-		Button btnBack = view.findViewById(R.id.button2);
+		Button btnBack = view.findViewById(R.id.btnBack);
 		btnBack.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -55,41 +53,41 @@ public class PersonnalProfileResults extends Fragment
 		});
 	}
 	
-	public class SkillListViewAdapter extends BaseAdapter
+	private class SkillListViewAdapter extends BaseAdapter
 	{
 		private static final int TYPE_BIG_SEPARATOR = 0;
 		private static final int TYPE_LITTLE_SEPARATOR = 1;
 		
-		private ArrayList<String> productList = new ArrayList<>();
-		private TreeSet<Integer> bigSectionHeader = new TreeSet<>();
-		private TreeSet<Integer> littleSectionHeader = new TreeSet<>();
+		private ArrayList<String> _headersList = new ArrayList<>();
+		private TreeSet<Integer> _bigHeaders = new TreeSet<>();
+		private TreeSet<Integer> _littleHeaders = new TreeSet<>();
 		
-		private Activity activity;
+		private Activity _activity;
 		
-		public SkillListViewAdapter(Activity activity)
+		SkillListViewAdapter(Activity activity)
 		{
 			super();
-			this.activity = activity;
+			_activity = activity;
 		}
 		
-		public void addBigSectionHeaderItem(final String item)
+		void addBigSectionHeaderItem(final String item)
 		{
-			productList.add(item);
-			bigSectionHeader.add(productList.size() - 1);
+			_headersList.add(item);
+			_bigHeaders.add(_headersList.size() - 1);
 			notifyDataSetChanged();
 		}
 		
-		public void addLittleSectionHeaderItem(final String item)
+		void addLittleSectionHeaderItem(final String item)
 		{
-			productList.add(item);
-			littleSectionHeader.add(productList.size() - 1);
+			_headersList.add(item);
+			_littleHeaders.add(_headersList.size() - 1);
 			notifyDataSetChanged();
 		}
 		
 		@Override
 		public int getItemViewType(int position)
 		{
-			return bigSectionHeader.contains(position) ? TYPE_BIG_SEPARATOR : TYPE_LITTLE_SEPARATOR;
+			return _bigHeaders.contains(position) ? TYPE_BIG_SEPARATOR : TYPE_LITTLE_SEPARATOR;
 		}
 		
 		@Override
@@ -101,13 +99,13 @@ public class PersonnalProfileResults extends Fragment
 		@Override
 		public int getCount()
 		{
-			return productList.size();
+			return _headersList.size();
 		}
 		
 		@Override
 		public Object getItem(int position)
 		{
-			return productList.get(position);
+			return _headersList.get(position);
 		}
 		
 		@Override
@@ -118,46 +116,34 @@ public class PersonnalProfileResults extends Fragment
 		
 		private class ViewHolder
 		{
-			TextView txtTopic;
-			ProgressBar prgsbarSkill;
-			TextView txtPercent;
+			private TextView _txtTopic;
+			private ProgressBar _prgsbarSkill;
+			private TextView _txtPercent;
 		}
 		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent)
 		{
-			
-			ViewHolder holder;
-			LayoutInflater inflater = activity.getLayoutInflater();
-			Log.d("myapp", "K");
 			if (convertView == null) {
-				Log.d("myapp", "KK");
-				convertView = inflater.inflate(R.layout.listview_item_progressbar, null);
-				holder = new ViewHolder();
-				holder.txtTopic = convertView.findViewById(R.id.textView9);
-				holder.prgsbarSkill = convertView.findViewById(R.id.progressBar);
-				holder.txtPercent = convertView.findViewById(R.id.textView10);
+				convertView = _activity.getLayoutInflater().inflate(R.layout.listview_progressbar_item, null);
 				
+				ViewHolder holder = new ViewHolder();
+				holder._txtTopic = convertView.findViewById(R.id.txtTopic);
+				holder._prgsbarSkill = convertView.findViewById(R.id.progressBar);
+				holder._txtPercent = convertView.findViewById(R.id.txtPercent);
 				
 				if (getItemViewType(position) == TYPE_BIG_SEPARATOR) {
-					holder.txtTopic.setText(productList.get(position));
-					holder.txtTopic.setTypeface(Typeface.DEFAULT_BOLD);
+					holder._txtTopic.setText(_headersList.get(position));
+					holder._txtTopic.setTypeface(Typeface.DEFAULT_BOLD);
 				}
 				else {
-					holder.txtTopic.setText("\t\t" + productList.get(position));
+					holder._txtTopic.setText("\t\t" + _headersList.get(position));
 				}
 				
-				holder.prgsbarSkill.incrementProgressBy(50);
-				holder.txtPercent.setText(holder.prgsbarSkill.getProgress() + "%");
-				
-				convertView.setTag(holder);
-			}
-			else {
-				Log.d("myapp", "KKK");
-				holder = (ViewHolder) convertView.getTag();
+				holder._prgsbarSkill.incrementProgressBy(50);
+				holder._txtPercent.setText(holder._prgsbarSkill.getProgress() + "%");
 			}
 			
-			Log.d("myapp", "KKKK");
 			return convertView;
 		}
 	}

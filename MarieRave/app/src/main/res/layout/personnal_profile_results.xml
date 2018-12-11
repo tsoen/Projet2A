@@ -6,7 +6,7 @@
                                              xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back"
@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
-        android:id="@+id/imgPicture"
+        android:id="@+id/imgPersonnalPicture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@mipmap/ic_launcher"
@@ -29,7 +29,7 @@
         android:text="REY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgPicture"/>
+        app:layout_constraintTop_toBottomOf="@+id/imgPersonnalPicture"/>
 
     <TextView
         android:id="@+id/txtSurname"
@@ -41,7 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtName"/>
 
     <Button
-        android:id="@+id/btnBilan"
+        android:id="@+id/btnResults"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bilan"
@@ -53,9 +53,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="PDF"
-        app:layout_constraintBottom_toBottomOf="@+id/btnBilan"
+        app:layout_constraintBottom_toBottomOf="@+id/btnResults"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnBilan"
+        app:layout_constraintTop_toTopOf="@+id/btnResults"
         app:layout_constraintVertical_bias="1.0"/>
 
     <ListView
