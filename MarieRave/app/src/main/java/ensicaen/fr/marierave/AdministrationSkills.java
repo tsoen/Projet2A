@@ -7,22 +7,20 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.TreeSet;
 
-public class PersonnalProfile extends Fragment
+public class AdministrationSkills extends Fragment
 {
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		return inflater.inflate(R.layout.personnal_profile, container, false);
+		return inflater.inflate(R.layout.administration_skills, container, false);
 	}
 	
 	@Override
@@ -46,7 +44,7 @@ public class PersonnalProfile extends Fragment
 		skillsAdapter.addBigSectionHeaderItem("SPORT");
 		skillsAdapter.addLittleSectionHeaderItem("Courir");
 		
-		ListView skillsListview = view.findViewById(R.id.listSkills);
+		ListView skillsListview = view.findViewById(R.id.listCompetences);
 		skillsListview.setAdapter(skillsAdapter);
 		skillsAdapter.notifyDataSetChanged();
 		
@@ -56,39 +54,12 @@ public class PersonnalProfile extends Fragment
 		subjectList.add("Histoire");
 		ListviewTopicsAdapter topicsAdapter = new ListviewTopicsAdapter(getActivity(), subjectList);
 		
-		ListView topicListview = view.findViewById(R.id.listTopics);
+		ListView topicListview = view.findViewById(R.id.listSubjects);
 		topicListview.setAdapter(topicsAdapter);
 		topicsAdapter.notifyDataSetChanged();
 		
-		skillsListview.setOnItemClickListener(new AdapterView.OnItemClickListener()
-		{
-			@Override
-			public void onItemClick(AdapterView parent, View view, int position, long id)
-			{
-				if (parent.getAdapter().getItemViewType(position) == 0) {
-					
-					String code = ((TextView) view.findViewById(R.id.txtCode)).getText().toString();
-					String result = ((TextView) view.findViewById(R.id.txtResult)).getText().toString();
-					String skill = ((TextView) view.findViewById(R.id.txtSkill)).getText().toString();
-					
-					Toast.makeText(getContext(), "Code : " + code + "\n" + "Compétence : " + result + "\n" + "Evaluation : " + skill, Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
-		
-		Button btnResults = view.findViewById(R.id.btnResults);
-		btnResults.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				Utils.replaceFragments(PersonnalProfileResults.class, getActivity(), null, true);
-			}
-		});
-		
-		Button btnBack = view.findViewById(R.id.btnBack);
-		btnBack.setOnClickListener(new View.OnClickListener()
-		{
+		Button btnBack = view.findViewById(R.id.button1);
+		btnBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v)
 			{
@@ -176,7 +147,6 @@ public class PersonnalProfile extends Fragment
 		private class ViewHolder
 		{
 			private TextView _code;
-			private TextView _result;
 			private TextView _name;
 		}
 		
@@ -193,28 +163,26 @@ public class PersonnalProfile extends Fragment
 			switch (getItemViewType(position)) {
 				case TYPE_ITEM:
 					ViewHolder holder = new ViewHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_item, null);
+					convertView = mInflater.inflate(R.layout.listview_skill_admin_item, null);
 					
 					holder._code = convertView.findViewById(R.id.txtCode);
-					holder._result = convertView.findViewById(R.id.txtResult);
 					holder._name = convertView.findViewById(R.id.txtSkill);
 					
 					Skill item = (Skill) _skillsAndHeaders.get(position);
 					holder._code.setText(item.getCode());
-					holder._result.setText(item.getResult());
 					holder._name.setText(item.getName());
 					break;
-					
+				
 				case TYPE_BIG_SEPARATOR:
 					HeaderHolder holderBigHeader = new HeaderHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_big_header_item, null);
+					convertView = mInflater.inflate(R.layout.listview_skill_big_header_admin_item, null);
 					holderBigHeader._header = convertView.findViewById(R.id.txtBigHeader);
 					holderBigHeader._header.setText((String) _skillsAndHeaders.get(position));
 					break;
 				
 				case TYPE_LITTLE_SEPARATOR:
 					HeaderHolder holderHeader = new HeaderHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_little_header_item, null);
+					convertView = mInflater.inflate(R.layout.listview_skill_little_header_admin_item, null);
 					holderHeader._header = convertView.findViewById(R.id.txtLittleHeader);
 					holderHeader._header.setText((String) _skillsAndHeaders.get(position));
 					convertView.setTag(holderHeader);
@@ -277,4 +245,3 @@ public class PersonnalProfile extends Fragment
 		}
 	}
 }
-

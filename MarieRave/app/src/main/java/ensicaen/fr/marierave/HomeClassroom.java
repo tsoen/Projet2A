@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,6 +50,15 @@ public class HomeClassroom extends Fragment
 			public void onItemClick(AdapterView parent, View view, int position, long id)
 			{
 				Utils.replaceFragments(PersonnalProfile.class, getActivity(), null, true);
+			}
+		});
+		
+		Button btnClassAssesment = view.findViewById(R.id.btnResults);
+		btnClassAssesment.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v)
+			{
+				Utils.replaceFragments(ClassAssesment.class, getActivity(), null, true);
 			}
 		});
 	}

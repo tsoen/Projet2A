@@ -43,21 +43,22 @@
 
     <Button
         android:id="@+id/btnResults"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Bilan"
         app:layout_constraintEnd_toStartOf="@+id/btnPDF"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
         android:id="@+id/btnPDF"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:text="PDF"
         app:layout_constraintBottom_toBottomOf="@+id/btnResults"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnResults"
-        app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintStart_toEndOf="@+id/btnResults"
+        app:layout_constraintTop_toTopOf="@+id/btnResults"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline15"
@@ -109,9 +110,7 @@
             android:id="@+id/guideline14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="45dp"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintGuide_percent="0.9"/>
 
         <TextView
@@ -177,5 +176,12 @@
         app:layout_constraintStart_toStartOf="@+id/guideline15"
         app:layout_constraintTop_toBottomOf="@+id/skillsHeaderLayout"
         app:layout_constraintVertical_bias="0.741"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.7"/>
 
 </android.support.constraint.ConstraintLayout>

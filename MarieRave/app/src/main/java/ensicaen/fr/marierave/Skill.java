@@ -6,7 +6,7 @@ public class Skill
 	private String _result;
 	private String _name;
 	
-	public Skill(String code, String result, String name)
+	public Skill(String code, String name, String result)
 	{
 		_code = code;
 		_result = result;

@@ -39,7 +39,8 @@
         android:layout_alignStart="@+id/prénom1_img"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="30dp"
-        android:text="Eleve A" />
+        android:gravity="center"
+        android:text="Eleve A"/>
 
     <ImageView
         android:id="@+id/prénom2_img"
@@ -53,12 +54,13 @@
 
     <TextView
         android:id="@+id/prénom2"
-        android:text="Eleve B"
         android:layout_width="94dp"
         android:layout_height="20dp"
         android:layout_alignStart="@+id/prénom2_img"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:text="Eleve B"/>
 
 
     <ImageView
@@ -73,11 +75,12 @@
 
     <TextView
         android:id="@+id/prénom3"
-        android:text="Eleve C"
         android:layout_width="94dp"
         android:layout_height="20dp"
         android:layout_alignStart="@+id/prénom3_img"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:text="Eleve C"/>
 
 </RelativeLayout>
