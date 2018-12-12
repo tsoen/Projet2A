@@ -15,6 +15,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ensicaen.fr.marierave.Model.Enfant;
+
 public class AdministrationResults extends Fragment
 {
 	@Override

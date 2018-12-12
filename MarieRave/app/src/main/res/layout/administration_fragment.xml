@@ -32,18 +32,18 @@
         android:layout_height="97dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="33dp"
-        android:layout_marginBottom="63dp"
-        android:text="CP" />
+        android:layout_marginBottom="50dp"
+        android:text="CP"/>
 
     <Button
         android:id="@+id/btnCE1"
         android:layout_width="121dp"
         android:layout_height="97dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="73dp"
-        android:layout_marginBottom="63dp"
+        android:layout_marginStart="250dp"
+        android:layout_marginBottom="50dp"
         android:layout_toEndOf="@+id/btnCP"
-        android:text="CE1" />
+        android:text="CE1"/>
 
     <ImageButton
         android:id="@+id/btnAdd_Class"

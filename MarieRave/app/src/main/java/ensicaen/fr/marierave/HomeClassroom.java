@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import ensicaen.fr.marierave.Model.Enfant;
+
 public class HomeClassroom extends Fragment
 {
 	@Override

@@ -2,148 +2,110 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <Button
         android:id="@+id/backButton"
-        android:layout_width="50dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="336dp"
-        android:layout_marginBottom="461dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        />
 
     <TextView
         android:id="@+id/className"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="112dp"
-        android:layout_marginTop="54dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="438dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editClassName"
-        app:layout_constraintStart_toEndOf="@+id/backButton"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/editClassName"
-        android:layout_width="31dp"
-        android:layout_height="14dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="133dp"
-        android:layout_marginBottom="437dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
+        android:text="CE1 - A"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/className"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ListView
         android:id="@+id/StudentList"
-        android:layout_width="368dp"
-        android:layout_height="299dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="130dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backButton" />
+        app:layout_constraintTop_toBottomOf="@+id/addStudent"/>
 
     <ListView
         android:id="@+id/teachersList"
         android:layout_width="144dp"
         android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="8dp"
         app:layout_constraintStart_toEndOf="@+id/teachers"
-        app:layout_constraintTop_toBottomOf="@+id/className" />
+        app:layout_constraintTop_toTopOf="@+id/teachers"/>
 
     <TextView
         android:id="@+id/students"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="162dp"
         android:layout_marginTop="50dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/StudentList"
-        app:layout_constraintEnd_toStartOf="@+id/addStudent"
+        android:text="Elèves : "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/teachersList" />
+        app:layout_constraintTop_toBottomOf="@+id/teachersList"
+        />
 
     <Button
         android:id="@+id/addStudent"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="47dp"
-        android:layout_marginEnd="75dp"
-        android:layout_marginBottom="3dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/StudentList"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/students"
-        app:layout_constraintTop_toBottomOf="@+id/teachersList" />
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="+"
+        app:layout_constraintEnd_toStartOf="@+id/removeStudent"
+        app:layout_constraintStart_toStartOf="@+id/guideline18"
+        app:layout_constraintTop_toTopOf="@+id/students"/>
 
     <Button
         android:id="@+id/removeStudent"
-        android:layout_width="79dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="44dp"
-        android:text="Button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="X"
+        app:layout_constraintBottom_toBottomOf="@+id/addStudent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/addStudent"
-        app:layout_constraintTop_toBottomOf="@+id/removeTeacher" />
+        app:layout_constraintTop_toTopOf="@+id/addStudent"/>
 
     <TextView
         android:id="@+id/teachers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="73dp"
-        android:layout_marginTop="118dp"
-        android:layout_marginBottom="67dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/StudentList"
-        app:layout_constraintEnd_toStartOf="@+id/teachersList"
+        android:layout_marginTop="8dp"
+        android:text="Enseignants :"
+        app:layout_constraintEnd_toStartOf="@+id/className"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/backButton"/>
 
     <Button
         android:id="@+id/addTeacher"
-        android:layout_width="46dp"
-        android:layout_height="23dp"
-        android:layout_marginTop="111dp"
-        android:layout_marginBottom="47dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/addStudent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="+"
         app:layout_constraintEnd_toStartOf="@+id/removeTeacher"
-        app:layout_constraintStart_toEndOf="@+id/teachersList"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/guideline18"
+        app:layout_constraintTop_toTopOf="@+id/teachersList"/>
 
     <Button
         android:id="@+id/removeTeacher"
-        android:layout_width="45dp"
-        android:layout_height="26dp"
-        android:layout_marginTop="111dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="44dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/removeStudent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:text="X"
+        app:layout_constraintBottom_toBottomOf="@+id/addTeacher"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/addTeacher"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/addTeacher"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.75"/>
 </android.support.constraint.ConstraintLayout>

@@ -17,6 +17,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
+import ensicaen.fr.marierave.Model.Skill;
+
 public class PersonnalProfile extends Fragment
 {
 	@Override

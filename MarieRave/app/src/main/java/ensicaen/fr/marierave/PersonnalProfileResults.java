@@ -51,6 +51,16 @@ public class PersonnalProfileResults extends Fragment
 				getActivity().getSupportFragmentManager().popBackStack();
 			}
 		});
+		
+		Button btnResults = view.findViewById(R.id.btnResults);
+		btnResults.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Utils.replaceFragments(PersonnalProfile.class, getActivity(), null, true);
+			}
+		});
 	}
 	
 	private class SkillListViewAdapter extends BaseAdapter

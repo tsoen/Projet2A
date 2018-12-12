@@ -1,4 +1,4 @@
-package ensicaen.fr.marierave;
+package ensicaen.fr.marierave.Model;
 
 public class Enfant
 {

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 public class ClassAdministration extends Fragment
 {
@@ -19,5 +20,15 @@ public class ClassAdministration extends Fragment
 	public void onViewCreated(@NonNull final View view, Bundle savedInstanceState)
 	{
 		super.onViewCreated(view, savedInstanceState);
+		
+		Button btnBack = view.findViewById(R.id.backButton);
+		btnBack.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				getActivity().getSupportFragmentManager().popBackStack();
+			}
+		});
 	}
 }

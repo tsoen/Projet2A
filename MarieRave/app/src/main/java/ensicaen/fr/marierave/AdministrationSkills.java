@@ -15,6 +15,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
+import ensicaen.fr.marierave.Model.Skill;
+
 public class AdministrationSkills extends Fragment
 {
 	@Override
