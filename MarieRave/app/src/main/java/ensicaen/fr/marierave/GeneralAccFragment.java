@@ -46,7 +46,7 @@ public class GeneralAccFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                Utils.replaceFragments(GeneralAccFragment.class, getActivity(), bundle, true);
+                Utils.replaceFragments(StudentAssessment1.class, getActivity(), bundle, true);
             }
         });
 

@@ -134,6 +134,14 @@ public class AdministrationHome extends Fragment
 				ViewHolder holder = new ViewHolder();
 				holder._classButton = convertView.findViewById(R.id.button8);
 				
+				holder._classButton.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v)
+					{
+						Utils.replaceFragments(ClassAdministration.class, getActivity(), null, true);
+					}
+				});
+				
 				holder._classButton.setText(_classList.get(position));
 			}
 			

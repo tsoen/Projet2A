@@ -41,21 +41,38 @@ public class AdministrationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                Utils.replaceFragments(AdministrationFragment.class, getActivity(), bundle, true);
+                Utils.replaceFragments(AdministrationHome.class, getActivity(), bundle, true);
             }
         });
-
-
-
+    
+        Button btnCP = view.findViewById(R.id.btnCP);
+		btnCP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                Utils.replaceFragments(HomeClassroom.class, getActivity(), bundle, true);
+            }
+        });
+    
+        Button btnCE1 = view.findViewById(R.id.btnCE1);
+		btnCE1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                Utils.replaceFragments(HomeClassroom.class, getActivity(), bundle, true);
+            }
+        });
+        
+        
     }
 
     private void getClasses(LayoutInflater inflater) {
         List<String> classes = new ArrayList<>();
         ListIterator lit = classes.listIterator();
 
-        while(lit.hasNext()) {
+        /*while(lit.hasNext()) {
 
-        }
+        }*/
 
     }
 }

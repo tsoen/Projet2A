@@ -61,6 +61,15 @@ public class HomeClassroom extends Fragment
 				Utils.replaceFragments(ClassAssesment.class, getActivity(), null, true);
 			}
 		});
+		
+		Button btnBack = view.findViewById(R.id.btnBack);
+		btnBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v)
+			{
+				getActivity().getSupportFragmentManager().popBackStack();
+			}
+		});
 	}
 	
 	private class GridViewAdapter extends BaseAdapter

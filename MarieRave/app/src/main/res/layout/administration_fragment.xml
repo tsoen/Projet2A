@@ -32,7 +32,6 @@
         android:layout_height="97dp"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="33dp"
-
         android:layout_marginBottom="63dp"
         android:text="CP" />
 
@@ -51,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="270dp"
+        android:layout_marginStart="270dp"
         android:layout_marginTop="91dp"
         app:srcCompat="@android:drawable/ic_input_add" />
 
@@ -60,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="320dp"
+        android:layout_marginStart="320dp"
         android:layout_marginTop="91dp"
         app:srcCompat="@android:drawable/ic_delete" />
 

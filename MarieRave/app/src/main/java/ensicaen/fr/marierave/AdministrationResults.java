@@ -111,6 +111,22 @@ public class AdministrationResults extends Fragment
 				holder._btnResults = convertView.findViewById(R.id.button13);
 				holder._btnPrint = convertView.findViewById(R.id.button14);
 				
+				holder._btnConsult.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v)
+					{
+						Utils.replaceFragments(PersonnalProfile.class, getActivity(), null, true);
+					}
+				});
+				
+				holder._btnResults.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v)
+					{
+						Utils.replaceFragments(PersonnalProfileResults.class, getActivity(), null, true);
+					}
+				});
+				
 				holder._class.setText(_childList.get(position).getClassR());
 				holder._name.setText(_childList.get(position).getName());
 				holder._surname.setText(_childList.get(position).getSurname());
