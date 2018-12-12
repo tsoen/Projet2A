@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-public class HelloWorld1 extends Fragment
+public class ClassAssesment extends Fragment
 {
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		return inflater.inflate(R.layout.hello_world_1, container, false);
+		return inflater.inflate(R.layout.class_assesment, container, false);
 	}
 	
 	@Override
@@ -21,14 +21,13 @@ public class HelloWorld1 extends Fragment
 	{
 		super.onViewCreated(view, savedInstanceState);
 		
-		Button btnGoTo = view.findViewById(R.id.btnGoTo);
-		btnGoTo.setOnClickListener(new View.OnClickListener() {
+		Button btnBack = view.findViewById(R.id.button);
+		btnBack.setOnClickListener(new View.OnClickListener()
+		{
 			@Override
 			public void onClick(View v)
 			{
-				Bundle bundle = new Bundle();
-				bundle.putString("myParameterText", "I got my text from Hello World 1 !");
-				Utils.replaceFragments(HelloWorld2.class, getActivity(), bundle, true);
+				getActivity().getSupportFragmentManager().popBackStack();
 			}
 		});
 	}

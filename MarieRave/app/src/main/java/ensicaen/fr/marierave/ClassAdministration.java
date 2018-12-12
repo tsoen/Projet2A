@@ -6,14 +6,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
 
-public class HelloWorld2 extends Fragment
+public class ClassAdministration extends Fragment
 {
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		return inflater.inflate(R.layout.hello_world_2, container, false);
+		return inflater.inflate(R.layout.class_administration, container, false);
 	}
 	
 	@Override
@@ -21,9 +21,14 @@ public class HelloWorld2 extends Fragment
 	{
 		super.onViewCreated(view, savedInstanceState);
 		
-		TextView txtFromAgrs = view.findViewById(R.id.txtHelloWorld2);
-		
-		Bundle args = getArguments();
-		txtFromAgrs.setText(args.getString("myParameterText"));
+		Button btnBack = view.findViewById(R.id.backButton);
+		btnBack.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				getActivity().getSupportFragmentManager().popBackStack();
+			}
+		});
 	}
 }
