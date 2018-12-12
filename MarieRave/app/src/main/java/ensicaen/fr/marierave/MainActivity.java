@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity
 		
 		if (findViewById(R.id.fragment_container) != null) {
 			if (savedInstanceState == null) {
-				Utils.replaceFragments(AdministrationHome.class, this, null, false);
+				Utils.replaceFragments(ConnectionFragment.class, this, null, false);
 			}
 		}
 	}
