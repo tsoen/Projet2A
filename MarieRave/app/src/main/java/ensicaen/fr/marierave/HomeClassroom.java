@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import ensicaen.fr.marierave.Model.Enfant;
+import ensicaen.fr.marierave.Model.Child;
 
 public class HomeClassroom extends Fragment
 {
@@ -31,15 +31,15 @@ public class HomeClassroom extends Fragment
 	{
 		super.onViewCreated(view, savedInstanceState);
 		
-		ArrayList<Enfant> subjectList = new ArrayList<>();
-		subjectList.add(new Enfant("", "Rey", "Raphael"));
-		subjectList.add(new Enfant("", "Soen", "Timothee"));
-		subjectList.add(new Enfant("", "Rey", "Raphael"));
-		subjectList.add(new Enfant("", "Soen", "Timothee"));
-		subjectList.add(new Enfant("", "Rey", "Raphael"));
-		subjectList.add(new Enfant("", "Soen", "Timothee"));
-		subjectList.add(new Enfant("", "Rey", "Raphael"));
-		subjectList.add(new Enfant("", "Soen", "Timothee"));
+		ArrayList<Child> subjectList = new ArrayList<>();
+		subjectList.add(new Child("", "Rey", "Raphael"));
+		subjectList.add(new Child("", "Soen", "Timothee"));
+		subjectList.add(new Child("", "Rey", "Raphael"));
+		subjectList.add(new Child("", "Soen", "Timothee"));
+		subjectList.add(new Child("", "Rey", "Raphael"));
+		subjectList.add(new Child("", "Soen", "Timothee"));
+		subjectList.add(new Child("", "Rey", "Raphael"));
+		subjectList.add(new Child("", "Soen", "Timothee"));
 		
 		GridViewAdapter adapter = new GridViewAdapter(getActivity(), subjectList);
 		GridView gridview = view.findViewById(R.id.gridviewProfiles);
@@ -76,10 +76,10 @@ public class HomeClassroom extends Fragment
 	
 	private class GridViewAdapter extends BaseAdapter
 	{
-		private ArrayList<Enfant> _productList;
+		private ArrayList<Child> _productList;
 		private Activity _activity;
 		
-		GridViewAdapter(Activity activity, ArrayList<Enfant> productList)
+		GridViewAdapter(Activity activity, ArrayList<Child> productList)
 		{
 			super();
 			_activity = activity;
@@ -123,7 +123,7 @@ public class HomeClassroom extends Fragment
 				
 				holder._profilePic.setImageResource(R.mipmap.ic_launcher_round);
 				holder._txtName.setText(_productList.get(position).getName());
-				holder._txtSurname.setText(_productList.get(position).getSurname());
+				holder._txtSurname.setText(_productList.get(position).getFirstname());
 			}
 			
 			return convertView;

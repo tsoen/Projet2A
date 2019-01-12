@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import ensicaen.fr.marierave.Model.Enfant;
+import ensicaen.fr.marierave.Model.Child;
 
 public class AdministrationResults extends Fragment
 {
@@ -39,19 +39,11 @@ public class AdministrationResults extends Fragment
 			}
 		});
 		
-		List<Enfant> childList = new ArrayList<>();
-		childList.add(new Enfant("", "Rey", "Raphael", "CE1"));
-		childList.add(new Enfant("", "Soen", "Timothee", "CM2"));
-		childList.add(new Enfant("", "Rey", "Raphael", "CE1"));
-		childList.add(new Enfant("", "Soen", "Timothee", "CM2"));
-		childList.add(new Enfant("", "Rey", "Raphael", "CE1"));
-		childList.add(new Enfant("", "Soen", "Timothee", "CM2"));
-		childList.add(new Enfant("", "Rey", "Raphael", "CE1"));
-		childList.add(new Enfant("", "Soen", "Timothee", "CM2"));
-		childList.add(new Enfant("", "Rey", "Raphael", "CE1"));
-		childList.add(new Enfant("", "Soen", "Timothee", "CM2"));
-		
-		
+		List<Child> childList = new ArrayList<>();
+		childList.add(new Child("", "Rey", "Raphael", 1));
+		childList.add(new Child("", "Soen", "Timothee", 1));
+		childList.add(new Child("", "Rey", "Raphael", 2));
+		childList.add(new Child("", "Soen", "Timothee", 2));
 		
 		ListViewAdapter adapter = new ListViewAdapter(getActivity(), childList);
 		ListView gridview = view.findViewById(R.id.listview1);
@@ -61,10 +53,10 @@ public class AdministrationResults extends Fragment
 	
 	private class ListViewAdapter extends BaseAdapter
 	{
-		private List<Enfant> _childList;
+		private List<Child> _childList;
 		private Activity _activity;
 		
-		ListViewAdapter(Activity activity, List<Enfant> classList)
+		ListViewAdapter(Activity activity, List<Child> classList)
 		{
 			super();
 			_activity = activity;
@@ -129,9 +121,9 @@ public class AdministrationResults extends Fragment
 					}
 				});
 				
-				holder._class.setText(_childList.get(position).getClassR());
+				holder._class.setText(_childList.get(position).getClassroomId());
 				holder._name.setText(_childList.get(position).getName());
-				holder._surname.setText(_childList.get(position).getSurname());
+				holder._surname.setText(_childList.get(position).getFirstname());
 			}
 			
 			return convertView;
