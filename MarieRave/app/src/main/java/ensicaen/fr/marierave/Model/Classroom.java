@@ -5,21 +5,12 @@ import java.util.List;
 
 public class Classroom
 {
-	public static Integer classroomId = 0;
-	
-	private Integer _id;
 	private String _name;
 	private List<Child> _childs = new ArrayList<>();
 	
-	public Classroom(Integer id, String name)
+	public Classroom(String name)
 	{
-		_id = id;
 		_name = name;
-	}
-	
-	public Integer getId()
-	{
-		return _id;
 	}
 	
 	public String getName()
