@@ -1,6 +1,7 @@
 package ensicaen.fr.marierave.Views;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -15,9 +16,14 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ensicaen.fr.marierave.Controllers.ChildDAO;
+import ensicaen.fr.marierave.Controllers.ClassroomDAO;
 import ensicaen.fr.marierave.Model.Child;
+import ensicaen.fr.marierave.Model.Classroom;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
+import ensicaen.fr.marierave.Views.Dialogs.NewChildDialog;
+import ensicaen.fr.marierave.Views.Dialogs.NewClassroomDialog;
 
 public class AdministrationResults extends Fragment
 {
@@ -41,16 +47,31 @@ public class AdministrationResults extends Fragment
 			}
 		});
 		
-		List<Child> childList = new ArrayList<>();
-		childList.add(new Child("", "Rey", "Raphael", 1));
-		childList.add(new Child("", "Soen", "Timothee", 1));
-		childList.add(new Child("", "Rey", "Raphael", 2));
-		childList.add(new Child("", "Soen", "Timothee", 2));
+		List<Child> childList = new ChildDAO(getContext()).getAllChilds();
 		
 		ListViewAdapter adapter = new ListViewAdapter(getActivity(), childList);
-		ListView gridview = view.findViewById(R.id.listview1);
-		gridview.setAdapter(adapter);
+		final ListView listview = view.findViewById(R.id.listview1);
+		listview.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
+		
+		Button btnNewChild = view.findViewById(R.id.button2);
+		btnNewChild.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v)
+			{
+				NewChildDialog dialog = new NewChildDialog(getActivity());
+				dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+					@Override
+					public void onDismiss(final DialogInterface arg0) {
+						List<Child> childs = new ChildDAO(getContext()).getAllChilds();
+						ListViewAdapter adapter = new ListViewAdapter(getActivity(), childs);
+						listview.setAdapter(adapter);
+					}
+				});
+				
+				dialog.show();
+			}
+		});
 	}
 	
 	private class ListViewAdapter extends BaseAdapter
@@ -123,7 +144,7 @@ public class AdministrationResults extends Fragment
 					}
 				});
 				
-				holder._class.setText(_childList.get(position).getClassroomId());
+				holder._class.setText(_childList.get(position).getClassroom());
 				holder._name.setText(_childList.get(position).getName());
 				holder._surname.setText(_childList.get(position).getFirstname());
 			}

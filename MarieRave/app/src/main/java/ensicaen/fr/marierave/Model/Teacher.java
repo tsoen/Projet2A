@@ -1,24 +1,21 @@
 package ensicaen.fr.marierave.Model;
 
-public class Child
+import java.util.ArrayList;
+import java.util.List;
+
+public class Teacher
 {
 	private Integer _id;
-	private String _classroom;
 	private String _imagePath;
 	private String _name;
 	private String _firstname;
 	
-	public Child(String name, String firstname)
+	private List<Classroom> _classrooms = new ArrayList<>();
+	
+	public Teacher(String name, String firstname)
 	{
 		_name = name;
 		_firstname = firstname;
-	}
-	
-	public Child(String name, String surname, String classroom)
-	{
-		_name = name;
-		_firstname = surname;
-		_classroom = classroom;
 	}
 	
 	public Integer getId()
@@ -41,8 +38,8 @@ public class Child
 		return _firstname;
 	}
 	
-	public String getClassroom()
+	public List<Classroom> getClassrooms()
 	{
-		return _classroom;
+		return _classrooms;
 	}
 }

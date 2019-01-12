@@ -25,4 +25,9 @@ public class Classroom
 	public void setChilds(List<Child> childs){
 		_childs = childs;
 	}
+	
+	@Override
+	public String toString(){
+		return _name;
+	}
 }

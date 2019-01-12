@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity
 		
 		setContentView(R.layout.application_layout_fragment_container);
 		
-		new DAOBase(this).clearDatabase();
+		//new DAOBase(this).clearDatabase();
 		
 		if (findViewById(R.id.fragment_container) != null) {
 			if (savedInstanceState == null) {
