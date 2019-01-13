@@ -6,8 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import ensicaen.fr.marierave.Controllers.ChildDAO;
 import ensicaen.fr.marierave.Controllers.ClassroomDAO;
 import ensicaen.fr.marierave.Controllers.DAOBase;
+import ensicaen.fr.marierave.Controllers.SkillDAO;
+import ensicaen.fr.marierave.Controllers.SkillheaderDAO;
+import ensicaen.fr.marierave.Controllers.SubjectDAO;
 import ensicaen.fr.marierave.Model.Child;
 import ensicaen.fr.marierave.Model.Classroom;
+import ensicaen.fr.marierave.Model.Skill;
+import ensicaen.fr.marierave.Model.Skillheader;
+import ensicaen.fr.marierave.Model.Subject;
 import ensicaen.fr.marierave.Views.ConnectionFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -29,6 +35,22 @@ public class MainActivity extends AppCompatActivity
 		childDAO.addChild(new Child("Soen", "Timothee", "CP"));
 		childDAO.addChild(new Child("Rey", "Raphael", "CE1"));
 		childDAO.addChild(new Child("Morretton", "Julie", "CP"));
+		
+		SubjectDAO subjectDAO = new SubjectDAO(this);
+		subjectDAO.addSubject(new Subject("FRANCAIS"));
+		subjectDAO.addSubject(new Subject("MATHS"));
+		subjectDAO.addSubject(new Subject("SPORT"));
+		
+		SkillheaderDAO skillheaderDAO = new SkillheaderDAO(this);
+		skillheaderDAO.addSkillheader(new Skillheader("Lire et écrire", "FRANCAIS"));
+		skillheaderDAO.addSkillheader(new Skillheader("Numération", "MATHS"));
+		skillheaderDAO.addSkillheader(new Skillheader("Courir", "SPORT"));
+		
+		SkillDAO skillDAO = new SkillDAO(this);
+		skillDAO.addSkill(new Skill("FRL1", "Lire des mots", "Lire et écrire"));
+		skillDAO.addSkill(new Skill("FRE1", "Recopier un texte court", "Lire et écrire"));
+		skillDAO.addSkill(new Skill("FRL10", "Reconnaître les pronoms personnels", "Lire et écrire"));
+		skillDAO.addSkill(new Skill("MAN5", "Additionner", "Numération"));
 		
 		if (findViewById(R.id.fragment_container) != null) {
 			if (savedInstanceState == null) {

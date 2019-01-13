@@ -15,11 +15,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeSet;
 
 import ensicaen.fr.marierave.Controllers.ChildDAO;
+import ensicaen.fr.marierave.Controllers.SkillDAO;
+import ensicaen.fr.marierave.Controllers.SkillheaderDAO;
+import ensicaen.fr.marierave.Controllers.SubjectDAO;
 import ensicaen.fr.marierave.Model.Child;
 import ensicaen.fr.marierave.Model.Skill;
+import ensicaen.fr.marierave.Model.Skillheader;
+import ensicaen.fr.marierave.Model.Subject;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
 
@@ -44,30 +50,26 @@ public class PersonnalProfile extends Fragment
 		TextView txtSurname = view.findViewById(R.id.txtSurname);
 		txtSurname.setText(child.getFirstname());
 		
-		Skill item1 = new Skill("FRL1", "Lire des mots", "A");
-		Skill item2 = new Skill("FRE1", "Recopier un texte court", "D");
-		Skill item3 = new Skill("FRL10", "Reconnaître les pronoms personnels", "C");
 		
 		ListviewSkillAdapter skillsAdapter = new ListviewSkillAdapter(getActivity());
-		skillsAdapter.addBigSectionHeaderItem("FRANCAIS");
-		skillsAdapter.addLittleSectionHeaderItem("Lire et écrire");
-		skillsAdapter.addItem(item1);
-		skillsAdapter.addItem(item2);
-		skillsAdapter.addItem(item3);
-		skillsAdapter.addBigSectionHeaderItem("MATHS");
-		skillsAdapter.addLittleSectionHeaderItem("Numération");
-		skillsAdapter.addItem(new Skill("MAN5", "Additionner", "B"));
-		skillsAdapter.addBigSectionHeaderItem("SPORT");
-		skillsAdapter.addLittleSectionHeaderItem("Courir");
+		List<Subject> subjectList = new SubjectDAO(getContext()).getAllSubjects();
+		
+		for (Subject subject : subjectList) {
+			skillsAdapter.addBigSectionHeaderItem(subject.getName());
+			
+			for (Skillheader skillheader : new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName())) {
+				skillsAdapter.addLittleSectionHeaderItem(skillheader.getName());
+				
+				for (Skill skill : new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName())) {
+					skillsAdapter.addItem(skill);
+				}
+			}
+		}
 		
 		ListView skillsListview = view.findViewById(R.id.listSkills);
 		skillsListview.setAdapter(skillsAdapter);
 		skillsAdapter.notifyDataSetChanged();
 		
-		ArrayList<String> subjectList = new ArrayList<>();
-		subjectList.add("Français");
-		subjectList.add("Maths");
-		subjectList.add("Histoire");
 		ListviewTopicsAdapter topicsAdapter = new ListviewTopicsAdapter(getActivity(), subjectList);
 		
 		ListView topicListview = view.findViewById(R.id.listTopics);
@@ -244,10 +246,10 @@ public class PersonnalProfile extends Fragment
 	
 	private class ListviewTopicsAdapter extends BaseAdapter
 	{
-		private ArrayList<String> _topicList;
+		private List<Subject> _topicList;
 		private Activity _activity;
 		
-		ListviewTopicsAdapter(Activity activity, ArrayList<String> productList)
+		ListviewTopicsAdapter(Activity activity, List<Subject> productList)
 		{
 			super();
 			_activity = activity;
@@ -284,7 +286,7 @@ public class PersonnalProfile extends Fragment
 				ViewHolder holder = new ViewHolder();
 				convertView =  _activity.getLayoutInflater().inflate(R.layout.listview_topic_item, null);
 				holder._txtTopic = convertView.findViewById(R.id.txtTopic);
-				holder._txtTopic.setText(_topicList.get(position));
+				holder._txtTopic.setText(_topicList.get(position).getName());
 			}
 			
 			return convertView;

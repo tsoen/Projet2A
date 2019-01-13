@@ -13,9 +13,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeSet;
 
+import ensicaen.fr.marierave.Controllers.SkillDAO;
+import ensicaen.fr.marierave.Controllers.SkillheaderDAO;
+import ensicaen.fr.marierave.Controllers.SubjectDAO;
 import ensicaen.fr.marierave.Model.Skill;
+import ensicaen.fr.marierave.Model.Skillheader;
+import ensicaen.fr.marierave.Model.Subject;
 import ensicaen.fr.marierave.R;
 
 public class AdministrationSkills extends Fragment
@@ -31,32 +37,27 @@ public class AdministrationSkills extends Fragment
 	{
 		super.onViewCreated(view, savedInstanceState);
 		
-		Skill item1 = new Skill("FRL1", "Lire des mots", "A");
-		Skill item2 = new Skill("FRE1", "Recopier un texte court", "D");
-		Skill item3 = new Skill("FRL10", "Reconnaître les pronoms personnels", "C");
-		
 		ListviewSkillAdapter skillsAdapter = new ListviewSkillAdapter(getActivity());
-		skillsAdapter.addBigSectionHeaderItem("FRANCAIS");
-		skillsAdapter.addLittleSectionHeaderItem("Lire et écrire");
-		skillsAdapter.addItem(item1);
-		skillsAdapter.addItem(item2);
-		skillsAdapter.addItem(item3);
-		skillsAdapter.addBigSectionHeaderItem("MATHS");
-		skillsAdapter.addLittleSectionHeaderItem("Numération");
-		skillsAdapter.addItem(new Skill("MAN5", "Additionner", "B"));
-		skillsAdapter.addBigSectionHeaderItem("SPORT");
-		skillsAdapter.addLittleSectionHeaderItem("Courir");
+		
+		List<Subject> subjectList = new SubjectDAO(getContext()).getAllSubjects();
+		
+		for (Subject subject : subjectList) {
+			skillsAdapter.addBigSectionHeaderItem(subject.getName());
+			
+			for (Skillheader skillheader : new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName())) {
+				skillsAdapter.addLittleSectionHeaderItem(skillheader.getName());
+				
+				for (Skill skill : new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName())) {
+					skillsAdapter.addItem(skill);
+				}
+			}
+		}
 		
 		ListView skillsListview = view.findViewById(R.id.listCompetences);
 		skillsListview.setAdapter(skillsAdapter);
 		skillsAdapter.notifyDataSetChanged();
 		
-		ArrayList<String> subjectList = new ArrayList<>();
-		subjectList.add("Français");
-		subjectList.add("Maths");
-		subjectList.add("Histoire");
 		ListviewTopicsAdapter topicsAdapter = new ListviewTopicsAdapter(getActivity(), subjectList);
-		
 		ListView topicListview = view.findViewById(R.id.listSubjects);
 		topicListview.setAdapter(topicsAdapter);
 		topicsAdapter.notifyDataSetChanged();
@@ -74,8 +75,8 @@ public class AdministrationSkills extends Fragment
 	private class ListviewSkillAdapter extends BaseAdapter
 	{
 		private static final int TYPE_ITEM = 0;
-		private static final int TYPE_BIG_SEPARATOR = 1;
-		private static final int TYPE_LITTLE_SEPARATOR = 2;
+		private static final int TYPE_BIG_HEADER = 1;
+		private static final int TYPE_LITTLE_HEADER = 2;
 		
 		private ArrayList<Object> _skillsAndHeaders = new ArrayList<>();
 		private TreeSet<Integer> _bigHeaders = new TreeSet<>();
@@ -113,11 +114,11 @@ public class AdministrationSkills extends Fragment
 		public int getItemViewType(int position)
 		{
 			if (_bigHeaders.contains(position)) {
-				return TYPE_BIG_SEPARATOR;
+				return TYPE_BIG_HEADER;
 			}
 			
 			if (_littleHeaders.contains(position)) {
-				return TYPE_LITTLE_SEPARATOR;
+				return TYPE_LITTLE_HEADER;
 			}
 			
 			return TYPE_ITEM;
@@ -176,14 +177,14 @@ public class AdministrationSkills extends Fragment
 					holder._name.setText(item.getName());
 					break;
 				
-				case TYPE_BIG_SEPARATOR:
+				case TYPE_BIG_HEADER:
 					HeaderHolder holderBigHeader = new HeaderHolder();
 					convertView = mInflater.inflate(R.layout.listview_skill_big_header_admin_item, null);
 					holderBigHeader._header = convertView.findViewById(R.id.txtBigHeader);
 					holderBigHeader._header.setText((String) _skillsAndHeaders.get(position));
 					break;
 				
-				case TYPE_LITTLE_SEPARATOR:
+				case TYPE_LITTLE_HEADER:
 					HeaderHolder holderHeader = new HeaderHolder();
 					convertView = mInflater.inflate(R.layout.listview_skill_little_header_admin_item, null);
 					holderHeader._header = convertView.findViewById(R.id.txtLittleHeader);
@@ -201,10 +202,10 @@ public class AdministrationSkills extends Fragment
 	
 	private class ListviewTopicsAdapter extends BaseAdapter
 	{
-		private ArrayList<String> _topicList;
+		private List<Subject> _topicList;
 		private Activity _activity;
 		
-		ListviewTopicsAdapter(Activity activity, ArrayList<String> productList)
+		ListviewTopicsAdapter(Activity activity, List<Subject> productList)
 		{
 			super();
 			_activity = activity;
@@ -241,7 +242,7 @@ public class AdministrationSkills extends Fragment
 				ViewHolder holder = new ViewHolder();
 				convertView =  _activity.getLayoutInflater().inflate(R.layout.listview_topic_item, null);
 				holder._txtTopic = convertView.findViewById(R.id.txtTopic);
-				holder._txtTopic.setText(_topicList.get(position));
+				holder._txtTopic.setText(_topicList.get(position).getName());
 			}
 			
 			return convertView;

@@ -32,9 +32,11 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                 "LevelId INTEGER, " +
                 "PRIMARY KEY (ClassroomName,LevelId));");
 	
-		db.execSQL("CREATE TABLE tableSkill (" +
-				"Code String PRIMARY KEY, " +
-				"Name TEXT);");
+		db.execSQL("CREATE TABLE tableSkill (" + "Code TEXT PRIMARY KEY, " + "Name TEXT NOT NULL," + "Skillheader TEXT NOT NULL);");
+	
+		db.execSQL("CREATE TABLE tableSkillHeader (" + "Name TEXT PRIMARY KEY, " + "Subject TEXT NOT NULL);");
+	
+		db.execSQL("CREATE TABLE tableSubject (" + "Name TEXT PRIMARY KEY);");
 	
 		db.execSQL("CREATE TABLE tableTeacher (" +
 				"Id INTEGER PRIMARY KEY, " +
@@ -54,6 +56,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS tableLevel;");
         db.execSQL("DROP TABLE IF EXISTS tableLevelClassroom;");
         db.execSQL("DROP TABLE IF EXISTS tableSkill;");
+		db.execSQL("DROP TABLE IF EXISTS tableSkillHeader;");
+		db.execSQL("DROP TABLE IF EXISTS tableSubject;");
         db.execSQL("DROP TABLE IF EXISTS tableTeacher;");
         db.execSQL("DROP TABLE IF EXISTS tableTeacherClassroom;");
 		
