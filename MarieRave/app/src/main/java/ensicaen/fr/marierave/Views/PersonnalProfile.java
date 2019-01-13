@@ -17,6 +17,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
+import ensicaen.fr.marierave.Controllers.ChildDAO;
+import ensicaen.fr.marierave.Model.Child;
 import ensicaen.fr.marierave.Model.Skill;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
@@ -33,6 +35,14 @@ public class PersonnalProfile extends Fragment
 	public void onViewCreated(@NonNull final View view, Bundle savedInstanceState)
 	{
 		super.onViewCreated(view, savedInstanceState);
+		
+		Child child = new ChildDAO(getContext()).getChild(getArguments().getInt("childId"));
+		
+		TextView txtName = view.findViewById(R.id.txtName);
+		txtName.setText(child.getName());
+		
+		TextView txtSurname = view.findViewById(R.id.txtSurname);
+		txtSurname.setText(child.getFirstname());
 		
 		Skill item1 = new Skill("FRL1", "Lire des mots", "A");
 		Skill item2 = new Skill("FRE1", "Recopier un texte court", "D");

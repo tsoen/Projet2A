@@ -25,7 +25,7 @@ public class ChildDAO extends DAOBase {
     
 	public void addChild(Child child) {
         ContentValues values = new ContentValues();
-		values.put(ID, child.getId());
+		values.put(ID, getNextId());
 		values.put(NAME, child.getName());
         values.put(FIRSTNAME, child.getFirstname());
         values.put(CLASSROOM, child.getClassroom());
@@ -41,7 +41,7 @@ public class ChildDAO extends DAOBase {
 			cursor.moveToFirst();
 		}
 		
-		Child child = new Child(cursor.getString(1), cursor.getString(2), cursor.getString(3));
+		Child child = new Child(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
 		
 		cursor.close();
 		
@@ -57,7 +57,49 @@ public class ChildDAO extends DAOBase {
 		
 		if (cursor.moveToFirst()) {
 			do {
-				Child child = new Child(cursor.getString(1), cursor.getString(2), cursor.getString(3));
+				Child child = new Child(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+				
+				childList.add(child);
+			} while (cursor.moveToNext());
+		}
+		
+		cursor.close();
+		
+		return childList;
+	}
+	
+	public List<Child> getAllChildsInClassroom(String classroomName)
+	{
+		List<Child> childList = new ArrayList<>();
+		
+		String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + CLASSROOM + " = '" + classroomName + "'";
+		
+		Cursor cursor = this.database.rawQuery(selectQuery, null);
+		
+		if (cursor.moveToFirst()) {
+			do {
+				Child child = new Child(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+				
+				childList.add(child);
+			} while (cursor.moveToNext());
+		}
+		
+		cursor.close();
+		
+		return childList;
+	}
+	
+	public List<Child> getAllChildsNotInClassroom(String classroomName)
+	{
+		List<Child> childList = new ArrayList<>();
+		
+		String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + CLASSROOM + " != '" + classroomName + "'";
+		
+		Cursor cursor = this.database.rawQuery(selectQuery, null);
+		
+		if (cursor.moveToFirst()) {
+			do {
+				Child child = new Child(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
 				
 				childList.add(child);
 			} while (cursor.moveToNext());
@@ -97,8 +139,12 @@ public class ChildDAO extends DAOBase {
 		Cursor cursor =  this.database.rawQuery(query, null);
 		
 		cursor.moveToFirst();
-		
-		int next = cursor.getInt(0);
+	
+		if (cursor.getCount() == 0) {
+			return 1;
+		}
+	
+		int next = cursor.getInt(0) + 1;
 		
 		cursor.close();
 		

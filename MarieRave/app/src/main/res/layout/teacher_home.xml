@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             tools:context=".MainActivity">
+
+    <ImageButton
+        android:id="@+id/btn_exit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_lock_power_off"/>
+
+    <ImageView
+        android:id="@+id/refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_exit"
+        app:layout_constraintEnd_toStartOf="@+id/btn_exit"
+        app:layout_constraintTop_toTopOf="@+id/btn_exit"
+        app:srcCompat="@android:drawable/ic_popup_sync"/>
+
+    <ImageButton
+        android:id="@+id/btnAdd_Class"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/btn_Admin"
+        app:layout_constraintTop_toBottomOf="@+id/btn_Admin"
+        app:srcCompat="@android:drawable/ic_input_add"/>
+
+    <ImageButton
+        android:id="@+id/btnDelete_Class"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnAdd_Class"
+        app:layout_constraintStart_toEndOf="@+id/btnAdd_Class"
+        app:layout_constraintTop_toTopOf="@+id/btnAdd_Class"
+        app:srcCompat="@android:drawable/ic_delete"/>
+
+    <Button
+        android:id="@+id/btn_Admin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Administratif"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="335dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDelete_Class">
+
+        <GridView
+            android:id="@+id/gridview_classes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:horizontalSpacing="15dp"
+            android:numColumns="4"
+            android:verticalSpacing="15dp"/>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

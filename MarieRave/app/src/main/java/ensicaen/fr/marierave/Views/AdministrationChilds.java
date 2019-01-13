@@ -13,24 +13,20 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ensicaen.fr.marierave.Controllers.ChildDAO;
-import ensicaen.fr.marierave.Controllers.ClassroomDAO;
 import ensicaen.fr.marierave.Model.Child;
-import ensicaen.fr.marierave.Model.Classroom;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
 import ensicaen.fr.marierave.Views.Dialogs.NewChildDialog;
-import ensicaen.fr.marierave.Views.Dialogs.NewClassroomDialog;
 
-public class AdministrationResults extends Fragment
+public class AdministrationChilds extends Fragment
 {
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		return inflater.inflate(R.layout.administration_results, container, false);
+		return inflater.inflate(R.layout.administration_childs, container, false);
 	}
 	
 	@Override

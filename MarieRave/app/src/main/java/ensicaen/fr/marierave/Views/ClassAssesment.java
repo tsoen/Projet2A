@@ -7,7 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
+import ensicaen.fr.marierave.Controllers.ClassroomDAO;
+import ensicaen.fr.marierave.Model.Classroom;
 import ensicaen.fr.marierave.R;
 
 public class ClassAssesment extends Fragment
@@ -22,6 +25,11 @@ public class ClassAssesment extends Fragment
 	public void onViewCreated(@NonNull final View view, Bundle savedInstanceState)
 	{
 		super.onViewCreated(view, savedInstanceState);
+		
+		final Classroom classroom = new ClassroomDAO(getContext()).getClassroom(getArguments().getString("classroomName"));
+		
+		TextView txtClassroomName = view.findViewById(R.id.classname);
+		txtClassroomName.setText(classroom.getName());
 		
 		Button btnBack = view.findViewById(R.id.button);
 		btnBack.setOnClickListener(new View.OnClickListener()

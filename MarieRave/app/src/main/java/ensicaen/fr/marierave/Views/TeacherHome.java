@@ -1,9 +1,9 @@
 package ensicaen.fr.marierave.Views;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 
 import java.util.List;
 
@@ -18,72 +19,43 @@ import ensicaen.fr.marierave.Controllers.ClassroomDAO;
 import ensicaen.fr.marierave.Model.Classroom;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
-import ensicaen.fr.marierave.Views.Dialogs.NewClassroomDialog;
 
-public class AdministrationHome extends Fragment
+public class TeacherHome extends Fragment
 {
-	@Override
-	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    @Override
+	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
 	{
-		return inflater.inflate(R.layout.administration_home, container, false);
-	}
-	
-	@Override
+		return inflater.inflate(R.layout.teacher_home, container, false);
+    }
+
+    @Override
 	public void onViewCreated(@NonNull final View view, Bundle savedInstanceState)
 	{
-		super.onViewCreated(view, savedInstanceState);
-		
-		Button btnSkills = view.findViewById(R.id.button4);
-		btnSkills.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v)
-			{
-				Utils.replaceFragments(AdministrationSkills.class, getActivity(), null, true);
-			}
-		});
-		
-		Button btnResults = view.findViewById(R.id.button5);
-		btnResults.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v)
-			{
-				Utils.replaceFragments(AdministrationChilds.class, getActivity(), null, true);
-			}
-		});
-		
-		Button btnBack = view.findViewById(R.id.button1);
-		btnBack.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v)
-			{
-				getActivity().getSupportFragmentManager().popBackStack();
-			}
-		});
-		
+        super.onViewCreated(view, savedInstanceState);
+
+        ImageButton btn_exit = view.findViewById(R.id.btn_exit);
+        btn_exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(0);
+            }
+        });
+
+        Button btn_admin = view.findViewById(R.id.btn_Admin);
+        btn_admin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                Utils.replaceFragments(AdministrationHome.class, getActivity(), bundle, true);
+            }
+        });
+	
 		List<Classroom> classrooms = new ClassroomDAO(getContext()).getAllClassrooms();
-		
+	
 		GridViewAdapter adapter = new GridViewAdapter(getActivity(), classrooms);
-		final GridView gridview = view.findViewById(R.id.gridview1);
+		final GridView gridview = view.findViewById(R.id.gridview_classes);
 		gridview.setAdapter(adapter);
-		
-		Button btnNewClassroom = view.findViewById(R.id.button6);
-		btnNewClassroom.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v)
-			{
-				NewClassroomDialog dialog = new NewClassroomDialog(getActivity());
-				dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-					@Override
-					public void onDismiss(final DialogInterface arg0) {
-						List<Classroom> classrooms = new ClassroomDAO(getContext()).getAllClassrooms();
-						GridViewAdapter adapter = new GridViewAdapter(getActivity(), classrooms);
-						gridview.setAdapter(adapter);
-					}
-				});
-				
-				dialog.show();
-			}
-		});
 	}
 	
 	private class GridViewAdapter extends BaseAdapter
@@ -129,14 +101,15 @@ public class AdministrationHome extends Fragment
 				final ViewHolder holder = new ViewHolder();
 				holder._classButton = convertView.findViewById(R.id.button8);
 				
-				holder._classButton.setOnClickListener(new View.OnClickListener() {
+				holder._classButton.setOnClickListener(new View.OnClickListener()
+				{
 					@Override
 					public void onClick(View v)
 					{
 						Bundle bundle = new Bundle();
 						bundle.putString("classroomName", holder._classButton.getText().toString());
 						
-						Utils.replaceFragments(ClassAdministration.class, getActivity(), bundle, true);
+						Utils.replaceFragments(HomeClassroom.class, getActivity(), bundle, true);
 					}
 				});
 				

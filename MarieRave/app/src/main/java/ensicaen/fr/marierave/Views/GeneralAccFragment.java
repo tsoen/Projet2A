@@ -40,7 +40,7 @@ public class GeneralAccFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                Utils.replaceFragments(AdministrationFragment.class, getActivity(), bundle, true);
+				Utils.replaceFragments(TeacherHome.class, getActivity(), bundle, true);
             }
         });
 

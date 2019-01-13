@@ -35,7 +35,6 @@ public class ClassroomDAO extends DAOBase {
 			cursor.moveToFirst();
 		}
 		
-		//TODO test get(columnName) instead of columnIndex
 		Classroom classroom = new Classroom(cursor.getString(0));
 		
 		cursor.close();

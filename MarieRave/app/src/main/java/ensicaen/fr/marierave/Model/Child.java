@@ -14,8 +14,23 @@ public class Child
 		_firstname = firstname;
 	}
 	
+	public Child(Integer id, String name, String firstname)
+	{
+		_id = id;
+		_name = name;
+		_firstname = firstname;
+	}
+	
 	public Child(String name, String surname, String classroom)
 	{
+		_name = name;
+		_firstname = surname;
+		_classroom = classroom;
+	}
+	
+	public Child(Integer id, String name, String surname, String classroom)
+	{
+		_id = id;
 		_name = name;
 		_firstname = surname;
 		_classroom = classroom;
@@ -44,5 +59,10 @@ public class Child
 	public String getClassroom()
 	{
 		return _classroom;
+	}
+	
+	public void setClassroom(String classroom)
+	{
+		_classroom = classroom;
 	}
 }

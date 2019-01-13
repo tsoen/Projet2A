@@ -14,9 +14,12 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import ensicaen.fr.marierave.Controllers.ChildDAO;
+import ensicaen.fr.marierave.Controllers.ClassroomDAO;
 import ensicaen.fr.marierave.Model.Child;
+import ensicaen.fr.marierave.Model.Classroom;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
 
@@ -33,15 +36,12 @@ public class HomeClassroom extends Fragment
 	{
 		super.onViewCreated(view, savedInstanceState);
 		
-		ArrayList<Child> subjectList = new ArrayList<>();
-		subjectList.add(new Child("", "Rey", "Raphael"));
-		subjectList.add(new Child("", "Soen", "Timothee"));
-		subjectList.add(new Child("", "Rey", "Raphael"));
-		subjectList.add(new Child("", "Soen", "Timothee"));
-		subjectList.add(new Child("", "Rey", "Raphael"));
-		subjectList.add(new Child("", "Soen", "Timothee"));
-		subjectList.add(new Child("", "Rey", "Raphael"));
-		subjectList.add(new Child("", "Soen", "Timothee"));
+		final Classroom classroom = new ClassroomDAO(getContext()).getClassroom(getArguments().getString("classroomName"));
+		
+		TextView txtClassroomName = view.findViewById(R.id.txtClassroomName);
+		txtClassroomName.setText(classroom.getName());
+		
+		final List<Child> subjectList = new ChildDAO(getContext()).getAllChildsInClassroom(classroom.getName());
 		
 		GridViewAdapter adapter = new GridViewAdapter(getActivity(), subjectList);
 		GridView gridview = view.findViewById(R.id.gridviewProfiles);
@@ -53,7 +53,9 @@ public class HomeClassroom extends Fragment
 			@Override
 			public void onItemClick(AdapterView parent, View view, int position, long id)
 			{
-				Utils.replaceFragments(PersonnalProfile.class, getActivity(), null, true);
+				Bundle bundle = new Bundle();
+				bundle.putInt("childId", subjectList.get(position).getId());
+				Utils.replaceFragments(PersonnalProfile.class, getActivity(), bundle, true);
 			}
 		});
 		
@@ -62,7 +64,9 @@ public class HomeClassroom extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				Utils.replaceFragments(ClassAssesment.class, getActivity(), null, true);
+				Bundle bundle = new Bundle();
+				bundle.putString("classroomName", classroom.getName());
+				Utils.replaceFragments(ClassAssesment.class, getActivity(), bundle, true);
 			}
 		});
 		
@@ -78,10 +82,10 @@ public class HomeClassroom extends Fragment
 	
 	private class GridViewAdapter extends BaseAdapter
 	{
-		private ArrayList<Child> _productList;
+		private List<Child> _productList;
 		private Activity _activity;
 		
-		GridViewAdapter(Activity activity, ArrayList<Child> productList)
+		GridViewAdapter(Activity activity, List<Child> productList)
 		{
 			super();
 			_activity = activity;
@@ -126,6 +130,7 @@ public class HomeClassroom extends Fragment
 				holder._profilePic.setImageResource(R.mipmap.ic_launcher_round);
 				holder._txtName.setText(_productList.get(position).getName());
 				holder._txtSurname.setText(_productList.get(position).getFirstname());
+				
 			}
 			
 			return convertView;
