@@ -20,4 +20,10 @@ public class Skillheader
 	{
 		return _subject;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return _name;
+	}
 }

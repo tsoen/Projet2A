@@ -1,6 +1,7 @@
 package ensicaen.fr.marierave.Views;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,7 @@ import ensicaen.fr.marierave.Model.Skill;
 import ensicaen.fr.marierave.Model.Skillheader;
 import ensicaen.fr.marierave.Model.Subject;
 import ensicaen.fr.marierave.R;
+import ensicaen.fr.marierave.Views.Dialogs.NewSkillDialog;
 
 public class AdministrationSkills extends Fragment
 {
@@ -53,7 +55,7 @@ public class AdministrationSkills extends Fragment
 			}
 		}
 		
-		ListView skillsListview = view.findViewById(R.id.listCompetences);
+		final ListView skillsListview = view.findViewById(R.id.listCompetences);
 		skillsListview.setAdapter(skillsAdapter);
 		skillsAdapter.notifyDataSetChanged();
 		
@@ -61,6 +63,42 @@ public class AdministrationSkills extends Fragment
 		ListView topicListview = view.findViewById(R.id.listSubjects);
 		topicListview.setAdapter(topicsAdapter);
 		topicsAdapter.notifyDataSetChanged();
+		
+		Button btnNewSkill = view.findViewById(R.id.button4);
+		btnNewSkill.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				NewSkillDialog dialog = new NewSkillDialog(getActivity());
+				dialog.setOnDismissListener(new DialogInterface.OnDismissListener()
+				{
+					@Override
+					public void onDismiss(final DialogInterface arg0)
+					{
+						ListviewSkillAdapter skillsAdapter = new ListviewSkillAdapter(getActivity());
+						
+						List<Subject> subjectList = new SubjectDAO(getContext()).getAllSubjects();
+						
+						for (Subject subject : subjectList) {
+							skillsAdapter.addBigSectionHeaderItem(subject.getName());
+							
+							for (Skillheader skillheader : new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName())) {
+								skillsAdapter.addLittleSectionHeaderItem(skillheader.getName());
+								
+								for (Skill skill : new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName())) {
+									skillsAdapter.addItem(skill);
+								}
+							}
+						}
+						
+						skillsListview.setAdapter(skillsAdapter);
+					}
+				});
+				
+				dialog.show();
+			}
+		});
 		
 		Button btnBack = view.findViewById(R.id.button1);
 		btnBack.setOnClickListener(new View.OnClickListener() {
