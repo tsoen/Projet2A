@@ -223,14 +223,14 @@ public class PersonnalProfile extends Fragment
 					
 				case TYPE_BIG_SEPARATOR:
 					HeaderHolder holderBigHeader = new HeaderHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_big_header_item, null);
+					convertView = mInflater.inflate(R.layout.listview_skill_subject_item, null);
 					holderBigHeader._header = convertView.findViewById(R.id.txtBigHeader);
 					holderBigHeader._header.setText((String) _skillsAndHeaders.get(position));
 					break;
 				
 				case TYPE_LITTLE_SEPARATOR:
 					HeaderHolder holderHeader = new HeaderHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_little_header_item, null);
+					convertView = mInflater.inflate(R.layout.listview_skill_skillheader_item, null);
 					holderHeader._header = convertView.findViewById(R.id.txtLittleHeader);
 					holderHeader._header.setText((String) _skillsAndHeaders.get(position));
 					convertView.setTag(holderHeader);

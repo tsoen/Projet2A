@@ -1,6 +1,7 @@
 package ensicaen.fr.marierave.Views;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,7 +16,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeSet;
 
 import ensicaen.fr.marierave.Controllers.SkillDAO;
 import ensicaen.fr.marierave.Controllers.SkillheaderDAO;
@@ -44,10 +44,10 @@ public class AdministrationSkills extends Fragment
 		List<Subject> subjectList = new SubjectDAO(getContext()).getAllSubjects();
 		
 		for (Subject subject : subjectList) {
-			skillsAdapter.addBigSectionHeaderItem(subject.getName());
+			skillsAdapter.addItem(subject);
 			
 			for (Skillheader skillheader : new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName())) {
-				skillsAdapter.addLittleSectionHeaderItem(skillheader.getName());
+				skillsAdapter.addItem(skillheader);
 				
 				for (Skill skill : new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName())) {
 					skillsAdapter.addItem(skill);
@@ -81,10 +81,10 @@ public class AdministrationSkills extends Fragment
 						List<Subject> subjectList = new SubjectDAO(getContext()).getAllSubjects();
 						
 						for (Subject subject : subjectList) {
-							skillsAdapter.addBigSectionHeaderItem(subject.getName());
+							skillsAdapter.addItem(subject);
 							
 							for (Skillheader skillheader : new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName())) {
-								skillsAdapter.addLittleSectionHeaderItem(skillheader.getName());
+								skillsAdapter.addItem(skillheader);
 								
 								for (Skill skill : new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName())) {
 									skillsAdapter.addItem(skill);
@@ -112,13 +112,8 @@ public class AdministrationSkills extends Fragment
 	
 	private class ListviewSkillAdapter extends BaseAdapter
 	{
-		private static final int TYPE_ITEM = 0;
-		private static final int TYPE_BIG_HEADER = 1;
-		private static final int TYPE_LITTLE_HEADER = 2;
-		
-		private ArrayList<Object> _skillsAndHeaders = new ArrayList<>();
-		private TreeSet<Integer> _bigHeaders = new TreeSet<>();
-		private TreeSet<Integer> _littleHeaders = new TreeSet<>();
+		private List<Object> _skillsAndHeaders = new ArrayList<>();
+
 		
 		private Activity _activity;
 		
@@ -128,52 +123,23 @@ public class AdministrationSkills extends Fragment
 			_activity = activity;
 		}
 		
-		void addItem(final Skill item)
+		void addItem(final Object item)
 		{
 			_skillsAndHeaders.add(item);
 			notifyDataSetChanged();
 		}
-		
-		void addBigSectionHeaderItem(final String item)
-		{
-			_skillsAndHeaders.add(item);
-			_bigHeaders.add(_skillsAndHeaders.size() - 1);
+
+		void removeItem(int position) {
+			_skillsAndHeaders.remove(position);
 			notifyDataSetChanged();
 		}
-		
-		void addLittleSectionHeaderItem(final String item)
-		{
-			_skillsAndHeaders.add(item);
-			_littleHeaders.add(_skillsAndHeaders.size() - 1);
-			notifyDataSetChanged();
-		}
-		
-		@Override
-		public int getItemViewType(int position)
-		{
-			if (_bigHeaders.contains(position)) {
-				return TYPE_BIG_HEADER;
-			}
-			
-			if (_littleHeaders.contains(position)) {
-				return TYPE_LITTLE_HEADER;
-			}
-			
-			return TYPE_ITEM;
-		}
-		
-		@Override
-		public int getViewTypeCount()
-		{
-			return 3;
-		}
-		
+
 		@Override
 		public int getCount()
 		{
 			return _skillsAndHeaders.size();
 		}
-		
+
 		@Override
 		public Object getItem(int position)
 		{
@@ -198,40 +164,110 @@ public class AdministrationSkills extends Fragment
 		}
 		
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent)
+		public View getView(final int position, View convertView, ViewGroup parent)
 		{
 			LayoutInflater mInflater = _activity.getLayoutInflater();
-			
-			switch (getItemViewType(position)) {
-				case TYPE_ITEM:
-					ViewHolder holder = new ViewHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_admin_item, null);
-					
-					holder._code = convertView.findViewById(R.id.txtCode);
-					holder._name = convertView.findViewById(R.id.txtSkill);
-					
-					Skill item = (Skill) _skillsAndHeaders.get(position);
-					holder._code.setText(item.getCode());
-					holder._name.setText(item.getName());
-					break;
-				
-				case TYPE_BIG_HEADER:
-					HeaderHolder holderBigHeader = new HeaderHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_big_header_admin_item, null);
-					holderBigHeader._header = convertView.findViewById(R.id.txtBigHeader);
-					holderBigHeader._header.setText((String) _skillsAndHeaders.get(position));
-					break;
-				
-				case TYPE_LITTLE_HEADER:
-					HeaderHolder holderHeader = new HeaderHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_little_header_admin_item, null);
-					holderHeader._header = convertView.findViewById(R.id.txtLittleHeader);
-					holderHeader._header.setText((String) _skillsAndHeaders.get(position));
-					convertView.setTag(holderHeader);
-					break;
-				
-				default:
-					break;
+
+			Object objectAt = _skillsAndHeaders.get(position);
+
+			if(objectAt instanceof Skill){
+				ViewHolder holder = new ViewHolder();
+				convertView = mInflater.inflate(R.layout.listview_skill_admin_item, null);
+
+				holder._code = convertView.findViewById(R.id.txtCode);
+				holder._name = convertView.findViewById(R.id.txtSkill);
+
+				final Skill skill = (Skill) objectAt;
+				holder._code.setText(skill.getCode());
+				holder._name.setText(skill.getName());
+
+				Button btnDeleteSkill = convertView.findViewById(R.id.button9);
+				btnDeleteSkill.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+
+						AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+						builder1.setMessage("Etes-vous sûr de vouloir supprimer la compétence ? Cette action est irréversible");
+						builder1.setCancelable(true);
+
+						builder1.setPositiveButton(
+								"Oui",
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int id) {
+										new SkillDAO(getContext()).deleteSkill(skill.getCode());
+
+										removeItem(position);
+										dialog.cancel();
+									}
+								});
+
+						builder1.setNegativeButton(
+								"Non",
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int id) {
+										dialog.cancel();
+									}
+								});
+
+						AlertDialog alert11 = builder1.create();
+						alert11.show();
+					}
+				});
+			}
+			else if(objectAt instanceof Subject){
+				HeaderHolder holderBigHeader = new HeaderHolder();
+				convertView = mInflater.inflate(R.layout.listview_skill_subject_admin_item, null);
+				holderBigHeader._header = convertView.findViewById(R.id.txtBigHeader);
+				holderBigHeader._header.setText(((Subject) _skillsAndHeaders.get(position)).getName());
+
+				final Subject subject = (Subject) objectAt;
+				Button btnDeleteSubject = convertView.findViewById(R.id.button11);
+				btnDeleteSubject.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+
+						AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+						builder1.setMessage("Etes-vous sûr de vouloir supprimer cette matière ? " +
+								"Toutes les sections et compétences associées seront supprimées. " +
+								"Cette action est irreversible.");
+						builder1.setCancelable(true);
+
+						builder1.setPositiveButton(
+								"Oui",
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int id) {
+
+										for (Skillheader skillheader : new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName())) {
+											new SkillDAO(_activity).deleteAllSkillsInHeader(skillheader.getName());
+										}
+
+										new SkillheaderDAO(_activity).deleteAllSkillheadersInSubject(subject.getName());
+
+										removeItem(position);
+										dialog.cancel();
+									}
+								});
+
+						builder1.setNegativeButton(
+								"Non",
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog, int id) {
+										dialog.cancel();
+									}
+								});
+
+						AlertDialog alert11 = builder1.create();
+						alert11.show();
+					}
+				});
+
+			}
+			else if(objectAt instanceof Skillheader){
+				HeaderHolder holderHeader = new HeaderHolder();
+				convertView = mInflater.inflate(R.layout.listview_skill_skillheader_admin_item, null);
+				holderHeader._header = convertView.findViewById(R.id.txtLittleHeader);
+				holderHeader._header.setText(((Skillheader) _skillsAndHeaders.get(position)).getName());
+				convertView.setTag(holderHeader);
 			}
 			
 			return convertView;

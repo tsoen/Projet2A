@@ -89,6 +89,10 @@ public class SkillDAO extends DAOBase {
 	public void deleteSkill(String code) {
 		this.database.delete(TABLE_NAME, CODE + " = ?", new String[] { code });
     }
+
+	public void deleteAllSkillsInHeader(String skillheaderName) {
+		this.database.delete(TABLE_NAME, SKILLHEADER + " = ?", new String[] { skillheaderName });
+	}
     
 	public void updateSkill(Skill skill) {
 		ContentValues values = new ContentValues();

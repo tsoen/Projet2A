@@ -91,6 +91,11 @@ public class SkillheaderDAO extends DAOBase
 	{
 		this.database.delete(TABLE_NAME, NAME + " = ?", new String[]{name});
 	}
+
+	public void deleteAllSkillheadersInSubject(String subjectName)
+	{
+		this.database.delete(TABLE_NAME, SUBJECT + " = ?", new String[]{subjectName});
+	}
 	
 	public void updateSkillheader(Skillheader skillheader)
 	{
