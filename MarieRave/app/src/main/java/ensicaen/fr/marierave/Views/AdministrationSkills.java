@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ import ensicaen.fr.marierave.Views.Dialogs.NewSkillDialog;
 
 public class AdministrationSkills extends Fragment
 {
+	private ListView skillsListview;
+	
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -39,25 +42,11 @@ public class AdministrationSkills extends Fragment
 	{
 		super.onViewCreated(view, savedInstanceState);
 		
-		ListviewSkillAdapter skillsAdapter = new ListviewSkillAdapter(getActivity());
+		skillsListview = view.findViewById(R.id.listCompetences);
+		
+		reloadSkillListView();
 		
 		List<Subject> subjectList = new SubjectDAO(getContext()).getAllSubjects();
-		
-		for (Subject subject : subjectList) {
-			skillsAdapter.addItem(subject);
-			
-			for (Skillheader skillheader : new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName())) {
-				skillsAdapter.addItem(skillheader);
-				
-				for (Skill skill : new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName())) {
-					skillsAdapter.addItem(skill);
-				}
-			}
-		}
-		
-		final ListView skillsListview = view.findViewById(R.id.listCompetences);
-		skillsListview.setAdapter(skillsAdapter);
-		skillsAdapter.notifyDataSetChanged();
 		
 		ListviewTopicsAdapter topicsAdapter = new ListviewTopicsAdapter(getActivity(), subjectList);
 		ListView topicListview = view.findViewById(R.id.listSubjects);
@@ -70,33 +59,9 @@ public class AdministrationSkills extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				NewSkillDialog dialog = new NewSkillDialog(getActivity());
-				dialog.setOnDismissListener(new DialogInterface.OnDismissListener()
-				{
-					@Override
-					public void onDismiss(final DialogInterface arg0)
-					{
-						ListviewSkillAdapter skillsAdapter = new ListviewSkillAdapter(getActivity());
-						
-						List<Subject> subjectList = new SubjectDAO(getContext()).getAllSubjects();
-						
-						for (Subject subject : subjectList) {
-							skillsAdapter.addItem(subject);
-							
-							for (Skillheader skillheader : new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName())) {
-								skillsAdapter.addItem(skillheader);
-								
-								for (Skill skill : new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName())) {
-									skillsAdapter.addItem(skill);
-								}
-							}
-						}
-						
-						skillsListview.setAdapter(skillsAdapter);
-					}
-				});
-				
-				dialog.show();
+				FragmentManager fm = getActivity().getSupportFragmentManager();
+				NewSkillDialog dialog = new NewSkillDialog();
+				dialog.show(fm, "newSkill");
 			}
 		});
 		
@@ -110,17 +75,36 @@ public class AdministrationSkills extends Fragment
 		});
 	}
 	
+	public void reloadSkillListView()
+	{
+		ListviewSkillAdapter skillsAdapter = new ListviewSkillAdapter(this);
+		
+		for (Subject subject : new SubjectDAO(getContext()).getAllSubjects()) {
+			skillsAdapter.addItem(subject);
+			
+			for (Skillheader skillheader : new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName())) {
+				skillsAdapter.addItem(skillheader);
+				
+				for (Skill skill : new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName())) {
+					skillsAdapter.addItem(skill);
+				}
+			}
+		}
+		
+		skillsListview.setAdapter(skillsAdapter);
+		skillsAdapter.notifyDataSetChanged();
+	}
+	
 	private class ListviewSkillAdapter extends BaseAdapter
 	{
 		private List<Object> _skillsAndHeaders = new ArrayList<>();
-
 		
-		private Activity _activity;
+		private AdministrationSkills fragment;
 		
-		ListviewSkillAdapter(Activity activity)
+		ListviewSkillAdapter(AdministrationSkills fragment)
 		{
 			super();
-			_activity = activity;
+			this.fragment = fragment;
 		}
 		
 		void addItem(final Object item)
@@ -128,9 +112,10 @@ public class AdministrationSkills extends Fragment
 			_skillsAndHeaders.add(item);
 			notifyDataSetChanged();
 		}
-
-		void removeItem(int position) {
-			_skillsAndHeaders.remove(position);
+		
+		void removeItem(Object obj)
+		{
+			_skillsAndHeaders.remove(obj);
 			notifyDataSetChanged();
 		}
 
@@ -156,19 +141,21 @@ public class AdministrationSkills extends Fragment
 		{
 			private TextView _code;
 			private TextView _name;
+			private Button _btnEdit;
 		}
 		
 		private class HeaderHolder
 		{
 			private TextView _header;
+			private Button _btnEdit;
 		}
 		
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent)
 		{
-			LayoutInflater mInflater = _activity.getLayoutInflater();
-
-			Object objectAt = _skillsAndHeaders.get(position);
+			LayoutInflater mInflater = fragment.getLayoutInflater();
+			
+			final Object objectAt = _skillsAndHeaders.get(position);
 
 			if(objectAt instanceof Skill){
 				ViewHolder holder = new ViewHolder();
@@ -180,7 +167,26 @@ public class AdministrationSkills extends Fragment
 				final Skill skill = (Skill) objectAt;
 				holder._code.setText(skill.getCode());
 				holder._name.setText(skill.getName());
-
+				
+				Button btnEditSkill = convertView.findViewById(R.id.btnEdit);
+				btnEditSkill.setOnClickListener(new View.OnClickListener()
+				{
+					@Override
+					public void onClick(View v)
+					{
+						Bundle bundle = new Bundle();
+						bundle.putString("skillCode", skill.getCode());
+						bundle.putString("skillName", skill.getName());
+						bundle.putString("skillHeaderName", skill.getSkillheader());
+						
+						FragmentManager fm = getActivity().getSupportFragmentManager();
+						NewSkillDialog dialog = new NewSkillDialog();
+						dialog.setArguments(bundle);
+						dialog.setTargetFragment(fragment, 0);
+						dialog.show(fm, "newSkill");
+					}
+				});
+				
 				Button btnDeleteSkill = convertView.findViewById(R.id.button9);
 				btnDeleteSkill.setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -195,8 +201,7 @@ public class AdministrationSkills extends Fragment
 								new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog, int id) {
 										new SkillDAO(getContext()).deleteSkill(skill.getCode());
-
-										removeItem(position);
+										removeItem(skill);
 										dialog.cancel();
 									}
 								});
@@ -238,12 +243,16 @@ public class AdministrationSkills extends Fragment
 									public void onClick(DialogInterface dialog, int id) {
 
 										for (Skillheader skillheader : new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName())) {
-											new SkillDAO(_activity).deleteAllSkillsInHeader(skillheader.getName());
+											for (Skill skill : new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName())) {
+												removeItem(skill);
+											}
+											new SkillDAO(getContext()).deleteAllSkillsInHeader(skillheader.getName());
+											removeItem(skillheader);
 										}
-
-										new SkillheaderDAO(_activity).deleteAllSkillheadersInSubject(subject.getName());
-
-										removeItem(position);
+										
+										new SkillheaderDAO(getContext()).deleteAllSkillheadersInSubject(subject.getName());
+										new SubjectDAO(getContext()).deleteSubject(subject.getName());
+										removeItem(subject);
 										dialog.cancel();
 									}
 								});
@@ -260,14 +269,50 @@ public class AdministrationSkills extends Fragment
 						alert11.show();
 					}
 				});
-
 			}
 			else if(objectAt instanceof Skillheader){
 				HeaderHolder holderHeader = new HeaderHolder();
 				convertView = mInflater.inflate(R.layout.listview_skill_skillheader_admin_item, null);
 				holderHeader._header = convertView.findViewById(R.id.txtLittleHeader);
 				holderHeader._header.setText(((Skillheader) _skillsAndHeaders.get(position)).getName());
-				convertView.setTag(holderHeader);
+				
+				final Skillheader skillheader = (Skillheader) objectAt;
+				Button btnDeleteSkillheader = convertView.findViewById(R.id.button11);
+				btnDeleteSkillheader.setOnClickListener(new View.OnClickListener()
+				{
+					@Override
+					public void onClick(View view)
+					{
+						
+						AlertDialog.Builder builder1 = new AlertDialog.Builder(getContext());
+						builder1.setMessage("Etes-vous sûr de vouloir supprimer cette section ? " + "Toutes les compétences associées seront supprimées. " + "Cette " +
+								"action est irreversible.");
+						builder1.setCancelable(true);
+						
+						builder1.setPositiveButton("Oui", new DialogInterface.OnClickListener()
+						{
+							public void onClick(DialogInterface dialog, int id)
+							{
+								
+								for (Skill skill : new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName())) {
+									removeItem(skill);
+								}
+								new SkillDAO(getContext()).deleteAllSkillsInHeader(skillheader.getName());
+								removeItem(skillheader);
+								dialog.cancel();
+							}
+						});
+						builder1.setNegativeButton("Non", new DialogInterface.OnClickListener()
+						{
+							public void onClick(DialogInterface dialog, int id)
+							{
+								dialog.cancel();
+							}
+						});
+						AlertDialog alert11 = builder1.create();
+						alert11.show();
+					}
+				});
 			}
 			
 			return convertView;

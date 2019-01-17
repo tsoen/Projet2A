@@ -29,10 +29,23 @@ public class SkillDAO extends DAOBase {
 		
         this.database.insert(TABLE_NAME, null, values);
     }
-    
+	
+	public boolean skillExists(String code)
+	{
+		Cursor cursor = this.database.query(TABLE_NAME, new String[]{CODE, NAME, SKILLHEADER}, CODE + " = ?", new String[]{code}, null, null, null, null);
+		
+		if (cursor == null || cursor.getCount() == 0) {
+			return false;
+		}
+		
+		cursor.close();
+		return true;
+	}
+ 
 	public Skill getSkill(String code) {
 		Cursor cursor = this.database.query(TABLE_NAME, new String[]{CODE, NAME, SKILLHEADER},
 				CODE + " = ?", new String[] { code }, null, null, null, null);
+		
 		
 		if (cursor != null) {
 			cursor.moveToFirst();
@@ -98,6 +111,7 @@ public class SkillDAO extends DAOBase {
 		ContentValues values = new ContentValues();
 		values.put(CODE, skill.getCode());
 		values.put(NAME, skill.getName());
+		values.put(SKILLHEADER, skill.getName());
 		
 		this.database.update(TABLE_NAME, values, CODE  + " = ?", new String[] { skill.getCode() } );
     }

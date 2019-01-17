@@ -1,9 +1,11 @@
 package ensicaen.fr.marierave.Views.Dialogs;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,35 +19,41 @@ import ensicaen.fr.marierave.Controllers.SkillheaderDAO;
 import ensicaen.fr.marierave.Model.Skill;
 import ensicaen.fr.marierave.Model.Skillheader;
 import ensicaen.fr.marierave.R;
+import ensicaen.fr.marierave.Views.AdministrationSkills;
 
-public class NewSkillDialog extends Dialog implements android.view.View.OnClickListener
+public class NewSkillDialog extends DialogFragment implements android.view.View.OnClickListener
 {
-	
-	public NewSkillDialog(Activity a)
-	{
-		super(a);
-	}
-	
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
+		View view = inflater.inflate(R.layout.dialog_new_skill, container);
 		
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		
-		setContentView(R.layout.dialog_new_skill);
-		
-		Spinner spinnerSkillheaders = findViewById(R.id.spinner_skillheaders);
+		Spinner spinnerSkillheaders = view.findViewById(R.id.spinner_skillheaders);
 		List<Skillheader> skillheaders = new SkillheaderDAO(getContext()).getAllSkillheaders();
 		ArrayAdapter<Skillheader> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, skillheaders);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinnerSkillheaders.setAdapter(adapter);
 		
-		Button btnValidate = findViewById(R.id.btn_validate);
+		Bundle bundle = getArguments();
+		if (bundle != null) {
+			EditText edit_skillCode = view.findViewById(R.id.edit_skillCode);
+			edit_skillCode.setText(bundle.getString("skillCode"));
+			
+			EditText edit_skillName = view.findViewById(R.id.edit_skillName);
+			edit_skillName.setText(bundle.getString("skillName"));
+			
+			spinnerSkillheaders.setSelection(adapter.getPosition(new Skillheader(bundle.getString("skillHeaderName"))));
+		}
+		
+		Button btnValidate = view.findViewById(R.id.btn_validate);
 		btnValidate.setOnClickListener(this);
 		
-		Button btnCancel = findViewById(R.id.btn_cancel);
+		Button btnCancel = view.findViewById(R.id.btn_cancel);
 		btnCancel.setOnClickListener(this);
+		
+		return view;
 	}
 	
 	@Override
@@ -53,13 +61,20 @@ public class NewSkillDialog extends Dialog implements android.view.View.OnClickL
 	{
 		switch (v.getId()) {
 			case R.id.btn_validate:
-				EditText editSkillCode = findViewById(R.id.edit_skillCode);
-				EditText editSkillName = findViewById(R.id.edit_skillName);
-				Spinner spinnerSkillheaders = findViewById(R.id.spinner_skillheaders);
+				EditText editSkillCode = getDialog().findViewById(R.id.edit_skillCode);
+				EditText editSkillName = getDialog().findViewById(R.id.edit_skillName);
+				Spinner spinnerSkillheaders = getDialog().findViewById(R.id.spinner_skillheaders);
 				
 				SkillDAO skillDAO = new SkillDAO(getContext());
+				
+				if (getArguments() != null && skillDAO.skillExists(getArguments().getString("skillCode"))) {
+					skillDAO.deleteSkill(getArguments().getString("skillCode"));
+				}
+				
 				skillDAO.addSkill(new Skill(editSkillCode.getText().toString(), editSkillName.getText().toString(), ((Skillheader) spinnerSkillheaders.getSelectedItem())
 						.getName()));
+				
+				((AdministrationSkills) getTargetFragment()).reloadSkillListView();
 				
 				dismiss();
 				break;

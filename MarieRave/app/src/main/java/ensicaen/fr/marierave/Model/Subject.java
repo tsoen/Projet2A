@@ -13,4 +13,21 @@ public class Subject
 	{
 		return _name;
 	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj == null) {
+			return false;
+		}
+		if (obj == this) {
+			return true;
+		}
+		if (!(obj instanceof Subject)) {
+			return false;
+		}
+		
+		Subject o = (Subject) obj;
+		return o._name.equals(_name);
+	}
 }
