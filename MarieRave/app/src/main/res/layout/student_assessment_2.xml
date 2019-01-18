@@ -1,69 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             tools:context=".MainActivity"
+                                             android:id="@+id/relativeLayout2">
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_alignStart="@+id/student_name"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="250dp"
-        android:src="@drawable/fille_icon" />
+        android:layout_marginTop="8dp"
+        android:src="@drawable/fille_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <ImageView
         android:id="@+id/back"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="250dp"
-        android:src="@drawable/images"/>
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/images"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <TextView
         android:id="@+id/welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="230dp"/>
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/image"
+        app:layout_constraintStart_toStartOf="@+id/image"
+        app:layout_constraintTop_toBottomOf="@+id/image"/>
 
     <TextView
         android:id="@+id/enterSkill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="200dp"
-        android:text="Quelle compétence souhaites-tu évaluer ?" />
+        android:layout_marginTop="32dp"
+        android:text="Quelle compétence souhaites-tu évaluer ?"
+        app:layout_constraintEnd_toEndOf="@+id/welcome"
+        app:layout_constraintStart_toStartOf="@+id/welcome"
+        app:layout_constraintTop_toBottomOf="@+id/welcome"/>
 
-    <AutoCompleteTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    <EditText
         android:id="@+id/skill"
         android:layout_width="426dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="90dp" />
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/enterSkill"
+        app:layout_constraintStart_toStartOf="@+id/enterSkill"
+        app:layout_constraintTop_toBottomOf="@+id/enterSkill"/>
 
-    <ImageView
-        android:id="@+id/group"
-        android:src="@drawable/fichier"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="80dp" />
-
-    <TextView
-        android:id="@+id/skillName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="55dp"
-        android:text="GR001" />
+    <GridView
+        android:id="@+id/gridview_skills"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:horizontalSpacing="10dp"
+        android:numColumns="5"
+        android:verticalSpacing="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/skill"/>
 
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

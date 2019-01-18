@@ -66,26 +66,26 @@ public class StudentAssessment1 extends Fragment
 					@Override
 					public void run()
 					{
-						getActivity().runOnUiThread(new Runnable()
-						{
-						
-							@Override
-							public void run()
+						if (getActivity() != null) {
+							getActivity().runOnUiThread(new Runnable()
 							{
-								childList.clear();
-								for (Child c : new ChildDAO(getContext()).getAllChilds()) {
-									double similarity = Utils.compareStrings(c.getFirstname(), editable.toString());
-									if (similarity > 0.9) {
-										childList.add(c);
+								@Override
+								public void run()
+								{
+									childList.clear();
+									for (Child c : new ChildDAO(getContext()).getAllChilds()) {
+										double similarity = Utils.compareStrings(c.getFirstname(), editable.toString());
+										if (similarity > 0.9) {
+											childList.add(c);
+										}
 									}
+									
+									GridViewAdapter adapt = new GridViewAdapter(getActivity(), childList);
+									gridview.setAdapter(adapt);
+									adapt.notifyDataSetChanged();
 								}
-							
-								GridViewAdapter adapt = new GridViewAdapter(getActivity(), childList);
-								gridview.setAdapter(adapt);
-								adapt.notifyDataSetChanged();
-							}
-						});
-					
+							});
+						}
 					}
 				}, DELAY);
 			}

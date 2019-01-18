@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import ensicaen.fr.marierave.R;
-import ensicaen.fr.marierave.Utils;
 
 public class StudentAssessment3 extends Fragment
 {
@@ -32,8 +31,7 @@ public class StudentAssessment3 extends Fragment
             @Override
             public void onClick(View v)
             {
-                Bundle bundle = new Bundle();
-                Utils.replaceFragments(StudentAssessment2.class, getActivity(), bundle, true);
+				getActivity().getSupportFragmentManager().popBackStack();
             }
         });
     }
