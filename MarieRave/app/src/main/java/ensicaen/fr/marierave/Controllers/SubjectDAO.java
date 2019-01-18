@@ -28,6 +28,18 @@ public class SubjectDAO extends DAOBase
 		this.database.insert(TABLE_NAME, null, values);
 	}
 	
+	public boolean subjectExists(String name)
+	{
+		Cursor cursor = this.database.query(TABLE_NAME, new String[]{NAME}, NAME + " = ?", new String[]{name}, null, null, null, null);
+		
+		if (cursor == null || cursor.getCount() == 0) {
+			return false;
+		}
+		
+		cursor.close();
+		return true;
+	}
+	
 	public Subject getSubject(String name)
 	{
 		Cursor cursor = this.database.query(TABLE_NAME, new String[]{NAME}, NAME + " = ?", new String[]{name}, null, null, null, null);
@@ -69,12 +81,12 @@ public class SubjectDAO extends DAOBase
 		this.database.delete(TABLE_NAME, NAME + " = ?", new String[]{name});
 	}
 	
-	public void updateSubject(Subject subject)
+	public void updateSubject(String oldSubjectName, Subject subject)
 	{
 		ContentValues values = new ContentValues();
 		values.put(NAME, subject.getName());
 		
-		this.database.update(TABLE_NAME, values, NAME + " = ?", new String[]{subject.getName()});
+		this.database.update(TABLE_NAME, values, NAME + " = ?", new String[]{oldSubjectName});
 	}
 	
 	public int getSubjectCount()

@@ -25,7 +25,9 @@ import ensicaen.fr.marierave.Model.Skill;
 import ensicaen.fr.marierave.Model.Skillheader;
 import ensicaen.fr.marierave.Model.Subject;
 import ensicaen.fr.marierave.R;
-import ensicaen.fr.marierave.Views.Dialogs.NewSkillDialog;
+import ensicaen.fr.marierave.Views.Dialogs.NewOrUpdateSkillDialog;
+import ensicaen.fr.marierave.Views.Dialogs.NewOrUpdateSkillheaderDialog;
+import ensicaen.fr.marierave.Views.Dialogs.NewOrUpdateSubjectDialog;
 
 public class AdministrationSkills extends Fragment
 {
@@ -60,7 +62,7 @@ public class AdministrationSkills extends Fragment
 			public void onClick(View v)
 			{
 				FragmentManager fm = getActivity().getSupportFragmentManager();
-				NewSkillDialog dialog = new NewSkillDialog();
+				NewOrUpdateSkillDialog dialog = new NewOrUpdateSkillDialog();
 				dialog.show(fm, "newSkill");
 			}
 		});
@@ -179,11 +181,10 @@ public class AdministrationSkills extends Fragment
 						bundle.putString("skillName", skill.getName());
 						bundle.putString("skillHeaderName", skill.getSkillheader());
 						
-						FragmentManager fm = getActivity().getSupportFragmentManager();
-						NewSkillDialog dialog = new NewSkillDialog();
+						NewOrUpdateSkillDialog dialog = new NewOrUpdateSkillDialog();
 						dialog.setArguments(bundle);
 						dialog.setTargetFragment(fragment, 0);
-						dialog.show(fm, "newSkill");
+						dialog.show(getActivity().getSupportFragmentManager(), "newSkill");
 					}
 				});
 				
@@ -226,6 +227,23 @@ public class AdministrationSkills extends Fragment
 				holderBigHeader._header.setText(((Subject) _skillsAndHeaders.get(position)).getName());
 
 				final Subject subject = (Subject) objectAt;
+				
+				Button btnEditSubject = convertView.findViewById(R.id.btnEdit);
+				btnEditSubject.setOnClickListener(new View.OnClickListener()
+				{
+					@Override
+					public void onClick(View v)
+					{
+						Bundle bundle = new Bundle();
+						bundle.putString("subjectName", subject.getName());
+						
+						NewOrUpdateSubjectDialog dialog = new NewOrUpdateSubjectDialog();
+						dialog.setArguments(bundle);
+						dialog.setTargetFragment(fragment, 0);
+						dialog.show(getActivity().getSupportFragmentManager(), "newSubject");
+					}
+				});
+				
 				Button btnDeleteSubject = convertView.findViewById(R.id.button11);
 				btnDeleteSubject.setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -241,18 +259,8 @@ public class AdministrationSkills extends Fragment
 								"Oui",
 								new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog, int id) {
-
-										for (Skillheader skillheader : new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName())) {
-											for (Skill skill : new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName())) {
-												removeItem(skill);
-											}
-											new SkillDAO(getContext()).deleteAllSkillsInHeader(skillheader.getName());
-											removeItem(skillheader);
-										}
-										
-										new SkillheaderDAO(getContext()).deleteAllSkillheadersInSubject(subject.getName());
 										new SubjectDAO(getContext()).deleteSubject(subject.getName());
-										removeItem(subject);
+										reloadSkillListView();
 										dialog.cancel();
 									}
 								});
@@ -277,6 +285,24 @@ public class AdministrationSkills extends Fragment
 				holderHeader._header.setText(((Skillheader) _skillsAndHeaders.get(position)).getName());
 				
 				final Skillheader skillheader = (Skillheader) objectAt;
+				
+				Button btnEditSkillheader = convertView.findViewById(R.id.btnEdit);
+				btnEditSkillheader.setOnClickListener(new View.OnClickListener()
+				{
+					@Override
+					public void onClick(View v)
+					{
+						Bundle bundle = new Bundle();
+						bundle.putString("skillheaderName", skillheader.getName());
+						bundle.putString("subjectName", skillheader.getSubject());
+						
+						NewOrUpdateSkillheaderDialog dialog = new NewOrUpdateSkillheaderDialog();
+						dialog.setArguments(bundle);
+						dialog.setTargetFragment(fragment, 0);
+						dialog.show(getActivity().getSupportFragmentManager(), "newSkillheader");
+					}
+				});
+				
 				Button btnDeleteSkillheader = convertView.findViewById(R.id.button11);
 				btnDeleteSkillheader.setOnClickListener(new View.OnClickListener()
 				{
@@ -293,12 +319,8 @@ public class AdministrationSkills extends Fragment
 						{
 							public void onClick(DialogInterface dialog, int id)
 							{
-								
-								for (Skill skill : new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName())) {
-									removeItem(skill);
-								}
-								new SkillDAO(getContext()).deleteAllSkillsInHeader(skillheader.getName());
-								removeItem(skillheader);
+								new SkillheaderDAO(getContext()).deleteSkillheader(skillheader.getName());
+								reloadSkillListView();
 								dialog.cancel();
 							}
 						});

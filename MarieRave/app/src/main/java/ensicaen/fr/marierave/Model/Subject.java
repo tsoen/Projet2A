@@ -15,6 +15,12 @@ public class Subject
 	}
 	
 	@Override
+	public String toString()
+	{
+		return _name;
+	}
+	
+	@Override
 	public boolean equals(Object obj)
 	{
 		if (obj == null) {

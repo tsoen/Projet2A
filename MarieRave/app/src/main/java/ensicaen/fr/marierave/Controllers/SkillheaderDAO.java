@@ -30,6 +30,18 @@ public class SkillheaderDAO extends DAOBase
 		this.database.insert(TABLE_NAME, null, values);
 	}
 	
+	public boolean skillheaderExists(String name)
+	{
+		Cursor cursor = this.database.query(TABLE_NAME, new String[]{NAME, SUBJECT}, NAME + " = ?", new String[]{name}, null, null, null, null);
+		
+		if (cursor == null || cursor.getCount() == 0) {
+			return false;
+		}
+		
+		cursor.close();
+		return true;
+	}
+	
 	public Skillheader getSkillheader(String name)
 	{
 		Cursor cursor = this.database.query(TABLE_NAME, new String[]{NAME, SUBJECT}, NAME + " = ?", new String[]{name}, null, null, null, null);
@@ -97,13 +109,13 @@ public class SkillheaderDAO extends DAOBase
 		this.database.delete(TABLE_NAME, SUBJECT + " = ?", new String[]{subjectName});
 	}
 	
-	public void updateSkillheader(Skillheader skillheader)
+	public void updateSkillheader(String oldSkillheaderName, Skillheader skillheader)
 	{
 		ContentValues values = new ContentValues();
 		values.put(NAME, skillheader.getName());
 		values.put(SUBJECT, skillheader.getSubject());
 		
-		this.database.update(TABLE_NAME, values, NAME + " = ?", new String[]{skillheader.getName()});
+		this.database.update(TABLE_NAME, values, NAME + " = ?", new String[]{oldSkillheaderName});
 	}
 	
 	public int getSkillheaderCount()

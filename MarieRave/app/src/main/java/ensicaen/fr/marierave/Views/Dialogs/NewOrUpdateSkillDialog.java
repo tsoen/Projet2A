@@ -21,12 +21,12 @@ import ensicaen.fr.marierave.Model.Skillheader;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Views.AdministrationSkills;
 
-public class NewSkillDialog extends DialogFragment implements android.view.View.OnClickListener
+public class NewOrUpdateSkillDialog extends DialogFragment implements android.view.View.OnClickListener
 {
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		View view = inflater.inflate(R.layout.dialog_new_skill, container);
+		View view = inflater.inflate(R.layout.dialog_new_or_update_skill, container);
 		
 		getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		
@@ -66,13 +66,15 @@ public class NewSkillDialog extends DialogFragment implements android.view.View.
 				Spinner spinnerSkillheaders = getDialog().findViewById(R.id.spinner_skillheaders);
 				
 				SkillDAO skillDAO = new SkillDAO(getContext());
+				Skill newSkill = new Skill(editSkillCode.getText().toString(), editSkillName.getText().toString(), ((Skillheader) spinnerSkillheaders.getSelectedItem())
+						.getName());
 				
 				if (getArguments() != null && skillDAO.skillExists(getArguments().getString("skillCode"))) {
-					skillDAO.deleteSkill(getArguments().getString("skillCode"));
+					skillDAO.updateSkill(getArguments().getString("skillCode"), newSkill);
 				}
-				
-				skillDAO.addSkill(new Skill(editSkillCode.getText().toString(), editSkillName.getText().toString(), ((Skillheader) spinnerSkillheaders.getSelectedItem())
-						.getName()));
+				else {
+					skillDAO.addSkill(newSkill);
+				}
 				
 				((AdministrationSkills) getTargetFragment()).reloadSkillListView();
 				
