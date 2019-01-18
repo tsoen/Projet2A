@@ -58,6 +58,7 @@ public class NewOrUpdateSubjectDialog extends DialogFragment implements android.
 				}
 				
 				((AdministrationSkills) getTargetFragment()).reloadSkillListView();
+				((AdministrationSkills) getTargetFragment()).reloadSubjectListView();
 				
 				dismiss();
 				break;
