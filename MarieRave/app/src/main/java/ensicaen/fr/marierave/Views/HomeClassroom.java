@@ -41,9 +41,9 @@ public class HomeClassroom extends Fragment
 		TextView txtClassroomName = view.findViewById(R.id.txtClassroomName);
 		txtClassroomName.setText(classroom.getName());
 		
-		final List<Child> subjectList = new ChildDAO(getContext()).getAllChildsInClassroom(classroom.getName());
+		final List<Child> childsInClassroom = new ChildDAO(getContext()).getAllChildsInClassroom(classroom.getName());
 		
-		GridViewAdapter adapter = new GridViewAdapter(getActivity(), subjectList);
+		GridViewAdapter adapter = new GridViewAdapter(getActivity(), childsInClassroom);
 		GridView gridview = view.findViewById(R.id.gridviewProfiles);
 		gridview.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
@@ -54,7 +54,7 @@ public class HomeClassroom extends Fragment
 			public void onItemClick(AdapterView parent, View view, int position, long id)
 			{
 				Bundle bundle = new Bundle();
-				bundle.putInt("childId", subjectList.get(position).getId());
+				bundle.putInt("childId", childsInClassroom.get(position).getId());
 				Utils.replaceFragments(PersonnalProfile.class, getActivity(), bundle, true);
 			}
 		});

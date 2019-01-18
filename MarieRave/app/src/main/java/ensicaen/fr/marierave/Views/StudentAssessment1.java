@@ -1,16 +1,27 @@
 package ensicaen.fr.marierave.Views;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import ensicaen.fr.marierave.Controllers.ChildDAO;
+import ensicaen.fr.marierave.Model.Child;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
 
@@ -26,52 +37,126 @@ public class StudentAssessment1 extends Fragment
     public void onViewCreated(@NonNull final View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-        final AutoCompleteTextView textView = view.findViewById(R.id.student_name);
-        String[] names = getResources().getStringArray(R.array.student_names);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_dropdown_item_1line, names);
-        textView.setAdapter(adapter);
-        Object item = adapter.getItem(0);
-        TextView prenom1 = view.findViewById(R.id.prénom1);
-        prenom1.setText(item.toString());
-        item = adapter.getItem(1);
-        TextView prenom2 = view.findViewById(R.id.prénom2);
-        prenom2.setText(item.toString());
-        item = adapter.getItem(2);
-        TextView prenom3 = view.findViewById(R.id.prénom3);
-        prenom3.setText(item.toString());
-        ImageView imageView = view.findViewById(R.id.prénom1_img);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                Bundle bundle = new Bundle();
-                TextView textView = view.findViewById(R.id.prénom1);
-                bundle.putString("Prénom",textView.getText().toString());
-                Utils.replaceFragments(StudentAssessment2.class, getActivity(), bundle, true);
-            }
-        });
-        ImageView imageView2 = view.findViewById(R.id.prénom2_img);
-        imageView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                Bundle bundle = new Bundle();
-                TextView textView = view.findViewById(R.id.prénom2);
-                bundle.putString("Prénom",textView.getText().toString());
-                Utils.replaceFragments(StudentAssessment2.class, getActivity(), bundle, true);
-            }
-        });
-        ImageView imageView3 = view.findViewById(R.id.prénom3_img);
-        imageView3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                Bundle bundle = new Bundle();
-                TextView textView = view.findViewById(R.id.prénom3);
-                bundle.putString("Prénom",textView.getText().toString());
-                Utils.replaceFragments(StudentAssessment2.class, getActivity(), bundle, true);
-            }
-        });
-
+	
+		final EditText editText = view.findViewById(R.id.student_name);
+		final GridView gridview = view.findViewById(R.id.gridviewProfiles);
+	
+		//final Classroom classroom = new ClassroomDAO(getContext()).getClassroom(getArguments().getString("classroomName"));
+	
+		final List<Child> childList = new ChildDAO(getContext()).getAllChilds();
+	
+		editText.addTextChangedListener(new TextWatcher()
+		{
+			private Timer timer = new Timer();
+			private final long DELAY = 500;
+		
+			@Override
+			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+		
+			@Override
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+		
+			@Override
+			public void afterTextChanged(final Editable editable)
+			{
+				timer.cancel();
+				timer = new Timer();
+				timer.schedule(new TimerTask()
+				{
+					@Override
+					public void run()
+					{
+						getActivity().runOnUiThread(new Runnable()
+						{
+						
+							@Override
+							public void run()
+							{
+								childList.clear();
+								for (Child c : new ChildDAO(getContext()).getAllChilds()) {
+									double similarity = Utils.compareStrings(c.getFirstname(), editable.toString());
+									if (similarity > 0.9) {
+										childList.add(c);
+									}
+								}
+							
+								GridViewAdapter adapt = new GridViewAdapter(getActivity(), childList);
+								gridview.setAdapter(adapt);
+								adapt.notifyDataSetChanged();
+							}
+						});
+					
+					}
+				}, DELAY);
+			}
+		});
+	
+		gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(AdapterView parent, View view, int position, long id)
+			{
+				Bundle bundle = new Bundle();
+				bundle.putString("Prénom", childList.get(position).getFirstname());
+				Utils.replaceFragments(StudentAssessment2.class, getActivity(), bundle, true);
+			}
+		});
     }
+	
+	private class GridViewAdapter extends BaseAdapter
+	{
+		private List<Child> _childList;
+		private Activity _activity;
+		
+		GridViewAdapter(Activity activity, List<Child> childList)
+		{
+			super();
+			_activity = activity;
+			_childList = childList;
+		}
+		
+		@Override
+		public int getCount()
+		{
+			return _childList.size();
+		}
+		
+		@Override
+		public Object getItem(int position)
+		{
+			return _childList.get(position);
+		}
+		
+		@Override
+		public long getItemId(int position)
+		{
+			return position;
+		}
+		
+		private class ViewHolder
+		{
+			private ImageView _profilePic;
+			private TextView _txtName;
+			private TextView _txtSurname;
+		}
+		
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent)
+		{
+			if (convertView == null) {
+				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_classroom_item, null);
+				ViewHolder holder = new ViewHolder();
+				holder._profilePic = convertView.findViewById(R.id.imgProfilePicture);
+				holder._txtName = convertView.findViewById(R.id.txtName);
+				holder._txtSurname = convertView.findViewById(R.id.txtSurname);
+				
+				holder._profilePic.setImageResource(R.mipmap.ic_launcher_round);
+				holder._txtName.setText(_childList.get(position).getName());
+				holder._txtSurname.setText(_childList.get(position).getFirstname());
+				
+			}
+			
+			return convertView;
+		}
+	}
 }
