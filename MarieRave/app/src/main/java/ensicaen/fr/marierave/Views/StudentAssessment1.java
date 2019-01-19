@@ -97,6 +97,7 @@ public class StudentAssessment1 extends Fragment
 			public void onItemClick(AdapterView parent, View view, int position, long id)
 			{
 				Bundle bundle = new Bundle();
+				bundle.putInt("Id", childList.get(position).getId());
 				bundle.putString("Prénom", childList.get(position).getFirstname());
 				Utils.replaceFragments(StudentAssessment2.class, getActivity(), bundle, true);
 			}

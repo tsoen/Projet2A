@@ -27,6 +27,8 @@ import ensicaen.fr.marierave.Utils;
 
 public class StudentAssessment2 extends Fragment
 {
+	private Activity _activity;
+	
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
@@ -37,12 +39,13 @@ public class StudentAssessment2 extends Fragment
     public void onViewCreated(@NonNull final View view, Bundle savedInstanceState)
     {
         super.onViewCreated(view, savedInstanceState);
-	
+		_activity = getActivity();
+		
 		final GridView gridview = view.findViewById(R.id.gridview_skills);
 	
 		TextView textWelcome = view.findViewById(R.id.welcome);
 	
-		Bundle args = getArguments();
+		final Bundle args = getArguments();
         textWelcome.setText("Bienvenue " + args.getString("Prénom"));
 	
 		final List<Skill> skillList = new SkillDAO(getContext()).getAllSkills();
@@ -69,13 +72,13 @@ public class StudentAssessment2 extends Fragment
 					@Override
 					public void run()
 					{
-						getActivity().runOnUiThread(new Runnable()
+						_activity.runOnUiThread(new Runnable()
 						{
 							@Override
 							public void run()
 							{
 								skillList.clear();
-								for (Skill s : new SkillDAO(getContext()).getAllSkills()) {
+								for (Skill s : new SkillDAO(_activity).getAllSkills()) {
 									double similarity = Utils.compareStrings(s.getCode(), editable.toString());
 									if (similarity > 0.9) {
 										skillList.add(s);
@@ -99,7 +102,10 @@ public class StudentAssessment2 extends Fragment
 			public void onItemClick(AdapterView parent, View view, int position, long id)
 			{
 				Bundle bundle = new Bundle();
-				bundle.putString("Skill", editText.getText().toString());
+				bundle.putString("Skill", ((Skill) parent.getItemAtPosition(position)).getCode());
+				bundle.putString("SkillName", ((Skill) parent.getItemAtPosition(position)).getName());
+				bundle.putInt("ChildId", args.getInt("Id"));
+				bundle.putString("Prénom", args.getString("Prénom"));
 				Utils.replaceFragments(StudentAssessment3.class, getActivity(), bundle, true);
 			}
 		});

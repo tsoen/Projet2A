@@ -20,6 +20,7 @@ import java.util.TreeSet;
 
 import ensicaen.fr.marierave.Controllers.ChildDAO;
 import ensicaen.fr.marierave.Controllers.SkillDAO;
+import ensicaen.fr.marierave.Controllers.SkillMarkDAO;
 import ensicaen.fr.marierave.Controllers.SkillheaderDAO;
 import ensicaen.fr.marierave.Controllers.SubjectDAO;
 import ensicaen.fr.marierave.Model.Child;
@@ -31,6 +32,8 @@ import ensicaen.fr.marierave.Utils;
 
 public class PersonnalProfile extends Fragment
 {
+	private Integer _childId;
+	
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -42,7 +45,9 @@ public class PersonnalProfile extends Fragment
 	{
 		super.onViewCreated(view, savedInstanceState);
 		
-		Child child = new ChildDAO(getContext()).getChild(getArguments().getInt("childId"));
+		_childId = getArguments().getInt("childId");
+		
+		Child child = new ChildDAO(getContext()).getChild(_childId);
 		
 		TextView txtName = view.findViewById(R.id.txtName);
 		txtName.setText(child.getName());
@@ -217,7 +222,9 @@ public class PersonnalProfile extends Fragment
 					
 					Skill item = (Skill) _skillsAndHeaders.get(position);
 					holder._code.setText(item.getCode());
-					holder._result.setText(item.getResult());
+					
+					
+					holder._result.setText(new SkillMarkDAO(getContext()).getSkillMark(_childId, item.getCode()));
 					holder._name.setText(item.getName());
 					break;
 					

@@ -111,7 +111,7 @@ public class AdministrationChilds extends Fragment
 		}
 		
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent)
+		public View getView(final int position, View convertView, ViewGroup parent)
 		{
 			if (convertView == null) {
 				convertView = _activity.getLayoutInflater().inflate(R.layout.listview_class_results, null);
@@ -128,7 +128,9 @@ public class AdministrationChilds extends Fragment
 					@Override
 					public void onClick(View v)
 					{
-						Utils.replaceFragments(PersonnalProfile.class, getActivity(), null, true);
+						Bundle bundle = new Bundle();
+						bundle.putInt("childId", _childList.get(position).getId());
+						Utils.replaceFragments(PersonnalProfile.class, getActivity(), bundle, true);
 					}
 				});
 				
