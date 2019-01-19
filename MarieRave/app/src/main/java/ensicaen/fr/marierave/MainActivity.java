@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity
 		new DAOBase(this).clearDatabase();
 		
 		ClassroomDAO classroomDAO = new ClassroomDAO(this);
+		classroomDAO.addClassroom(new Classroom("Ecole"));
 		classroomDAO.addClassroom(new Classroom("CP"));
 		classroomDAO.addClassroom(new Classroom("CE1"));
 		

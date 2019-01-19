@@ -1,6 +1,7 @@
 package ensicaen.fr.marierave.Views;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -100,6 +101,12 @@ public class AdministrationChilds extends Fragment
 			return position;
 		}
 		
+		void removeItem(Child child)
+		{
+			_childList.remove(child);
+			notifyDataSetChanged();
+		}
+		
 		private class ViewHolder
 		{
 			private TextView _class;
@@ -108,6 +115,7 @@ public class AdministrationChilds extends Fragment
 			private Button _btnConsult;
 			private Button _btnResults;
 			private Button _btnPrint;
+			private Button _btnDelete;
 		}
 		
 		@Override
@@ -116,20 +124,22 @@ public class AdministrationChilds extends Fragment
 			if (convertView == null) {
 				convertView = _activity.getLayoutInflater().inflate(R.layout.listview_class_results, null);
 				ViewHolder holder = new ViewHolder();
-				
 				holder._class = convertView.findViewById(R.id.textView);
 				holder._name = convertView.findViewById(R.id.textView6);
 				holder._surname = convertView.findViewById(R.id.textView8);
 				holder._btnConsult = convertView.findViewById(R.id.button12);
 				holder._btnResults = convertView.findViewById(R.id.button13);
 				holder._btnPrint = convertView.findViewById(R.id.button14);
+				holder._btnDelete = convertView.findViewById(R.id.button17);
+				
+				final Child child = _childList.get(position);
 				
 				holder._btnConsult.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v)
 					{
 						Bundle bundle = new Bundle();
-						bundle.putInt("childId", _childList.get(position).getId());
+						bundle.putInt("childId", child.getId());
 						Utils.replaceFragments(PersonnalProfile.class, getActivity(), bundle, true);
 					}
 				});
@@ -139,6 +149,35 @@ public class AdministrationChilds extends Fragment
 					public void onClick(View v)
 					{
 						Utils.replaceFragments(PersonnalProfileResults.class, getActivity(), null, true);
+					}
+				});
+				
+				holder._btnDelete.setOnClickListener(new View.OnClickListener()
+				{
+					@Override
+					public void onClick(View v)
+					{
+						AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+						builder.setMessage("Etes-vous sûr de vouloir supprimer cet élève de l'école ? Cette action est irréversible");
+						builder.setCancelable(true);
+						builder.setPositiveButton("Oui", new DialogInterface.OnClickListener()
+						{
+							public void onClick(DialogInterface dialog, int id)
+							{
+								new ChildDAO(getContext()).deleteChild(_childList.get(position).getId());
+								removeItem(child);
+								dialog.cancel();
+							}
+						});
+						builder.setNegativeButton("Non", new DialogInterface.OnClickListener()
+						{
+							public void onClick(DialogInterface dialog, int id)
+							{
+								dialog.cancel();
+							}
+						});
+						
+						builder.create().show();
 					}
 				});
 				

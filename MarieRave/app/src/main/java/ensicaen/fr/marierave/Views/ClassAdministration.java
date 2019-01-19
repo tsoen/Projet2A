@@ -64,7 +64,29 @@ public class ClassAdministration extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				AddChildToClassroomDIalog dialog = new AddChildToClassroomDIalog(getActivity(), classroom.getName());
+				AddChildToClassroomDIalog dialog = new AddChildToClassroomDIalog(getActivity(), classroom.getName(), "Add");
+				dialog.setOnDismissListener(new DialogInterface.OnDismissListener()
+				{
+					@Override
+					public void onDismiss(final DialogInterface arg0)
+					{
+						List<Child> subjectList = new ChildDAO(getContext()).getAllChildsInClassroom(classroom.getName());
+						GridViewAdapter adapter = new GridViewAdapter(getActivity(), subjectList);
+						gridview.setAdapter(adapter);
+					}
+				});
+				
+				dialog.show();
+			}
+		});
+		
+		Button removeStudent = view.findViewById(R.id.removeStudent);
+		removeStudent.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				AddChildToClassroomDIalog dialog = new AddChildToClassroomDIalog(getActivity(), classroom.getName(), "Delete");
 				dialog.setOnDismissListener(new DialogInterface.OnDismissListener()
 				{
 					@Override

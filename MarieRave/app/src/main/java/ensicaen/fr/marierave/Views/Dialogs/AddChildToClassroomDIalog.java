@@ -28,13 +28,15 @@ public class AddChildToClassroomDIalog extends Dialog implements android.view.Vi
 	
 	private Activity _activity;
 	private String _classroomName;
+	private String _mode;
 	private GridView gridview;
 	
-	public AddChildToClassroomDIalog(Activity a, String classroomName)
+	public AddChildToClassroomDIalog(Activity a, String classroomName, String mode)
 	{
 		super(a);
 		_activity = a;
 		_classroomName = classroomName;
+		_mode = mode;
 	}
 	
 	@Override
@@ -52,7 +54,13 @@ public class AddChildToClassroomDIalog extends Dialog implements android.view.Vi
 		Button btnCancel = findViewById(R.id.btn_cancel);
 		btnCancel.setOnClickListener(this);
 		
-		List<Child> subjectList = new ChildDAO(getContext()).getAllChildsNotInClassroom(_classroomName);
+		List<Child> subjectList = new ArrayList<>();
+		if (_mode.equals("Add")) {
+			subjectList = new ChildDAO(_activity).getAllChildsNotInClassroom(_classroomName);
+		}
+		else if (_mode.equals("Delete")) {
+			subjectList = new ChildDAO(_activity).getAllChildsInClassroom(_classroomName);
+		}
 		
 		final GridViewAdapter adapter = new GridViewAdapter(_activity, subjectList);
 		gridview = findViewById(R.id.gridview_childsToAdd);
@@ -114,7 +122,13 @@ public class AddChildToClassroomDIalog extends Dialog implements android.view.Vi
 				
 				for (int i : ((GridViewAdapter) gridview.getAdapter())._selectedPositions) {
 					Child c = (Child) gridview.getAdapter().getItem(i);
-					c.setClassroom(_classroomName);
+					if (_mode.equals("Add")) {
+						c.setClassroom(_classroomName);
+					}
+					else if (_mode.equals("Delete")) {
+						c.setClassroom("Ecole");
+					}
+					
 					childDAO.updateChild(c);
 				}
 				
