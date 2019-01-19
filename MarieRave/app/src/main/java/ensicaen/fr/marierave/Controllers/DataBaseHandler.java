@@ -41,6 +41,10 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 		db.execSQL("CREATE TABLE tableChildSkillMark (" + "ChildId INTEGER, " + "SkillCode TEXT, " + "Mark TEXT, " + "PRIMARY KEY(SkillCode,ChildId,Mark), " + "FOREIGN " +
 				"KEY(ChildId) REFERENCES tableChild(Id) ON UPDATE CASCADE ON DELETE CASCADE, " + "FOREIGN KEY(SkillCode) REFERENCES tableSkill(Code) ON UPDATE CASCADE " +
 				"ON DELETE CASCADE);");
+	
+		db.execSQL("CREATE TABLE tableChildSkillComment (" + "ChildId INTEGER, " + "SkillCode TEXT, " + "Comment TEXT, " + "PRIMARY KEY(SkillCode,ChildId,Comment), " +
+				"FOREIGN " + "KEY(ChildId) REFERENCES tableChild(Id) ON UPDATE CASCADE ON DELETE CASCADE, " + "FOREIGN KEY(SkillCode) REFERENCES tableSkill(Code) ON " +
+				"UPDATE CASCADE " + "ON DELETE CASCADE);");
 		
 		db.execSQL("CREATE TABLE tableTeacher (" +
 				"Id INTEGER PRIMARY KEY, " +
@@ -63,6 +67,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 	@Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS tableChildSkillMark;");
+		db.execSQL("DROP TABLE IF EXISTS tableChildSkillComment;");
 		db.execSQL("DROP TABLE IF EXISTS tableLevelClassroom;");
 		db.execSQL("DROP TABLE IF EXISTS tableChild;");
         db.execSQL("DROP TABLE IF EXISTS tableClassroom;");

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +30,13 @@ import ensicaen.fr.marierave.Model.Skillheader;
 import ensicaen.fr.marierave.Model.Subject;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
+import ensicaen.fr.marierave.Views.Dialogs.EditEvaluationAndCommentDialog;
 
 public class PersonnalProfile extends Fragment
 {
 	private Integer _childId;
+	
+	private ListView skillsListview;
 	
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -55,26 +59,10 @@ public class PersonnalProfile extends Fragment
 		TextView txtSurname = view.findViewById(R.id.txtSurname);
 		txtSurname.setText(child.getFirstname());
 		
+		skillsListview = view.findViewById(R.id.listSkills);
+		reloadSkillListView();
 		
-		ListviewSkillAdapter skillsAdapter = new ListviewSkillAdapter(getActivity());
 		List<Subject> subjectList = new SubjectDAO(getContext()).getAllSubjects();
-		
-		for (Subject subject : subjectList) {
-			skillsAdapter.addBigSectionHeaderItem(subject.getName());
-			
-			for (Skillheader skillheader : new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName())) {
-				skillsAdapter.addLittleSectionHeaderItem(skillheader.getName());
-				
-				for (Skill skill : new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName())) {
-					skillsAdapter.addItem(skill);
-				}
-			}
-		}
-		
-		ListView skillsListview = view.findViewById(R.id.listSkills);
-		skillsListview.setAdapter(skillsAdapter);
-		skillsAdapter.notifyDataSetChanged();
-		
 		ListviewTopicsAdapter topicsAdapter = new ListviewTopicsAdapter(getActivity(), subjectList);
 		
 		ListView topicListview = view.findViewById(R.id.listTopics);
@@ -118,6 +106,27 @@ public class PersonnalProfile extends Fragment
 		});
 	}
 	
+	public void reloadSkillListView()
+	{
+		ListviewSkillAdapter skillsAdapter = new ListviewSkillAdapter(this);
+		List<Subject> subjectList = new SubjectDAO(getContext()).getAllSubjects();
+		
+		for (Subject subject : subjectList) {
+			skillsAdapter.addBigSectionHeaderItem(subject.getName());
+			
+			for (Skillheader skillheader : new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName())) {
+				skillsAdapter.addLittleSectionHeaderItem(skillheader.getName());
+				
+				for (Skill skill : new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName())) {
+					skillsAdapter.addItem(skill);
+				}
+			}
+		}
+		
+		skillsListview.setAdapter(skillsAdapter);
+		skillsAdapter.notifyDataSetChanged();
+	}
+	
 	private class ListviewSkillAdapter extends BaseAdapter
 	{
 		private static final int TYPE_ITEM = 0;
@@ -128,12 +137,14 @@ public class PersonnalProfile extends Fragment
 		private TreeSet<Integer> _bigHeaders = new TreeSet<>();
 		private TreeSet<Integer> _littleHeaders = new TreeSet<>();
 		
-		private Activity _activity;
+		private FragmentActivity _activity;
+		private PersonnalProfile _fragment;
 		
-		ListviewSkillAdapter(Activity activity)
+		ListviewSkillAdapter(PersonnalProfile fragment)
 		{
 			super();
-			_activity = activity;
+			_fragment = fragment;
+			_activity = fragment.getActivity();
 		}
 		
 		void addItem(final Skill item)
@@ -197,8 +208,9 @@ public class PersonnalProfile extends Fragment
 		private class ViewHolder
 		{
 			private TextView _code;
-			private TextView _result;
 			private TextView _name;
+			private TextView _result;
+			private Button _btnEdit;
 		}
 		
 		private class HeaderHolder
@@ -219,13 +231,29 @@ public class PersonnalProfile extends Fragment
 					holder._code = convertView.findViewById(R.id.txtCode);
 					holder._result = convertView.findViewById(R.id.txtResult);
 					holder._name = convertView.findViewById(R.id.txtSkill);
+					holder._btnEdit = convertView.findViewById(R.id.btnEdit);
 					
-					Skill item = (Skill) _skillsAndHeaders.get(position);
+					final Skill item = (Skill) _skillsAndHeaders.get(position);
 					holder._code.setText(item.getCode());
-					
-					
-					holder._result.setText(new SkillMarkDAO(getContext()).getSkillMark(_childId, item.getCode()));
 					holder._name.setText(item.getName());
+					holder._result.setText(new SkillMarkDAO(getContext()).getSkillMark(_childId, item.getCode()));
+					
+					holder._btnEdit.setOnClickListener(new View.OnClickListener()
+					{
+						@Override
+						public void onClick(View v)
+						{
+							Bundle bundle = new Bundle();
+							bundle.putInt("ChildId", _childId);
+							bundle.putString("Skill", item.getCode());
+							
+							EditEvaluationAndCommentDialog dialog = new EditEvaluationAndCommentDialog();
+							dialog.setArguments(bundle);
+							dialog.setCancelable(false);
+							dialog.setTargetFragment(_fragment, 0);
+							dialog.show(_activity.getSupportFragmentManager(), "editEvaluation");
+						}
+					});
 					break;
 					
 				case TYPE_BIG_SEPARATOR:

@@ -20,7 +20,7 @@
         android:id="@+id/refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/btn_exit"
         app:layout_constraintEnd_toStartOf="@+id/btn_exit"
         app:layout_constraintTop_toTopOf="@+id/btn_exit"
@@ -30,20 +30,20 @@
         android:id="@+id/btnAdd_Class"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/btn_Admin"
-        app:layout_constraintTop_toBottomOf="@+id/btn_Admin"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnDelete_Class"
+        app:layout_constraintEnd_toStartOf="@+id/btnDelete_Class"
+        app:layout_constraintTop_toTopOf="@+id/btnDelete_Class"
         app:srcCompat="@android:drawable/ic_input_add"/>
 
     <ImageButton
         android:id="@+id/btnDelete_Class"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btnAdd_Class"
-        app:layout_constraintStart_toEndOf="@+id/btnAdd_Class"
-        app:layout_constraintTop_toTopOf="@+id/btnAdd_Class"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_exit"
         app:srcCompat="@android:drawable/ic_delete"/>
 
     <Button

@@ -4,33 +4,33 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-public class SkillMarkDAO extends DAOBase
+public class SkillCommentDAO extends DAOBase
 {
-	
-	private static final String TABLE_NAME = "tableChildSkillMark";
+	private static final String TABLE_NAME = "tableChildSkillComment";
 	private static final String CHILDID = "ChildId";
 	private static final String SKILLCODE = "SkillCode";
-	private static final String MARK = "Mark";
+	private static final String COMMENT = "Comment";
 	
-	public SkillMarkDAO(Context context)
+	public SkillCommentDAO(Context context)
 	{
 		super(context);
 	}
 	
-	public void addSkillMark(Integer childId, String skillCode, String mark)
+	public void addSkillComment(Integer childId, String skillCode, String comment)
 	{
 		ContentValues values = new ContentValues();
 		values.put(CHILDID, childId);
 		values.put(SKILLCODE, skillCode);
-		values.put(MARK, mark);
+		values.put(COMMENT, comment);
 		
 		this.database.insert(TABLE_NAME, null, values);
 	}
 	
-	public String getSkillMark(Integer childId, String skillCode)
+	public String getSkillcomment(Integer childId, String skillCode)
 	{
 		Cursor cursor = this.database
-				.query(TABLE_NAME, new String[]{MARK}, CHILDID + " = ? AND " + SKILLCODE + " = ?", new String[]{childId.toString(), skillCode}, null, null, null, null);
+				.query(TABLE_NAME, new String[]{COMMENT}, CHILDID + " = ? AND " + SKILLCODE + " = ?", new String[]{childId.toString(), skillCode}, null, null, null,
+						null);
 		
 		if (cursor != null) {
 			if (cursor.getCount() == 0) {
@@ -39,17 +39,18 @@ public class SkillMarkDAO extends DAOBase
 			cursor.moveToFirst();
 		}
 		
-		String mark = cursor.getString(0);
+		String comment = cursor.getString(0);
 		
 		cursor.close();
 		
-		return mark;
+		return comment;
 	}
 	
-	public boolean skillMarkExists(Integer childId, String skillCode)
+	public boolean skillCommentExists(Integer childId, String skillCode)
 	{
 		Cursor cursor = this.database
-				.query(TABLE_NAME, new String[]{MARK}, CHILDID + " = ? AND " + SKILLCODE + " = ?", new String[]{childId.toString(), skillCode}, null, null, null, null);
+				.query(TABLE_NAME, new String[]{COMMENT}, CHILDID + " = ? AND " + SKILLCODE + " = ?", new String[]{childId.toString(), skillCode}, null, null, null,
+						null);
 		
 		if (cursor == null || cursor.getCount() == 0) {
 			return false;
@@ -59,22 +60,22 @@ public class SkillMarkDAO extends DAOBase
 		return true;
 	}
 	
-	public void deleteSkillMark(Integer childId, String skillCode)
+	public void deleteSkillcomment(Integer childId, String skillCode)
 	{
 		this.database.delete(TABLE_NAME, CHILDID + " = ? AND " + SKILLCODE + " = ?", new String[]{childId.toString(), skillCode});
 	}
 	
-	public void updateSkillMark(Integer childId, String skillCode, String mark)
+	public void updateSkillcomment(Integer childId, String skillCode, String comment)
 	{
 		ContentValues values = new ContentValues();
 		values.put(CHILDID, childId);
 		values.put(SKILLCODE, skillCode);
-		values.put(MARK, mark);
+		values.put(COMMENT, comment);
 		
 		this.database.update(TABLE_NAME, values, CHILDID + " = ? AND " + SKILLCODE + " = ?", new String[]{childId.toString(), skillCode});
 	}
 	
-	public int getSkillMarkCount()
+	public int getSkillcommentCount()
 	{
 		String countQuery = "SELECT * FROM " + TABLE_NAME;
 		Cursor cursor = this.database.rawQuery(countQuery, null);
