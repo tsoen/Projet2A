@@ -140,14 +140,15 @@ public class ChildDAO extends DAOBase {
 		
 		cursor.moveToFirst();
 	
-		if (cursor.getCount() == 0) {
-			return 1;
+		int next = 1;
+	
+		if (cursor.getCount() != 0) {
+			cursor.moveToFirst();
+			next = cursor.getInt(0);
 		}
 	
-		int next = cursor.getInt(0) + 1;
-		
 		cursor.close();
-		
+	
 		return next;
 	}
 }

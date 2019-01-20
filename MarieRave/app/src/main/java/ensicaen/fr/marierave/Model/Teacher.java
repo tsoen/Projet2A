@@ -18,6 +18,13 @@ public class Teacher
 		_firstname = firstname;
 	}
 	
+	public Teacher(Integer id, String name, String firstname)
+	{
+		_id = id;
+		_name = name;
+		_firstname = firstname;
+	}
+	
 	public Integer getId()
 	{
 		return _id;

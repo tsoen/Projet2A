@@ -1,11 +1,11 @@
 package ensicaen.fr.marierave.Views;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,9 +74,9 @@ public class AdministrationChilds extends Fragment
 	private class ListViewAdapter extends BaseAdapter
 	{
 		private List<Child> _childList;
-		private Activity _activity;
+		private FragmentActivity _activity;
 		
-		ListViewAdapter(Activity activity, List<Child> classList)
+		ListViewAdapter(FragmentActivity activity, List<Child> classList)
 		{
 			super();
 			_activity = activity;
@@ -122,7 +122,7 @@ public class AdministrationChilds extends Fragment
 		public View getView(final int position, View convertView, ViewGroup parent)
 		{
 			if (convertView == null) {
-				convertView = _activity.getLayoutInflater().inflate(R.layout.listview_class_results, null);
+				convertView = _activity.getLayoutInflater().inflate(R.layout.listview_admin_childs_item, null);
 				ViewHolder holder = new ViewHolder();
 				holder._class = convertView.findViewById(R.id.textView);
 				holder._name = convertView.findViewById(R.id.textView6);
@@ -148,7 +148,7 @@ public class AdministrationChilds extends Fragment
 					@Override
 					public void onClick(View v)
 					{
-						Utils.replaceFragments(PersonnalProfileResults.class, getActivity(), null, true);
+						Utils.replaceFragments(PersonnalProfileResults.class, _activity, null, true);
 					}
 				});
 				
@@ -164,7 +164,7 @@ public class AdministrationChilds extends Fragment
 						{
 							public void onClick(DialogInterface dialog, int id)
 							{
-								new ChildDAO(getContext()).deleteChild(_childList.get(position).getId());
+								new ChildDAO(_activity).deleteChild(_childList.get(position).getId());
 								removeItem(child);
 								dialog.cancel();
 							}

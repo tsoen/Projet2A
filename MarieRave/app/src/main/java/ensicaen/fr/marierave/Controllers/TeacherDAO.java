@@ -7,7 +7,6 @@ import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.List;
 
-import ensicaen.fr.marierave.Model.Child;
 import ensicaen.fr.marierave.Model.Teacher;
 
 public class TeacherDAO extends DAOBase {
@@ -24,7 +23,7 @@ public class TeacherDAO extends DAOBase {
     
 	public void addTeacher(Teacher teacher) {
         ContentValues values = new ContentValues();
-		values.put(ID, teacher.getId());
+		values.put(ID, getNextId());
 		values.put(NAME, teacher.getName());
         values.put(FIRSTNAME, teacher.getFirstname());
 		
@@ -39,7 +38,7 @@ public class TeacherDAO extends DAOBase {
 			cursor.moveToFirst();
 		}
 		
-		Teacher teacher = new Teacher(cursor.getString(1), cursor.getString(2));
+		Teacher teacher = new Teacher(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
 		
 		cursor.close();
 		
@@ -55,7 +54,7 @@ public class TeacherDAO extends DAOBase {
 		
 		if (cursor.moveToFirst()) {
 			do {
-				Teacher teacher = new Teacher(cursor.getString(1), cursor.getString(2));
+				Teacher teacher = new Teacher(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
 				
 				teacherList.add(teacher);
 			} while (cursor.moveToNext());
@@ -92,14 +91,17 @@ public class TeacherDAO extends DAOBase {
     public int getNextId(){
 		String query = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + ID + " DESC LIMIT 1;";
 		Cursor cursor =  this.database.rawQuery(query, null);
-		
-		cursor.moveToFirst();
-		
-		int next = cursor.getInt(0);
+	
+		int next = 0;
+	
+		if (cursor.getCount() != 0) {
+			cursor.moveToFirst();
+			next = cursor.getInt(0);
+		}
 		
 		cursor.close();
-		
-		return next;
+	
+		return next + 1;
 	}
 }
 

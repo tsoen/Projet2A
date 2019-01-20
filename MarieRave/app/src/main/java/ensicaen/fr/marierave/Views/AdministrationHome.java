@@ -42,12 +42,23 @@ public class AdministrationHome extends Fragment
 			}
 		});
 		
-		Button btnResults = view.findViewById(R.id.button5);
-		btnResults.setOnClickListener(new View.OnClickListener() {
+		Button btnChilds = view.findViewById(R.id.button5);
+		btnChilds.setOnClickListener(new View.OnClickListener()
+		{
 			@Override
 			public void onClick(View v)
 			{
 				Utils.replaceFragments(AdministrationChilds.class, getActivity(), null, true);
+			}
+		});
+		
+		Button btnTeachers = view.findViewById(R.id.button3);
+		btnTeachers.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Utils.replaceFragments(AdministrationTeachers.class, getActivity(), null, true);
 			}
 		});
 		

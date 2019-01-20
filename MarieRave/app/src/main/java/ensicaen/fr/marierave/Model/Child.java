@@ -28,11 +28,11 @@ public class Child
 		_classroom = classroom;
 	}
 	
-	public Child(Integer id, String name, String surname, String classroom)
+	public Child(Integer id, String name, String firstname, String classroom)
 	{
 		_id = id;
 		_name = name;
-		_firstname = surname;
+		_firstname = firstname;
 		_classroom = classroom;
 	}
 	
