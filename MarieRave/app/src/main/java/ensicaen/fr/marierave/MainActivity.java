@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity
 		TeacherDAO teacherDAO = new TeacherDAO(this);
 		teacherDAO.addTeacher(new Teacher("Lhote", "Loick"));
 		teacherDAO.addTeacher(new Teacher("Simon", "Loick"));
+		teacherDAO.addTeacher(new Teacher("admin", "admin"));
 		
 		SubjectDAO subjectDAO = new SubjectDAO(this);
 		subjectDAO.addSubject(new Subject("FRANCAIS"));
@@ -65,4 +66,7 @@ public class MainActivity extends AppCompatActivity
 			}
 		}
 	}
+	
+	@Override
+	public void onBackPressed() { }
 }

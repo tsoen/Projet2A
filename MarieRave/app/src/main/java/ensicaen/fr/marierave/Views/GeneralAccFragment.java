@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
@@ -23,19 +22,11 @@ public class GeneralAccFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@Nullable final View view, Bundle savedInstanceState) {
+	public void onViewCreated(@NonNull final View view, Bundle savedInstanceState)
+	{
         super.onViewCreated(view, savedInstanceState);
-
-        ImageButton btn_exit = view.findViewById(R.id.btn_exit);
-        btn_exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(0);
-            }
-        });
-
-        Button btn_enseignant = view.findViewById(R.id.btn_ens);
+	
+		Button btn_enseignant = view.findViewById(R.id.btn_ens);
         btn_enseignant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

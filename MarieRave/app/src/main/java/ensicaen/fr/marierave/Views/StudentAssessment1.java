@@ -24,6 +24,7 @@ import ensicaen.fr.marierave.Controllers.ChildDAO;
 import ensicaen.fr.marierave.Model.Child;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
+import ensicaen.fr.marierave.Views.Dialogs.ChangeAppModePasswordDialog;
 
 public class StudentAssessment1 extends Fragment
 {
@@ -100,6 +101,18 @@ public class StudentAssessment1 extends Fragment
 				bundle.putInt("Id", childList.get(position).getId());
 				bundle.putString("Prénom", childList.get(position).getFirstname());
 				Utils.replaceFragments(StudentAssessment2.class, getActivity(), bundle, true);
+			}
+		});
+	
+		ImageView openAssessment = view.findViewById(R.id.openAssessment2);
+		openAssessment.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				ChangeAppModePasswordDialog dialog = new ChangeAppModePasswordDialog();
+				dialog.setTargetFragment(getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container), 0);
+				dialog.show(getActivity().getSupportFragmentManager(), "newSkill");
 			}
 		});
     }

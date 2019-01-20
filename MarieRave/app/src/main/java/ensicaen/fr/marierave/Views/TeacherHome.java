@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 
 import java.util.List;
 
@@ -36,10 +37,21 @@ public class TeacherHome extends Fragment
         btn_admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                Utils.replaceFragments(AdministrationHome.class, getActivity(), bundle, true);
-            }
-        });
+				Utils.replaceFragments(AdministrationHome.class, getActivity(), null, true);
+			}
+	
+		});
+		
+		ImageView openAssessment = view.findViewById(R.id.openAssessment);
+		openAssessment.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Bundle bundle = new Bundle();
+				Utils.replaceFragments(StudentAssessment1.class, getActivity(), bundle, true);
+			}
+		});
 	
 		List<Classroom> classrooms = new ClassroomDAO(getContext()).getAllClassrooms();
 	
