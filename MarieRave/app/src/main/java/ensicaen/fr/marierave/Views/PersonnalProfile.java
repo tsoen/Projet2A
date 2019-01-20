@@ -249,7 +249,6 @@ public class PersonnalProfile extends Fragment
 							
 							EditEvaluationAndCommentDialog dialog = new EditEvaluationAndCommentDialog();
 							dialog.setArguments(bundle);
-							dialog.setCancelable(false);
 							dialog.setTargetFragment(_fragment, 0);
 							dialog.show(_activity.getSupportFragmentManager(), "editEvaluation");
 						}

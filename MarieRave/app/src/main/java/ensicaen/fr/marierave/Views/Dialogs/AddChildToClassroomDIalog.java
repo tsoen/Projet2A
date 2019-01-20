@@ -45,6 +45,7 @@ public class AddChildToClassroomDIalog extends Dialog implements android.view.Vi
 		super.onCreate(savedInstanceState);
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setCancelable(false);
 		
 		setContentView(R.layout.dialog_add_child_to_classroom);
 		

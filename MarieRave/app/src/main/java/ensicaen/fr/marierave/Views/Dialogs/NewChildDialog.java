@@ -31,6 +31,7 @@ public class NewChildDialog extends Dialog implements android.view.View.OnClickL
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+		setCancelable(false);
 		
 		setContentView(R.layout.dialog_new_child);
 		

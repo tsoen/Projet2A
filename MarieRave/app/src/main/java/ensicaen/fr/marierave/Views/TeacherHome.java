@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageButton;
 
 import java.util.List;
 
@@ -32,17 +31,8 @@ public class TeacherHome extends Fragment
 	public void onViewCreated(@NonNull final View view, Bundle savedInstanceState)
 	{
         super.onViewCreated(view, savedInstanceState);
-
-        ImageButton btn_exit = view.findViewById(R.id.btn_exit);
-        btn_exit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(0);
-            }
-        });
-
-        Button btn_admin = view.findViewById(R.id.btn_Admin);
+		
+		Button btn_admin = view.findViewById(R.id.btn_Admin);
         btn_admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

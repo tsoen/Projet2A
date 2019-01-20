@@ -25,6 +25,7 @@ public class NewOrUpdateSubjectDialog extends DialogFragment implements android.
 		
 		getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+		setCancelable(false);
 		
 		Bundle bundle = getArguments();
 		if (bundle != null) {

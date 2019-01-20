@@ -31,6 +31,7 @@ public class NewOrUpdateSkillDialog extends DialogFragment implements android.vi
 		
 		getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+		setCancelable(false);
 		
 		Spinner spinnerSkillheaders = view.findViewById(R.id.spinner_skillheaders);
 		List<Skillheader> skillheaders = new SkillheaderDAO(getContext()).getAllSkillheaders();

@@ -31,6 +31,7 @@ public class EditEvaluationAndCommentDialog extends DialogFragment
 		
 		getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+		setCancelable(false);
 		
 		final Bundle args = getArguments();
 		
