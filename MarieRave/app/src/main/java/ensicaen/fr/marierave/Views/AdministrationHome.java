@@ -147,7 +147,7 @@ public class AdministrationHome extends Fragment
 						Bundle bundle = new Bundle();
 						bundle.putString("classroomName", holder._classButton.getText().toString());
 						
-						Utils.replaceFragments(ClassAdministration.class, getActivity(), bundle, true);
+						Utils.replaceFragments(AdministrationClassroom.class, getActivity(), bundle, true);
 					}
 				});
 				

@@ -15,20 +15,26 @@ public class TeacherDAO extends DAOBase {
     private static final String ID = "Id";
     private static final String NAME = "Name";
     private static final String FIRSTNAME = "Firstname";
-
+	
+	private Context _context;
+    
     public TeacherDAO(Context context)
     {
         super(context);
+		_context = context;
     }
     
 	public void addTeacher(Teacher teacher) {
         ContentValues values = new ContentValues();
-		values.put(ID, getNextId());
+		int nextId = getNextId();
+		values.put(ID, nextId);
 		values.put(NAME, teacher.getName());
         values.put(FIRSTNAME, teacher.getFirstname());
 		
         this.database.insert(TABLE_NAME, null, values);
-    }
+		
+		new TeacherClassroomDAO(_context).addTeacherToClassroom("Ecole", nextId);
+	}
     
 	public Teacher getTeacher(long id) {
 		Cursor cursor =  this.database.query(TABLE_NAME, new String[] { ID, NAME, FIRSTNAME },
@@ -87,21 +93,26 @@ public class TeacherDAO extends DAOBase {
 		
 		return res;
     }
-    
-    public int getNextId(){
+	
+	public int getNextId(){
+		return getLastId() + 1;
+	}
+	
+	public int getLastId()
+	{
 		String query = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + ID + " DESC LIMIT 1;";
 		Cursor cursor =  this.database.rawQuery(query, null);
-	
+		
 		int next = 0;
-	
+		
 		if (cursor.getCount() != 0) {
 			cursor.moveToFirst();
 			next = cursor.getInt(0);
 		}
 		
 		cursor.close();
-	
-		return next + 1;
+		
+		return next;
 	}
 }
 

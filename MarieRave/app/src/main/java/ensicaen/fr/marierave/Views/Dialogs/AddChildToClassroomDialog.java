@@ -23,7 +23,7 @@ import ensicaen.fr.marierave.Controllers.ChildDAO;
 import ensicaen.fr.marierave.Model.Child;
 import ensicaen.fr.marierave.R;
 
-public class AddChildToClassroomDIalog extends Dialog implements android.view.View.OnClickListener
+public class AddChildToClassroomDialog extends Dialog implements android.view.View.OnClickListener
 {
 	
 	private Activity _activity;
@@ -31,7 +31,7 @@ public class AddChildToClassroomDIalog extends Dialog implements android.view.Vi
 	private String _mode;
 	private GridView gridview;
 	
-	public AddChildToClassroomDIalog(Activity a, String classroomName, String mode)
+	public AddChildToClassroomDialog(Activity a, String classroomName, String mode)
 	{
 		super(a);
 		_activity = a;

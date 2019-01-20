@@ -149,7 +149,7 @@ public class ChildDAO extends DAOBase {
 	
 		cursor.close();
 	
-		return next;
+		return next + 1;
 	}
 }
 

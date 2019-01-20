@@ -9,11 +9,13 @@ import ensicaen.fr.marierave.Controllers.DAOBase;
 import ensicaen.fr.marierave.Controllers.SkillDAO;
 import ensicaen.fr.marierave.Controllers.SkillheaderDAO;
 import ensicaen.fr.marierave.Controllers.SubjectDAO;
+import ensicaen.fr.marierave.Controllers.TeacherDAO;
 import ensicaen.fr.marierave.Model.Child;
 import ensicaen.fr.marierave.Model.Classroom;
 import ensicaen.fr.marierave.Model.Skill;
 import ensicaen.fr.marierave.Model.Skillheader;
 import ensicaen.fr.marierave.Model.Subject;
+import ensicaen.fr.marierave.Model.Teacher;
 import ensicaen.fr.marierave.Views.ConnectionFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -36,6 +38,10 @@ public class MainActivity extends AppCompatActivity
 		childDAO.addChild(new Child("Soen", "Timothee", "CP"));
 		childDAO.addChild(new Child("Rey", "Raphael", "CE1"));
 		childDAO.addChild(new Child("Morretton", "Julie", "CP"));
+		
+		TeacherDAO teacherDAO = new TeacherDAO(this);
+		teacherDAO.addTeacher(new Teacher("Lhote", "Loick"));
+		teacherDAO.addTeacher(new Teacher("Simon", "Loick"));
 		
 		SubjectDAO subjectDAO = new SubjectDAO(this);
 		subjectDAO.addSubject(new Subject("FRANCAIS"));
