@@ -106,6 +106,7 @@ public class AddChildToClassroomDialog extends DialogFragment implements View.On
 			}
 		});
 		
+		
 		return view;
 	}
 	
