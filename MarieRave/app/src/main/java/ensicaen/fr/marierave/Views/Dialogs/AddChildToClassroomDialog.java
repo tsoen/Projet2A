@@ -37,6 +37,7 @@ public class AddChildToClassroomDialog extends DialogFragment implements View.On
 	{
 		final View view = inflater.inflate(R.layout.dialog_add_child_to_classroom, container);
 		
+		
 		getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		setCancelable(false);
 		
