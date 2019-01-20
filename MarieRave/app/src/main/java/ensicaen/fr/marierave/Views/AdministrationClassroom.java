@@ -141,7 +141,7 @@ public class AdministrationClassroom extends Fragment
 					{
 						List<Child> subjectList = new ChildDAO(getContext()).getAllChildsInClassroom(classroom.getName());
 						GridViewChildsAdapter adapter = new GridViewChildsAdapter(getActivity(), subjectList);
-						gridviewTeachers.setAdapter(adapter);
+						gridviewChilds.setAdapter(adapter);
 					}
 				});
 				
@@ -163,7 +163,7 @@ public class AdministrationClassroom extends Fragment
 					{
 						List<Child> subjectList = new ChildDAO(getContext()).getAllChildsInClassroom(classroom.getName());
 						GridViewChildsAdapter adapter = new GridViewChildsAdapter(getActivity(), subjectList);
-						gridviewTeachers.setAdapter(adapter);
+						gridviewChilds.setAdapter(adapter);
 					}
 				});
 				
