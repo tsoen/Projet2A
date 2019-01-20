@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity
 		childDAO.addChild(new Child("Morretton", "Julie", "CP"));
 		
 		TeacherDAO teacherDAO = new TeacherDAO(this);
-		teacherDAO.addTeacher(new Teacher("Lhote", "Loick"));
-		teacherDAO.addTeacher(new Teacher("Simon", "Loick"));
-		teacherDAO.addTeacher(new Teacher("admin", "admin"));
+		teacherDAO.addTeacher(new Teacher("Lhote", "Loick", "lolo", "plolo"));
+		teacherDAO.addTeacher(new Teacher("Simon", "Loick", "sisi", "psisi"));
+		teacherDAO.addTeacher(new Teacher("admin", "admin", "admin", "admin"));
 		
 		SubjectDAO subjectDAO = new SubjectDAO(this);
 		subjectDAO.addSubject(new Subject("FRANCAIS"));

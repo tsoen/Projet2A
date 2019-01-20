@@ -111,6 +111,8 @@ public class AdministrationTeachers extends Fragment
 		{
 			private TextView _name;
 			private TextView _surname;
+			private TextView _idConnection;
+			private TextView _password;
 			private Button _btnDelete;
 		}
 		
@@ -122,6 +124,8 @@ public class AdministrationTeachers extends Fragment
 				ViewHolder holder = new ViewHolder();
 				holder._name = convertView.findViewById(R.id.textView22);
 				holder._surname = convertView.findViewById(R.id.textView21);
+				holder._idConnection = convertView.findViewById(R.id.textView20);
+				holder._password = convertView.findViewById(R.id.textView23);
 				holder._btnDelete = convertView.findViewById(R.id.button20);
 				
 				final Teacher teacher = _teacherList.get(position);
@@ -157,6 +161,8 @@ public class AdministrationTeachers extends Fragment
 				
 				holder._name.setText(_teacherList.get(position).getName());
 				holder._surname.setText(_teacherList.get(position).getFirstname());
+				holder._idConnection.setText(_teacherList.get(position).getIdConnection());
+				holder._password.setText(_teacherList.get(position).getPassword());
 			}
 			
 			return convertView;

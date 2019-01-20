@@ -14,6 +14,9 @@ import static java.lang.Math.max;
 
 public class Utils
 {
+	public static Integer teacherLoggedInId = 0;
+	public static String teacherLoggedInLogin = "";
+	
 	/**
 	 * Switchs the fragment displayed in the application
 	 * Can be called from inside a FragmentClass

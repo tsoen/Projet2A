@@ -15,9 +15,8 @@ import ensicaen.fr.marierave.Utils;
 public class GeneralAccFragment extends Fragment {
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
         return inflater.inflate(R.layout.general_acc_fragment, container, false);
     }
 
@@ -30,8 +29,7 @@ public class GeneralAccFragment extends Fragment {
         btn_enseignant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle bundle = new Bundle();
-				Utils.replaceFragments(TeacherHome.class, getActivity(), bundle, true);
+                Utils.replaceFragments(TeacherHome.class, getActivity(), getArguments(), true);
             }
         });
 

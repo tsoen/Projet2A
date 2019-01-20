@@ -9,6 +9,8 @@ public class Teacher
 	private String _imagePath;
 	private String _name;
 	private String _firstname;
+	private String _idConnection;
+	private String _password;
 	
 	private List<Classroom> _classrooms = new ArrayList<>();
 	
@@ -18,11 +20,21 @@ public class Teacher
 		_firstname = firstname;
 	}
 	
-	public Teacher(Integer id, String name, String firstname)
+	public Teacher(String name, String firstname, String idConnection, String password)
+	{
+		_name = name;
+		_firstname = firstname;
+		_idConnection = idConnection;
+		_password = password;
+	}
+	
+	public Teacher(Integer id, String name, String firstname, String idConnection, String password)
 	{
 		_id = id;
 		_name = name;
 		_firstname = firstname;
+		_idConnection = idConnection;
+		_password = password;
 	}
 	
 	public Integer getId()
@@ -48,5 +60,15 @@ public class Teacher
 	public List<Classroom> getClassrooms()
 	{
 		return _classrooms;
+	}
+	
+	public String getIdConnection()
+	{
+		return _idConnection;
+	}
+	
+	public String getPassword()
+	{
+		return _password;
 	}
 }

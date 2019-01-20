@@ -13,9 +13,11 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ensicaen.fr.marierave.Controllers.ClassroomDAO;
+import ensicaen.fr.marierave.Controllers.TeacherClassroomDAO;
 import ensicaen.fr.marierave.Model.Classroom;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
@@ -33,14 +35,27 @@ public class TeacherHome extends Fragment
 	{
         super.onViewCreated(view, savedInstanceState);
 		
+		List<String> classroomNames = new TeacherClassroomDAO(getContext()).getClassroomsWithTeacher(Utils.teacherLoggedInId);
+		List<Classroom> classrooms = new ArrayList<>();
+		ClassroomDAO classroomDAO = new ClassroomDAO(getContext());
+		for (String s : classroomNames) {
+			classrooms.add(classroomDAO.getClassroom(s));
+		}
+  
 		Button btn_admin = view.findViewById(R.id.btn_Admin);
-        btn_admin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-				Utils.replaceFragments(AdministrationHome.class, getActivity(), null, true);
-			}
-	
-		});
+		if (!Utils.teacherLoggedInLogin.equals("admin")) {
+			btn_admin.setVisibility(View.INVISIBLE);
+		}
+		else {
+			btn_admin.setOnClickListener(new View.OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+					Utils.replaceFragments(AdministrationHome.class, getActivity(), null, true);
+				}
+			});
+		}
 		
 		ImageView openAssessment = view.findViewById(R.id.openAssessment);
 		openAssessment.setOnClickListener(new View.OnClickListener()
@@ -52,8 +67,6 @@ public class TeacherHome extends Fragment
 				Utils.replaceFragments(StudentAssessment1.class, getActivity(), bundle, true);
 			}
 		});
-	
-		List<Classroom> classrooms = new ClassroomDAO(getContext()).getAllClassrooms();
 	
 		GridViewAdapter adapter = new GridViewAdapter(getActivity(), classrooms);
 		final GridView gridview = view.findViewById(R.id.gridview_classes);

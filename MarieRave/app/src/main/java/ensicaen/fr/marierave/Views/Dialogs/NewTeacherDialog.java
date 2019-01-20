@@ -1,8 +1,10 @@
 package ensicaen.fr.marierave.Views.Dialogs;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,9 +46,25 @@ public class NewTeacherDialog extends DialogFragment implements android.view.Vie
 				EditText editTeacherName = getDialog().findViewById(R.id.edit_teacherName);
 				EditText editTeacherFirstname = getDialog().findViewById(R.id.edit_teacherFirstname);
 				
-				new TeacherDAO(getContext()).addTeacher(new Teacher(editTeacherName.getText().toString(), editTeacherFirstname.getText().toString()));
+				TeacherDAO teacherDAO = new TeacherDAO(getContext());
+				teacherDAO.addTeacher(new Teacher(editTeacherName.getText().toString(), editTeacherFirstname.getText().toString()));
+				
+				Teacher teacher = teacherDAO.getTeacher(teacherDAO.getLastId());
 				
 				((AdministrationTeachers) getTargetFragment()).reloadTeachersListview();
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+				builder.setMessage("L'enseignant a bien été créé. N'oubliez pas de lui communiquer ses identifiants : \n" + "Identifiant : " + teacher
+						.getIdConnection() + "\n" + "Mot de passe : " + teacher.getPassword()).setCancelable(false)
+						.setPositiveButton("Ok", new DialogInterface.OnClickListener()
+						{
+							public void onClick(DialogInterface dialog, int id)
+							{
+								dismiss();
+							}
+						});
+				AlertDialog alert = builder.create();
+				alert.show();
 				
 				dismiss();
 				break;

@@ -15,6 +15,8 @@ public class TeacherDAO extends DAOBase {
     private static final String ID = "Id";
     private static final String NAME = "Name";
     private static final String FIRSTNAME = "Firstname";
+	private static final String IDCONNECTION = "IdConnection";
+	private static final String PASSWORD = "Password";
 	
 	private Context _context;
     
@@ -30,6 +32,14 @@ public class TeacherDAO extends DAOBase {
 		values.put(ID, nextId);
 		values.put(NAME, teacher.getName());
         values.put(FIRSTNAME, teacher.getFirstname());
+		if (teacher.getName().equals("admin") && teacher.getFirstname().equals("admin")) {
+			values.put(IDCONNECTION, teacher.getName());
+			values.put(PASSWORD, teacher.getName());
+		}
+		else {
+			values.put(IDCONNECTION, teacher.getName() + nextId);
+			values.put(PASSWORD, teacher.getName() + nextId);
+		}
 		
         this.database.insert(TABLE_NAME, null, values);
 		
@@ -37,14 +47,30 @@ public class TeacherDAO extends DAOBase {
 	}
     
 	public Teacher getTeacher(long id) {
-		Cursor cursor =  this.database.query(TABLE_NAME, new String[] { ID, NAME, FIRSTNAME },
+		Cursor cursor = this.database.query(TABLE_NAME, new String[]{ID, NAME, FIRSTNAME, IDCONNECTION, PASSWORD},
 				ID + " = ?", new String[] { String.valueOf(id) }, null, null, null, null);
 		
 		if (cursor != null) {
 			cursor.moveToFirst();
 		}
 		
-		Teacher teacher = new Teacher(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
+		Teacher teacher = new Teacher(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+		
+		cursor.close();
+		
+		return teacher;
+	}
+	
+	public Teacher getTeacher(String idConnection)
+	{
+		Cursor cursor = this.database
+				.query(TABLE_NAME, new String[]{ID, NAME, FIRSTNAME, IDCONNECTION, PASSWORD}, IDCONNECTION + " = ?", new String[]{idConnection}, null, null, null, null);
+		
+		if (cursor != null) {
+			cursor.moveToFirst();
+		}
+		
+		Teacher teacher = new Teacher(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
 		
 		cursor.close();
 		
@@ -60,7 +86,7 @@ public class TeacherDAO extends DAOBase {
 		
 		if (cursor.moveToFirst()) {
 			do {
-				Teacher teacher = new Teacher(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
+				Teacher teacher = new Teacher(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
 				
 				teacherList.add(teacher);
 			} while (cursor.moveToNext());
@@ -80,6 +106,8 @@ public class TeacherDAO extends DAOBase {
 		values.put(ID, teacher.getId());
 		values.put(NAME, teacher.getName());
 		values.put(FIRSTNAME, teacher.getFirstname());
+		values.put(IDCONNECTION, teacher.getIdConnection());
+		values.put(PASSWORD, teacher.getPassword());
 		
 		this.database.update(TABLE_NAME, values, ID  + " = ?", new String[] {String.valueOf(teacher.getId())} );
     }
@@ -113,6 +141,19 @@ public class TeacherDAO extends DAOBase {
 		cursor.close();
 		
 		return next;
+	}
+	
+	public boolean teacherExists(String idConnection, String password)
+	{
+		Cursor cursor = this.database
+				.query(TABLE_NAME, new String[]{ID}, IDCONNECTION + " = ? AND " + PASSWORD + " = ?", new String[]{idConnection, password}, null, null, null, null);
+		
+		if (cursor == null || cursor.getCount() == 0) {
+			return false;
+		}
+		
+		cursor.close();
+		return true;
 	}
 }
 
