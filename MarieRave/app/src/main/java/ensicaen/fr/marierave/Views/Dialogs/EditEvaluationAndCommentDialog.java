@@ -125,7 +125,7 @@ public class EditEvaluationAndCommentDialog extends DialogFragment implements Vi
 					skillCommentDAO.addSkillComment(_childId, _skillCode, textView.getText().toString());
 				}
 				
-				((PersonnalProfile) getTargetFragment()).reloadSkillListView();
+				((PersonnalProfile) getTargetFragment()).reloadSkillListView(null);
 				dismiss();
 				break;
 			

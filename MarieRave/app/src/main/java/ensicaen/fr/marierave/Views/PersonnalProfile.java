@@ -60,15 +60,7 @@ public class PersonnalProfile extends Fragment
 		txtSurname.setText(child.getFirstname());
 		
 		skillsListview = view.findViewById(R.id.listSkills);
-		reloadSkillListView();
-		
-		List<Subject> subjectList = new SubjectDAO(getContext()).getAllSubjects();
-		ListviewTopicsAdapter topicsAdapter = new ListviewTopicsAdapter(getActivity(), subjectList);
-		
-		ListView topicListview = view.findViewById(R.id.listTopics);
-		topicListview.setAdapter(topicsAdapter);
-		topicsAdapter.notifyDataSetChanged();
-		
+		reloadSkillListView(null);
 		skillsListview.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
 			@Override
@@ -84,6 +76,24 @@ public class PersonnalProfile extends Fragment
 				}
 			}
 		});
+		
+		List<Subject> subjectList = new SubjectDAO(getContext()).getAllSubjects();
+		ListviewTopicsAdapter topicsAdapter = new ListviewTopicsAdapter(getActivity(), subjectList);
+		
+		ListView topicListview = view.findViewById(R.id.listTopics);
+		topicListview.setAdapter(topicsAdapter);
+		topicsAdapter.notifyDataSetChanged();
+		
+		topicListview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+			{
+				reloadSkillListView((Subject) parent.getAdapter().getItem(position));
+			}
+		});
+		
+		
 		
 		Button btnResults = view.findViewById(R.id.btnResults);
 		btnResults.setOnClickListener(new View.OnClickListener()
@@ -106,10 +116,17 @@ public class PersonnalProfile extends Fragment
 		});
 	}
 	
-	public void reloadSkillListView()
+	public void reloadSkillListView(Subject filterSubject)
 	{
 		ListviewSkillAdapter skillsAdapter = new ListviewSkillAdapter(this);
-		List<Subject> subjectList = new SubjectDAO(getContext()).getAllSubjects();
+		List<Subject> subjectList = new ArrayList<>();
+		
+		if (filterSubject != null) {
+			subjectList.add(filterSubject);
+		}
+		else {
+			subjectList = new SubjectDAO(getContext()).getAllSubjects();
+		}
 		
 		for (Subject subject : subjectList) {
 			skillsAdapter.addBigSectionHeaderItem(subject.getName());
