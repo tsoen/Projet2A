@@ -20,36 +20,15 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Nouveau"
-        app:layout_constraintRight_toLeftOf="@+id/button3"
-        app:layout_constraintTop_toTopOf="@+id/button1"/>
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="OFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintTop_toTopOf="@+id/button2"/>
+        app:layout_constraintTop_toTopOf="@+id/button1"/>
 
     <AutoCompleteTextView
         android:id="@+id/search_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="SearchBar"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toRightOf="@+id/button1"
-        app:layout_constraintRight_toLeftOf="@+id/button4"
-        app:layout_constraintTop_toTopOf="@+id/button1"/>
-
-    <SearchView
-        android:id="@+id/button4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Search"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintRight_toLeftOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintStart_toEndOf="@+id/button1"
         app:layout_constraintTop_toTopOf="@+id/button1"/>
 
     <android.support.constraint.ConstraintLayout

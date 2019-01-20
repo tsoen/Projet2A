@@ -6,24 +6,14 @@
                                              android:layout_height="match_parent"
                                              tools:context=".MainActivity">
 
-    <ImageButton
-        android:id="@+id/btn_exit"
+    <ImageView
+        android:id="@+id/refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_lock_power_off"/>
-
-    <ImageView
-        android:id="@+id/refresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_exit"
-        app:layout_constraintEnd_toStartOf="@+id/btn_exit"
-        app:layout_constraintTop_toTopOf="@+id/btn_exit"
         app:srcCompat="@android:drawable/ic_popup_sync"/>
 
     <ImageButton
@@ -43,7 +33,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_exit"
+        app:layout_constraintTop_toBottomOf="@+id/refresh"
         app:srcCompat="@android:drawable/ic_delete"/>
 
     <Button
@@ -56,24 +46,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <LinearLayout
+    <GridView
+        android:id="@+id/gridview_classes"
         android:layout_width="0dp"
-        android:layout_height="335dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:orientation="vertical"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:horizontalSpacing="15dp"
+        android:numColumns="4"
+        android:verticalSpacing="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnDelete_Class">
-
-        <GridView
-            android:id="@+id/gridview_classes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:horizontalSpacing="15dp"
-            android:numColumns="4"
-            android:verticalSpacing="15dp"/>
-
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/btnAdd_Class"/>
 
 </android.support.constraint.ConstraintLayout>

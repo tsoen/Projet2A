@@ -2,16 +2,14 @@ package ensicaen.fr.marierave.Views.Dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -32,6 +30,7 @@ public class NewChildDialog extends Dialog implements android.view.View.OnClickL
 		super.onCreate(savedInstanceState);
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 		
 		setContentView(R.layout.dialog_new_child);
 		

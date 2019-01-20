@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,6 +26,7 @@ public class NewClassroomDialog extends Dialog implements android.view.View.OnCl
 		super.onCreate(savedInstanceState);
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 		
 		setContentView(R.layout.dialog_new_classroom);
 		
