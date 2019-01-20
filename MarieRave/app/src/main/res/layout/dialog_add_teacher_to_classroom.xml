@@ -22,7 +22,7 @@
             app:layout_constraintGuide_percent="0.35"/>
 
         <GridView
-            android:id="@+id/gridview_childsToAdd"
+            android:id="@+id/gridview_teachersToAdd"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

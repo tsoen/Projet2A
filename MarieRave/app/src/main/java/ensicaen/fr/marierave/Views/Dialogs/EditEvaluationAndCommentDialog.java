@@ -18,9 +18,13 @@ import ensicaen.fr.marierave.Controllers.SkillMarkDAO;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Views.PersonnalProfile;
 
-public class EditEvaluationAndCommentDialog extends DialogFragment
+public class EditEvaluationAndCommentDialog extends DialogFragment implements View.OnClickListener
 {
-	private String newMark;
+	private String _newMark;
+	
+	private Integer _childId;
+	
+	private String _skillCode;
 	
 	public EditEvaluationAndCommentDialog() { }
 	
@@ -35,12 +39,15 @@ public class EditEvaluationAndCommentDialog extends DialogFragment
 		
 		final Bundle args = getArguments();
 		
-		final TextView textView = view.findViewById(R.id.textView17);
-		textView.setText(new SkillCommentDAO(getContext()).getSkillcomment(args.getInt("ChildId"), args.getString("Skill")));
+		_childId = args.getInt("ChildId");
+		_skillCode = args.getString("Skill");
 		
-		newMark = new SkillMarkDAO(getContext()).getSkillMark(args.getInt("ChildId"), args.getString("Skill"));
+		TextView textView = view.findViewById(R.id.textView17);
+		textView.setText(new SkillCommentDAO(getContext()).getSkillcomment(_childId, _skillCode));
+		
+		_newMark = new SkillMarkDAO(getContext()).getSkillMark(_childId, _skillCode);
 		RadioButton rdb_mark = null;
-		switch (newMark) {
+		switch (_newMark) {
 			case "A":
 				rdb_mark = view.findViewById(R.id.darkGreen);
 				break;
@@ -68,16 +75,16 @@ public class EditEvaluationAndCommentDialog extends DialogFragment
 			{
 				switch (checkedId) {
 					case R.id.darkGreen:
-						newMark = "A";
+						_newMark = "A";
 						break;
 					case R.id.green:
-						newMark = "B";
+						_newMark = "B";
 						break;
 					case R.id.yellow:
-						newMark = "C";
+						_newMark = "C";
 						break;
 					case R.id.red:
-						newMark = "D";
+						_newMark = "D";
 						break;
 					default:
 						break;
@@ -86,43 +93,48 @@ public class EditEvaluationAndCommentDialog extends DialogFragment
 		});
 		
 		Button btnValidate = view.findViewById(R.id.btn_validate);
-		btnValidate.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
+		btnValidate.setOnClickListener(this);
+		
+		Button btnCancel = view.findViewById(R.id.btn_cancel);
+		btnCancel.setOnClickListener(this);
+		
+		return view;
+	}
+	
+	@Override
+	public void onClick(View v)
+	{
+		TextView textView = getDialog().findViewById(R.id.textView17);
+		
+		switch (v.getId()) {
+			case R.id.btn_validate:
 				SkillMarkDAO skillMarkDAO = new SkillMarkDAO(getContext());
 				SkillCommentDAO skillCommentDAO = new SkillCommentDAO(getContext());
 				
-				if (skillMarkDAO.skillMarkExists(args.getInt("ChildId"), args.getString("Skill"))) {
-					skillMarkDAO.updateSkillMark(args.getInt("ChildId"), args.getString("Skill"), newMark);
+				if (skillMarkDAO.skillMarkExists(_childId, _skillCode)) {
+					skillMarkDAO.updateSkillMark(_childId, _skillCode, _newMark);
 				}
 				else {
-					skillMarkDAO.addSkillMark(args.getInt("ChildId"), args.getString("Skill"), newMark);
+					skillMarkDAO.addSkillMark(_childId, _skillCode, _newMark);
 				}
 				
-				if (skillCommentDAO.skillCommentExists(args.getInt("ChildId"), args.getString("Skill"))) {
-					skillCommentDAO.updateSkillcomment(args.getInt("ChildId"), args.getString("Skill"), textView.getText().toString());
+				if (skillCommentDAO.skillCommentExists(_childId, _skillCode)) {
+					skillCommentDAO.updateSkillcomment(_childId, _skillCode, textView.getText().toString());
 				}
 				else {
-					skillCommentDAO.addSkillComment(args.getInt("ChildId"), args.getString("Skill"), textView.getText().toString());
+					skillCommentDAO.addSkillComment(_childId, _skillCode, textView.getText().toString());
 				}
 				
 				((PersonnalProfile) getTargetFragment()).reloadSkillListView();
 				dismiss();
-			}
-		});
-		
-		Button btnCancel = view.findViewById(R.id.btn_cancel);
-		btnCancel.setOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
+				break;
+			
+			case R.id.btn_cancel:
 				dismiss();
-			}
-		});
-		
-		return view;
+				break;
+			
+			default:
+				break;
+		}
 	}
 }

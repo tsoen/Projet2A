@@ -1,9 +1,11 @@
 package ensicaen.fr.marierave.Views.Dialogs;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -22,56 +24,48 @@ import java.util.List;
 import ensicaen.fr.marierave.Controllers.ChildDAO;
 import ensicaen.fr.marierave.Model.Child;
 import ensicaen.fr.marierave.R;
+import ensicaen.fr.marierave.Views.AdministrationClassroom;
 
-public class AddChildToClassroomDialog extends Dialog implements android.view.View.OnClickListener
+public class AddChildToClassroomDialog extends DialogFragment implements View.OnClickListener
 {
-	
-	private Activity _activity;
 	private String _classroomName;
 	private String _mode;
-	private GridView gridview;
-	
-	public AddChildToClassroomDialog(Activity a, String classroomName, String mode)
-	{
-		super(a);
-		_activity = a;
-		_classroomName = classroomName;
-		_mode = mode;
-	}
+	private GridView _childsGridview;
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
+		final View view = inflater.inflate(R.layout.dialog_add_child_to_classroom, container);
 		
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 		setCancelable(false);
 		
-		setContentView(R.layout.dialog_add_child_to_classroom);
+		_mode = getArguments().getString("mode");
+		_classroomName = getArguments().getString("classroomName");
 		
-		Button btnValidate = findViewById(R.id.btn_validate);
+		Button btnValidate = view.findViewById(R.id.btn_validate);
 		btnValidate.setOnClickListener(this);
 		
-		Button btnCancel = findViewById(R.id.btn_cancel);
+		Button btnCancel = view.findViewById(R.id.btn_cancel);
 		btnCancel.setOnClickListener(this);
 		
-		List<Child> subjectList = new ArrayList<>();
+		List<Child> childList = new ArrayList<>();
 		if (_mode.equals("Add")) {
-			subjectList = new ChildDAO(_activity).getAllChildsNotInClassroom(_classroomName);
+			childList = new ChildDAO(getContext()).getAllChildsNotInClassroom(_classroomName);
 		}
 		else if (_mode.equals("Delete")) {
-			subjectList = new ChildDAO(_activity).getAllChildsInClassroom(_classroomName);
+			childList = new ChildDAO(getContext()).getAllChildsInClassroom(_classroomName);
 		}
 		
-		final GridViewAdapter adapter = new GridViewAdapter(_activity, subjectList);
-		gridview = findViewById(R.id.gridview_childsToAdd);
-		gridview.setAdapter(adapter);
+		final GridViewAdapter adapter = new GridViewAdapter(getActivity(), childList);
+		_childsGridview = view.findViewById(R.id.gridview_childsToAdd);
+		_childsGridview.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 		
-		gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+		_childsGridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+			public void onItemClick(AdapterView<?> parent, View v, int position, long id)
 			{
 				if (!adapter._selectedPositions.contains(position)) {
 					adapter._selectedPositions.add(position);
@@ -80,37 +74,39 @@ public class AddChildToClassroomDialog extends Dialog implements android.view.Vi
 					adapter._selectedPositions.remove(Integer.valueOf(position));
 				}
 				
-				TextView txtNumberOfSelected = findViewById(R.id.textView14);
+				TextView txtNumberOfSelected = view.findViewById(R.id.textView14);
 				txtNumberOfSelected.setText(Integer.toString(adapter._selectedPositions.size()));
 				
 				adapter.notifyDataSetChanged();
 			}
 		});
 		
-		CheckBox cboSelectAll = findViewById(R.id.checkBox);
+		CheckBox cboSelectAll = view.findViewById(R.id.checkBox);
 		cboSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
 		{
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
 			{
 				if (isChecked) {
-					for (int i = 0; i < gridview.getChildCount(); i++) {
+					for (int i = 0; i < _childsGridview.getChildCount(); i++) {
 						if (!adapter._selectedPositions.contains(i)) {
 							adapter._selectedPositions.add(i);
 						}
 					}
 				}
 				else {
-					for (int i = 0; i < gridview.getChildCount(); i++) {
+					for (int i = 0; i < _childsGridview.getChildCount(); i++) {
 						adapter._selectedPositions.remove(Integer.valueOf(i));
 					}
 				}
 				
-				TextView txtNumberOfSelected = findViewById(R.id.textView14);
+				TextView txtNumberOfSelected = view.findViewById(R.id.textView14);
 				txtNumberOfSelected.setText(Integer.toString(adapter._selectedPositions.size()));
 				adapter.notifyDataSetChanged();
 			}
 		});
+		
+		return view;
 	}
 	
 	@Override
@@ -120,9 +116,8 @@ public class AddChildToClassroomDialog extends Dialog implements android.view.Vi
 			case R.id.btn_validate:
 				
 				ChildDAO childDAO = new ChildDAO(getContext());
-				
-				for (int i : ((GridViewAdapter) gridview.getAdapter())._selectedPositions) {
-					Child c = (Child) gridview.getAdapter().getItem(i);
+				for (int i : ((GridViewAdapter) _childsGridview.getAdapter())._selectedPositions) {
+					Child c = (Child) _childsGridview.getAdapter().getItem(i);
 					if (_mode.equals("Add")) {
 						c.setClassroom(_classroomName);
 					}
@@ -132,6 +127,8 @@ public class AddChildToClassroomDialog extends Dialog implements android.view.Vi
 					
 					childDAO.updateChild(c);
 				}
+				
+				((AdministrationClassroom) getTargetFragment()).reloadChildsGridview();
 				
 				dismiss();
 				break;
@@ -147,27 +144,27 @@ public class AddChildToClassroomDialog extends Dialog implements android.view.Vi
 	
 	private class GridViewAdapter extends BaseAdapter
 	{
-		private List<Child> _productList;
 		private Activity _activity;
+		private List<Child> _childList;
 		private List<Integer> _selectedPositions = new ArrayList<>();
 		
-		GridViewAdapter(Activity activity, List<Child> productList)
+		GridViewAdapter(Activity activity, List<Child> childList)
 		{
 			super();
 			_activity = activity;
-			_productList = productList;
+			_childList = childList;
 		}
 		
 		@Override
 		public int getCount()
 		{
-			return _productList.size();
+			return _childList.size();
 		}
 		
 		@Override
 		public Object getItem(int position)
 		{
-			return _productList.get(position);
+			return _childList.get(position);
 		}
 		
 		@Override
@@ -188,16 +185,16 @@ public class AddChildToClassroomDialog extends Dialog implements android.view.Vi
 		{
 			if (convertView == null) {
 				
-				
 				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_classroom_item, null);
+				
 				ViewHolder holder = new ViewHolder();
 				holder._profilePic = convertView.findViewById(R.id.imgProfilePicture);
 				holder._txtName = convertView.findViewById(R.id.txtName);
 				holder._txtSurname = convertView.findViewById(R.id.txtSurname);
 				
 				holder._profilePic.setImageResource(R.mipmap.ic_launcher_round);
-				holder._txtName.setText(_productList.get(position).getName());
-				holder._txtSurname.setText(_productList.get(position).getFirstname());
+				holder._txtName.setText(_childList.get(position).getName());
+				holder._txtSurname.setText(_childList.get(position).getFirstname());
 			}
 			
 			if (_selectedPositions.contains(position)) {
