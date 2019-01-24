@@ -9,21 +9,22 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/skillsHeaderLayout"
+        app:layout_constraintStart_toStartOf="@+id/skillsHeaderLayout"
         app:layout_constraintTop_toBottomOf="@+id/skillsHeaderLayout"/>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/skillsHeaderLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorCell"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/colorCell"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backButton"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/backButton">
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline12"
@@ -134,23 +135,50 @@
         android:id="@+id/search_bar4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/button21"
-        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintEnd_toStartOf="@+id/guideline31"
+        app:layout_constraintStart_toStartOf="@+id/guideline18"
         app:layout_constraintTop_toTopOf="@+id/backButton"/>
 
     <ImageButton
         android:id="@+id/button21"
+        style="@style/newButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_weight="1"
-        style="@style/newButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/backButton"/>
 
     <ImageButton
         android:id="@+id/backButton"
         style="@style/backButton"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.35"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.65"/>
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Rechercher un enseignant :"
+        app:layout_constraintBottom_toBottomOf="@+id/search_bar4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline18"
+        app:layout_constraintTop_toTopOf="@+id/search_bar4"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -60,13 +60,13 @@
 
     <ImageButton
         android:id="@+id/button20"
-        android:layout_width="wrap_content"
+        style="@style/deleteButton"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/cell_shape_r"
-        style="@style/deleteButton"
         app:layout_constraintBottom_toBottomOf="@+id/textView21"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline20"
+        app:layout_constraintStart_toStartOf="@+id/guideline26"
         app:layout_constraintTop_toTopOf="@+id/textView21"/>
 
     <TextView

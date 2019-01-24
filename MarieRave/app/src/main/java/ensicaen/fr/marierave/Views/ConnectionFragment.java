@@ -39,8 +39,8 @@ public class ConnectionFragment extends Fragment {
 		
 					Utils.teacherLoggedInId = new TeacherDAO(getContext()).getTeacher(editLogin.getText().toString()).getId();
 					Utils.teacherLoggedInLogin = editLogin.getText().toString();
-		
-					Utils.replaceFragments(GeneralAccFragment.class, getActivity(), null, true);
+					
+					Utils.replaceFragments(TeacherHome.class, getActivity(), null, true);
 				}
             }
         });

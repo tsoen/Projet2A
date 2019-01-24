@@ -8,13 +8,16 @@
     <ImageButton
         android:id="@+id/backButton"
         style="@style/backButton"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
         android:id="@+id/imgPersonnalPicture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:background="@mipmap/ic_launcher"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,17 +44,19 @@
         style="@style/appraisalButton"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginTop="8dp"
         android:layout_weight="0.1"
         app:layout_constraintEnd_toStartOf="@+id/btnPDF"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
         android:id="@+id/btnPDF"
+        style="@style/printButton"
         android:layout_width="0dp"
         android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
         android:layout_weight="0.1"
-        style="@style/printButton"
         app:layout_constraintBottom_toBottomOf="@+id/btnResults"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnResults"
@@ -68,6 +73,7 @@
         android:id="@+id/textTopicsHeader"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
         android:background="@color/colorCell"
         android:gravity="center"
         android:padding="5dp"
@@ -83,6 +89,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:background="@color/colorCell"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -153,6 +160,7 @@
         android:id="@+id/listTopics"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
         android:divider="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline15"
@@ -165,6 +173,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/cell_shape_l"
         android:divider="@null"
         app:layout_constraintBottom_toBottomOf="parent"
