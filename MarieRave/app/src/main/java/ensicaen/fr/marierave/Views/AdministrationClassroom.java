@@ -61,16 +61,16 @@ public class AdministrationClassroom extends Fragment implements android.view.Vi
 		_teachersGridview = view.findViewById(R.id.teachersList);
 		reloadTeachersGridview();
 		
-		Button btnAddTeacher = view.findViewById(R.id.addTeacher);
+		ImageButton btnAddTeacher = view.findViewById(R.id.addTeacher);
 		btnAddTeacher.setOnClickListener(this);
 		
-		Button btnDeleteTeacher = view.findViewById(R.id.removeTeacher);
+		ImageButton btnDeleteTeacher = view.findViewById(R.id.removeTeacher);
 		btnDeleteTeacher.setOnClickListener(this);
 		
-		Button btnAddChild = view.findViewById(R.id.addStudent);
+		ImageButton btnAddChild = view.findViewById(R.id.addStudent);
 		btnAddChild.setOnClickListener(this);
 		
-		Button btnRemoveChild = view.findViewById(R.id.removeStudent);
+		ImageButton btnRemoveChild = view.findViewById(R.id.removeStudent);
 		btnRemoveChild.setOnClickListener(this);
 	}
 	

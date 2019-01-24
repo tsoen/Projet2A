@@ -52,7 +52,7 @@ public class AdministrationChilds extends Fragment
 		listview.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 		
-		Button btnNewChild = view.findViewById(R.id.button2);
+		ImageButton btnNewChild = view.findViewById(R.id.button2);
 		btnNewChild.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v)
@@ -113,10 +113,10 @@ public class AdministrationChilds extends Fragment
 			private TextView _class;
 			private TextView _name;
 			private TextView _surname;
-			private Button _btnConsult;
-			private Button _btnResults;
-			private Button _btnPrint;
-			private Button _btnDelete;
+			private ImageButton _btnConsult;
+			private ImageButton _btnResults;
+			private ImageButton _btnPrint;
+			private ImageButton _btnDelete;
 		}
 		
 		@Override

@@ -36,20 +36,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtName"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/btnResults"
+        style="@style/appraisalButton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Bilan"
+        android:layout_height="50dp"
+        android:layout_weight="0.1"
         app:layout_constraintEnd_toStartOf="@+id/btnPDF"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnPDF"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="PDF"
+        android:layout_height="50dp"
+        android:layout_weight="0.1"
+        style="@style/printButton"
         app:layout_constraintBottom_toBottomOf="@+id/btnResults"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnResults"

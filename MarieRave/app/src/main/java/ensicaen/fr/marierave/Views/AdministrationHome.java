@@ -78,7 +78,7 @@ public class AdministrationHome extends Fragment
 		final GridView gridview = view.findViewById(R.id.gridview1);
 		gridview.setAdapter(adapter);
 		
-		Button btnNewClassroom = view.findViewById(R.id.button6);
+		ImageButton btnNewClassroom = view.findViewById(R.id.button6);
 		btnNewClassroom.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v)

@@ -50,8 +50,8 @@ public class AdministrationTeachers extends Fragment
 		
 		_teacherListview = view.findViewById(R.id.listview1);
 		reloadTeachersListview();
-		
-		Button btnNewTeacher = view.findViewById(R.id.button21);
+
+		ImageButton btnNewTeacher = view.findViewById(R.id.button21);
 		btnNewTeacher.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -114,7 +114,7 @@ public class AdministrationTeachers extends Fragment
 			private TextView _surname;
 			private TextView _idConnection;
 			private TextView _password;
-			private Button _btnDelete;
+			private ImageButton _btnDelete;
 		}
 		
 		@Override

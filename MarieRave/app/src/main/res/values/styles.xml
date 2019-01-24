@@ -25,6 +25,7 @@
     <style name="deleteButton">
         <item name="android:src">@android:drawable/ic_delete</item>
         <item name="android:scaleType">fitCenter</item>
+        <item name="android:background">?android:colorBackground</item>
     </style>
     <style name="consultButton">
         <item name="android:src">@drawable/consult</item>
@@ -33,9 +34,25 @@
     <style name="printButton">
         <item name="android:src">@drawable/print</item>
         <item name="android:scaleType">fitCenter</item>
+        <item name="android:background">?android:colorBackground</item>
     </style>
     <style name="appraisalButton">
         <item name="android:src">@drawable/bilan</item>
         <item name="android:scaleType">fitCenter</item>
+        <item name="android:background">?android:colorBackground</item>
+    </style>
+    <style name="newButton">
+        <item name="android:src">@android:drawable/ic_input_add</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:adjustViewBounds">false</item>
+        <item name="android:background">?android:colorBackground</item>
+    </style>
+    <style name="removeButton">
+        <item name="android:src">@drawable/remove</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:adjustViewBounds">false</item>
+        <item name="android:background">?android:colorBackground</item>
+        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_width">30dp</item>
     </style>
 </resources>

@@ -96,7 +96,7 @@ public class PersonnalProfile extends Fragment
 		
 		
 		
-		Button btnResults = view.findViewById(R.id.btnResults);
+		ImageButton btnResults = view.findViewById(R.id.btnResults);
 		btnResults.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -228,7 +228,7 @@ public class PersonnalProfile extends Fragment
 			private TextView _code;
 			private TextView _name;
 			private TextView _result;
-			private Button _btnEdit;
+			private ImageButton _btnEdit;
 		}
 		
 		private class HeaderHolder

@@ -9,9 +9,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:gravity="center"
         app:layout_constraintEnd_toStartOf="@+id/guideline12"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline12"
@@ -52,11 +53,13 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.60"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/button12"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/blue_cell_shape"
+        android:layout_marginStart="1dp"
+        android:background="@drawable/cell_shape_r"
+        style="@style/consultButton"
         app:layout_constraintBottom_toBottomOf="@+id/textView8"
         app:layout_constraintEnd_toStartOf="@+id/guideline13"
         app:layout_constraintStart_toStartOf="@+id/guideline16"
@@ -69,11 +72,12 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.7"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/button13"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/green_cell_shape"
+        android:background="@drawable/cell_shape_r"
+        style="@style/appraisalButton"
         app:layout_constraintBottom_toBottomOf="@+id/button12"
         app:layout_constraintEnd_toStartOf="@+id/guideline17"
         app:layout_constraintStart_toStartOf="@+id/guideline13"
@@ -86,11 +90,12 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.8"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/button14"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/orange_cell_shape"
+        android:background="@drawable/cell_shape_r"
+        style="@style/printButton"
         app:layout_constraintBottom_toBottomOf="@+id/button13"
         app:layout_constraintEnd_toStartOf="@+id/guideline20"
         app:layout_constraintStart_toStartOf="@+id/guideline17"
@@ -103,11 +108,12 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.9"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/button17"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/red_cell_shape"
+        android:background="@drawable/cell_shape_r"
+        style="@style/deleteButton"
         app:layout_constraintBottom_toBottomOf="@+id/button14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline20"
