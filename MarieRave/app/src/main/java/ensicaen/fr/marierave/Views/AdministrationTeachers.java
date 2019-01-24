@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,7 +38,7 @@ public class AdministrationTeachers extends Fragment
 	{
 		super.onViewCreated(view, savedInstanceState);
 		
-		Button btnBack = view.findViewById(R.id.button22);
+		ImageButton btnBack = view.findViewById(R.id.backButton);
 		btnBack.setOnClickListener(new View.OnClickListener()
 		{
 			@Override

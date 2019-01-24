@@ -18,10 +18,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/colorCell"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button22">
+        app:layout_constraintTop_toBottomOf="@+id/backButton"
+        >
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline12"
@@ -133,8 +135,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@+id/button21"
-        app:layout_constraintStart_toEndOf="@+id/button22"
-        app:layout_constraintTop_toTopOf="@+id/button1"/>
+        app:layout_constraintStart_toEndOf="@+id/backButton"
+        app:layout_constraintTop_toTopOf="@+id/backButton"/>
 
     <Button
         android:id="@+id/button21"
@@ -143,14 +145,12 @@
         android:layout_weight="1"
         android:text="Nouveau"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button1"/>
+        app:layout_constraintTop_toTopOf="@+id/backButton"/>
 
-    <Button
-        android:id="@+id/button22"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Retour"
+    <ImageButton
+        android:id="@+id/backButton"
+        style="@style/backButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

@@ -1,11 +1,25 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
+    <style name="backButton">
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:adjustViewBounds">false</item>
+        <item name="android:background">?android:colorBackground</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:src">@drawable/images</item>
+    </style>
+    <style name="sppraisalButton">
+        <item name="android:background">@drawable/cell_shape_notop</item>
+        <item name="android:color">@color/sweetBlue</item>
+    </style>
 </resources>

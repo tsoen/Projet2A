@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class AdministrationHome extends Fragment
 			}
 		});
 		
-		Button btnBack = view.findViewById(R.id.button1);
+		ImageButton btnBack = view.findViewById(R.id.backButton);
 		btnBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v)

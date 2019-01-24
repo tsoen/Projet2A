@@ -2,6 +2,7 @@ package ensicaen.fr.marierave;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
 
 import ensicaen.fr.marierave.Controllers.ChildDAO;
 import ensicaen.fr.marierave.Controllers.ClassroomDAO;

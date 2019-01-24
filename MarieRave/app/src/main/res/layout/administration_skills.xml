@@ -5,14 +5,11 @@
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Retour"
+    <ImageButton
+        android:id="@+id/backButton"
+        style="@style/backButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button4"
@@ -22,7 +19,7 @@
         android:layout_weight="1"
         android:text="Ajouter une compétence"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button1"/>
+        app:layout_constraintTop_toBottomOf="@+id/backButton"/>
 
     <ListView
         android:id="@+id/listSubjects"

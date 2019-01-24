@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -105,7 +106,7 @@ public class PersonnalProfile extends Fragment
 			}
 		});
 		
-		Button btnBack = view.findViewById(R.id.btnBack);
+		ImageButton btnBack = view.findViewById(R.id.backButton);
 		btnBack.setOnClickListener(new View.OnClickListener()
 		{
 			@Override

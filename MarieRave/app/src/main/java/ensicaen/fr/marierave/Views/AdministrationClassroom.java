@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,7 +52,7 @@ public class AdministrationClassroom extends Fragment implements android.view.Vi
 		TextView txtClassroomName = view.findViewById(R.id.className);
 		txtClassroomName.setText(_classroomName);
 		
-		Button btnBack = view.findViewById(R.id.backButton);
+		ImageButton btnBack = view.findViewById(R.id.backButton);
 		btnBack.setOnClickListener(this);
 		
 		_childsGridview = view.findViewById(R.id.gridviewChilds);

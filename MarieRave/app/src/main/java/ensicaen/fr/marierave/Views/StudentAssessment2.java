@@ -110,7 +110,7 @@ public class StudentAssessment2 extends Fragment
 			}
 		});
 		
-        ImageView imageView = view.findViewById(R.id.back);
+        ImageView imageView = view.findViewById(R.id.backButton);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)

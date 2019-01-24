@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import ensicaen.fr.marierave.Controllers.ClassroomDAO;
@@ -31,7 +32,7 @@ public class ClassAssesment extends Fragment
 		TextView txtClassroomName = view.findViewById(R.id.classname);
 		txtClassroomName.setText(classroom.getName());
 		
-		Button btnBack = view.findViewById(R.id.button);
+		ImageButton btnBack = view.findViewById(R.id.backButton);
 		btnBack.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
