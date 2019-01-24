@@ -18,8 +18,24 @@
         <item name="android:scaleType">fitCenter</item>
         <item name="android:src">@drawable/images</item>
     </style>
-    <style name="sppraisalButton">
-        <item name="android:background">@drawable/cell_shape_notop</item>
-        <item name="android:color">@color/sweetBlue</item>
+    <style name="editButton">
+        <item name="android:src">@drawable/edit</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+    <style name="deleteButton">
+        <item name="android:src">@android:drawable/ic_delete</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+    <style name="consultButton">
+        <item name="android:src">@drawable/consult</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+    <style name="printButton">
+        <item name="android:src">@drawable/print</item>
+        <item name="android:scaleType">fitCenter</item>
+    </style>
+    <style name="appraisalButton">
+        <item name="android:src">@drawable/bilan</item>
+        <item name="android:scaleType">fitCenter</item>
     </style>
 </resources>

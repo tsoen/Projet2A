@@ -4,7 +4,7 @@
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             android:background="@drawable/cell_shape_r">
+                                             android:background="@drawable/blue_cell_shape">
 
     <TextView
         android:id="@+id/txtBigHeader"

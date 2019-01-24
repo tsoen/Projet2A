@@ -176,15 +176,15 @@ public class AdministrationSkills extends Fragment
 		{
 			private TextView _code;
 			private TextView _name;
-			private Button _btnEdit;
-			private Button _btnDelete;
+			private ImageButton _btnEdit;
+			private ImageButton _btnDelete;
 		}
 		
 		private class HeaderHolder
 		{
 			private TextView _header;
-			private Button _btnEdit;
-			private Button _btnDelete;
+			private ImageButton _btnEdit;
+			private ImageButton _btnDelete;
 		}
 		
 		@Override
