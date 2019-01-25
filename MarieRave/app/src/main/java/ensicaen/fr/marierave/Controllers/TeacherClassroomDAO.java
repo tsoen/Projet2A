@@ -100,9 +100,8 @@ public class TeacherClassroomDAO extends DAOBase
 		
 		return classroomList;
 	}
-	
-	public void deleteTeacherFromCLassroom(String classroomName)
-	{
-		this.database.delete(TABLE_NAME, CLASSROOMNAME + " = ?", new String[]{classroomName});
+
+	public void deleteTeacherFromCLassroom(String classroomName, Integer teacherId) {
+		this.database.delete(TABLE_NAME, CLASSROOMNAME + " = ? AND " + TEACHERID + " = ?", new String[]{classroomName, teacherId.toString()});
 	}
 }

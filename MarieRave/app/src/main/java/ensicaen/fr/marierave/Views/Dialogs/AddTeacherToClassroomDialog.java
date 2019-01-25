@@ -133,7 +133,7 @@ public class AddTeacherToClassroomDialog extends DialogFragment implements andro
 						teacherClassroomDAO.addTeacherToClassroom(_classroomName, teacher.getId());
 					}
 					else if (_mode.equals("Delete")) {
-						teacherClassroomDAO.deleteTeacherFromCLassroom(_classroomName);
+						teacherClassroomDAO.deleteTeacherFromCLassroom(_classroomName, teacher.getId());
 					}
 				}
 				
