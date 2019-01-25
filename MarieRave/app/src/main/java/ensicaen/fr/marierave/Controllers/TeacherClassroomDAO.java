@@ -53,7 +53,7 @@ public class TeacherClassroomDAO extends DAOBase
 	public List<Integer> getTeachersIdNotInClassroom(String classroomName)
 	{
 		String countQuery =
-				"SELECT DISTINCT " + TEACHERID + " FROM " + TABLE_NAME + " WHERE NOT EXISTS (SELECT " + TEACHERID + " FROM " + TABLE_NAME + " WHERE " + CLASSROOMNAME +
+				"SELECT DISTINCT " + TEACHERID + " FROM " + TABLE_NAME + " WHERE " + TEACHERID + " NOT IN (SELECT " + TEACHERID + " FROM " + TABLE_NAME + " WHERE " + CLASSROOMNAME +
 						" = '" + classroomName + "' )";
 		Cursor cursor = this.database.rawQuery(countQuery, null);
 		
