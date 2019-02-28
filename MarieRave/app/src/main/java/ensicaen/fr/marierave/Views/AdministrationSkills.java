@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -50,7 +51,7 @@ public class AdministrationSkills extends Fragment
 		skillsListview = view.findViewById(R.id.listCompetences);
 		topicListview = view.findViewById(R.id.listSubjects);
 		
-		reloadSkillListView();
+		reloadSkillListView(null);
 		
 		reloadSubjectListView();
 		
@@ -101,13 +102,31 @@ public class AdministrationSkills extends Fragment
 				getActivity().getSupportFragmentManager().popBackStack();
 			}
 		});
+		
+		topicListview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+			{
+				reloadSkillListView((Subject) parent.getAdapter().getItem(position));
+			}
+		});
+		
 	}
 	
-	public void reloadSkillListView()
+	public void reloadSkillListView(Subject filterSubject)
 	{
 		ListviewSkillAdapter skillsAdapter = new ListviewSkillAdapter(this);
+		List<Subject> subjectList = new ArrayList<>();
 		
-		for (Subject subject : new SubjectDAO(getContext()).getAllSubjects()) {
+		if (filterSubject != null) {
+			subjectList.add(filterSubject);
+		}
+		else {
+			subjectList = new SubjectDAO(getContext()).getAllSubjects();
+		}
+		
+		for (Subject subject : subjectList) {
 			skillsAdapter.addItem(subject);
 			
 			for (Skillheader skillheader : new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName())) {
@@ -292,7 +311,7 @@ public class AdministrationSkills extends Fragment
 								new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog, int id) {
 										new SubjectDAO(getContext()).deleteSubject(subject.getName());
-										reloadSkillListView();
+										reloadSkillListView(null);
 										dialog.cancel();
 									}
 								});
@@ -349,7 +368,7 @@ public class AdministrationSkills extends Fragment
 							public void onClick(DialogInterface dialog, int id)
 							{
 								new SkillheaderDAO(getContext()).deleteSkillheader(skillheader.getName());
-								reloadSkillListView();
+								reloadSkillListView(null);
 								dialog.cancel();
 							}
 						});

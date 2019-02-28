@@ -60,7 +60,7 @@ public class NewOrUpdateSubjectDialog extends DialogFragment implements android.
 					subjectDAO.addSubject(newSubject);
 				}
 				
-				((AdministrationSkills) getTargetFragment()).reloadSkillListView();
+				((AdministrationSkills) getTargetFragment()).reloadSkillListView(null);
 				((AdministrationSkills) getTargetFragment()).reloadSubjectListView();
 				
 				dismiss();

@@ -79,7 +79,7 @@ public class NewOrUpdateSkillDialog extends DialogFragment implements android.vi
 					skillDAO.addSkill(newSkill);
 				}
 				
-				((AdministrationSkills) getTargetFragment()).reloadSkillListView();
+				((AdministrationSkills) getTargetFragment()).reloadSkillListView(null);
 				
 				dismiss();
 				break;

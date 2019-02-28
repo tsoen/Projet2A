@@ -73,7 +73,7 @@ public class NewOrUpdateSkillheaderDialog extends DialogFragment implements andr
 				}
 				
 				
-				((AdministrationSkills) getTargetFragment()).reloadSkillListView();
+				((AdministrationSkills) getTargetFragment()).reloadSkillListView(null);
 				
 				dismiss();
 				break;
