@@ -88,4 +88,15 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline25"
         app:layout_constraintStart_toStartOf="@+id/guideline24"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/button"
+        style="@style/editButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/cell_shape_r"
+        app:layout_constraintBottom_toBottomOf="@+id/textView23"
+        app:layout_constraintEnd_toStartOf="@+id/guideline26"
+        app:layout_constraintStart_toEndOf="@+id/guideline25"
+        app:layout_constraintTop_toTopOf="parent"/>
 </android.support.constraint.ConstraintLayout>

@@ -3,6 +3,7 @@ package ensicaen.fr.marierave.Views;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -11,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -21,6 +21,7 @@ import java.util.List;
 import ensicaen.fr.marierave.Controllers.TeacherDAO;
 import ensicaen.fr.marierave.Model.Teacher;
 import ensicaen.fr.marierave.R;
+import ensicaen.fr.marierave.Views.Dialogs.EditTeacherDialog;
 import ensicaen.fr.marierave.Views.Dialogs.NewTeacherDialog;
 
 public class AdministrationTeachers extends Fragment
@@ -114,6 +115,7 @@ public class AdministrationTeachers extends Fragment
 			private TextView _surname;
 			private TextView _idConnection;
 			private TextView _password;
+			private ImageButton _btnEdit;
 			private ImageButton _btnDelete;
 		}
 		
@@ -127,9 +129,26 @@ public class AdministrationTeachers extends Fragment
 				holder._surname = convertView.findViewById(R.id.textView21);
 				holder._idConnection = convertView.findViewById(R.id.textView20);
 				holder._password = convertView.findViewById(R.id.textView23);
+				holder._btnEdit = convertView.findViewById(R.id.button);
 				holder._btnDelete = convertView.findViewById(R.id.button20);
 				
 				final Teacher teacher = _teacherList.get(position);
+				
+				holder._btnEdit.setOnClickListener(new View.OnClickListener()
+				{
+					@Override
+					public void onClick(View v)
+					{
+						Bundle bundle = new Bundle();
+						bundle.putInt("teacherId", teacher.getId());
+						
+						FragmentManager fm = getActivity().getSupportFragmentManager();
+						DialogFragment dialog = new EditTeacherDialog();
+						dialog.setArguments(bundle);
+						dialog.setTargetFragment(fm.findFragmentById(R.id.fragment_container), 0);
+						dialog.show(fm, "editTeacher");
+					}
+				});
 				
 				holder._btnDelete.setOnClickListener(new View.OnClickListener()
 				{
