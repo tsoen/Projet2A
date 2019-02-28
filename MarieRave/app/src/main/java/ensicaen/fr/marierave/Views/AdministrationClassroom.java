@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -194,7 +193,7 @@ public class AdministrationClassroom extends Fragment implements android.view.Vi
 		public View getView(int position, View convertView, ViewGroup parent)
 		{
 			if (convertView == null) {
-				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_classroom_item, null);
+				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_classroom_guy_item, null);
 				GridViewChildsAdapter.ViewHolder holder = new GridViewChildsAdapter.ViewHolder();
 				holder._profilePic = convertView.findViewById(R.id.imgProfilePicture);
 				holder._txtName = convertView.findViewById(R.id.txtName);
@@ -250,7 +249,7 @@ public class AdministrationClassroom extends Fragment implements android.view.Vi
 		public View getView(int position, View convertView, ViewGroup parent)
 		{
 			if (convertView == null) {
-				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_classroom_item, null);
+				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_classroom_guy_item, null);
 				ViewHolder holder = new ViewHolder();
 				holder._profilePic = convertView.findViewById(R.id.imgProfilePicture);
 				holder._txtName = convertView.findViewById(R.id.txtName);

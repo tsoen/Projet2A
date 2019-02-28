@@ -194,7 +194,7 @@ public class AddTeacherToClassroomDialog extends DialogFragment implements andro
 		{
 			if (convertView == null) {
 				
-				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_classroom_item, null);
+				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_classroom_guy_item, null);
 				
 				ViewHolder holder = new ViewHolder();
 				holder._profilePic = convertView.findViewById(R.id.imgProfilePicture);

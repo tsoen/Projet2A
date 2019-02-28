@@ -90,7 +90,9 @@ public class TeacherClassroomDAO extends DAOBase
 			cursor.moveToFirst();
 			
 			do {
-				classroomList.add(cursor.getString(0));
+				if (!cursor.getString(0).equals("Ecole")) {
+					classroomList.add(cursor.getString(0));
+				}
 			} while (cursor.moveToNext());
 			
 			cursor.close();

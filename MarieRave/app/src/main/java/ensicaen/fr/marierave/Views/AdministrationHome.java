@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +21,13 @@ import ensicaen.fr.marierave.Controllers.ClassroomDAO;
 import ensicaen.fr.marierave.Model.Classroom;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
+import ensicaen.fr.marierave.Views.Dialogs.DialogDeleteClass;
 import ensicaen.fr.marierave.Views.Dialogs.NewClassroomDialog;
 
 public class AdministrationHome extends Fragment
 {
+	private GridView gridview;
+	
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -75,7 +80,7 @@ public class AdministrationHome extends Fragment
 		List<Classroom> classrooms = new ClassroomDAO(getContext()).getAllClassrooms();
 		
 		GridViewAdapter adapter = new GridViewAdapter(getActivity(), classrooms);
-		final GridView gridview = view.findViewById(R.id.gridview1);
+		gridview = view.findViewById(R.id.gridview1);
 		gridview.setAdapter(adapter);
 		
 		ImageButton btnNewClassroom = view.findViewById(R.id.button6);
@@ -96,6 +101,30 @@ public class AdministrationHome extends Fragment
 				dialog.show();
 			}
 		});
+		
+		ImageButton btnDeleteClassroom = view.findViewById(R.id.button7);
+		btnDeleteClassroom.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Bundle bundle = new Bundle();
+				FragmentManager fm = getActivity().getSupportFragmentManager();
+				
+				DialogFragment dialog = new DialogDeleteClass();
+				dialog.setArguments(bundle);
+				dialog.setTargetFragment(fm.findFragmentById(R.id.fragment_container), 0);
+				dialog.show(fm, "deleteTeacher");
+			}
+		});
+	}
+	
+	public void reloadClassroomListview()
+	{
+		List<Classroom> classrooms = new ClassroomDAO(getContext()).getAllClassrooms();
+		GridViewAdapter adapter = new GridViewAdapter(getActivity(), classrooms);
+		gridview.setAdapter(adapter);
+		adapter.notifyDataSetChanged();
 	}
 	
 	private class GridViewAdapter extends BaseAdapter

@@ -51,9 +51,12 @@ public class ClassroomDAO extends DAOBase {
 		
 		if (cursor.moveToFirst()) {
 			do {
-				Classroom classroom = new Classroom(cursor.getString(0));
+				if (!cursor.getString(0).equals("Ecole")) {
+					Classroom classroom = new Classroom(cursor.getString(0));
+					classroomList.add(classroom);
+					
+				}
 				
-				classroomList.add(classroom);
 			} while (cursor.moveToNext());
 		}
 		

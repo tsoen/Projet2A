@@ -122,7 +122,7 @@ public class HomeClassroom extends Fragment
 		public View getView(int position, View convertView, ViewGroup parent)
 		{
 			if (convertView == null) {
-				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_classroom_item, null);
+				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_classroom_guy_item, null);
 				ViewHolder holder = new ViewHolder();
 				holder._profilePic = convertView.findViewById(R.id.imgProfilePicture);
 				holder._txtName = convertView.findViewById(R.id.txtName);

@@ -2,7 +2,6 @@ package ensicaen.fr.marierave;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
 
 import ensicaen.fr.marierave.Controllers.ChildDAO;
 import ensicaen.fr.marierave.Controllers.ClassroomDAO;
@@ -31,7 +30,9 @@ public class MainActivity extends AppCompatActivity
 		new DAOBase(this).clearDatabase();
 		
 		ClassroomDAO classroomDAO = new ClassroomDAO(this);
-		classroomDAO.addClassroom(new Classroom("Ecole"));
+		
+		classroomDAO.addClassroom(new Classroom("Ecole")); //!! DO NOT REMOVE UNTIL ARCHITECTURE CHANGE !!\\
+		
 		classroomDAO.addClassroom(new Classroom("CP"));
 		classroomDAO.addClassroom(new Classroom("CE1"));
 		
