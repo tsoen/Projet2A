@@ -73,10 +73,12 @@ public class TeacherHome extends Fragment
 		GridViewAdapter adapter = new GridViewAdapter(getActivity(), classrooms);
 		final GridView gridview = view.findViewById(R.id.gridview_classes);
 		gridview.setAdapter(adapter);
-
-		gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		
+		gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+		{
 			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+			{
 				Bundle bundle = new Bundle();
 				TextView className = view.findViewById(R.id.button8);
 				bundle.putString("classroomName", className.getText().toString());

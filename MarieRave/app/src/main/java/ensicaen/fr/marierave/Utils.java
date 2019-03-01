@@ -21,7 +21,7 @@ public class Utils
 	 * Switchs the fragment displayed in the application
 	 * Can be called from inside a FragmentClass
 	 *
-     * @param fragmentClass Fragment classroom to display
+	 * @param fragmentClass Fragment classroom to display
 	 * @param activity      Reference to the activity containing fragments
 	 * @param bundle        Variables to pass to the fragment
 	 */

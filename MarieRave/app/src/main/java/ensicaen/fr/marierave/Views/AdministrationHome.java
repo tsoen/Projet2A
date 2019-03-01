@@ -84,14 +84,16 @@ public class AdministrationHome extends Fragment
 		GridViewAdapter adapter = new GridViewAdapter(getActivity(), classrooms);
 		gridview = view.findViewById(R.id.gridview1);
 		gridview.setAdapter(adapter);
-		gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+		{
 			@Override
-			public void onItemClick(AdapterView<?> adapterView, View v, int i, long l) {
-
+			public void onItemClick(AdapterView<?> adapterView, View v, int i, long l)
+			{
+				
 				Bundle bundle = new Bundle();
 				TextView className = v.findViewById(R.id.button8);
 				bundle.putString("classroomName", className.getText().toString());
-
+				
 				Utils.replaceFragments(AdministrationClassroom.class, getActivity(), bundle, true);
 			}
 		});
