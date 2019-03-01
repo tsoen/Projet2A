@@ -8,10 +8,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +73,16 @@ public class TeacherHome extends Fragment
 		GridViewAdapter adapter = new GridViewAdapter(getActivity(), classrooms);
 		final GridView gridview = view.findViewById(R.id.gridview_classes);
 		gridview.setAdapter(adapter);
+
+		gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+				Bundle bundle = new Bundle();
+				TextView className = view.findViewById(R.id.button8);
+				bundle.putString("classroomName", className.getText().toString());
+				Utils.replaceFragments(HomeClassroom.class, getActivity(), bundle, true);
+			}
+		});
 	}
 	
 	private class GridViewAdapter extends BaseAdapter
@@ -105,7 +117,7 @@ public class TeacherHome extends Fragment
 		
 		private class ViewHolder
 		{
-			private Button _classButton;
+			private TextView _className;
 		}
 		
 		@Override
@@ -114,21 +126,8 @@ public class TeacherHome extends Fragment
 			if (convertView == null) {
 				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_list_classes_item, null);
 				final ViewHolder holder = new ViewHolder();
-				holder._classButton = convertView.findViewById(R.id.button8);
-				
-				holder._classButton.setOnClickListener(new View.OnClickListener()
-				{
-					@Override
-					public void onClick(View v)
-					{
-						Bundle bundle = new Bundle();
-						bundle.putString("classroomName", holder._classButton.getText().toString());
-						
-						Utils.replaceFragments(HomeClassroom.class, getActivity(), bundle, true);
-					}
-				});
-				
-				holder._classButton.setText(_classList.get(position).getName());
+				holder._className = convertView.findViewById(R.id.button8);
+				holder._className.setText(_classList.get(position).getName());
 			}
 			
 			return convertView;
