@@ -71,7 +71,6 @@ public class ClassAssesment extends Fragment
 		
 		ListView topicListview = view.findViewById(R.id.jumpToSubject);
 		topicListview.setAdapter(topicsAdapter);
-		//topicsAdapter.notifyDataSetChanged();
 	}
 	
 	public void reloadSkillListView(Subject filterSubject)
