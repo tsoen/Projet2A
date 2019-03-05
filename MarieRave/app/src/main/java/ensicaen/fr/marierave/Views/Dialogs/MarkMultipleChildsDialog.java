@@ -32,8 +32,9 @@ public class MarkMultipleChildsDialog extends DialogFragment implements android.
 	
 	private String _skillCode;
 	private String _classroomName;
-	private String _selectedMark;
+    private String _selectedMark = "";
 	private ListviewChildsAdapter childsAdapter;
+    private CheckBox cboSelectAll;
 	
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -82,12 +83,12 @@ public class MarkMultipleChildsDialog extends DialogFragment implements android.
 			}
 		});
 
-		CheckBox cboSelectAll = view.findViewById(R.id.checkBox2);
+        cboSelectAll = view.findViewById(R.id.checkBox2);
 		cboSelectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
-					for (int i = 0; i < _childListview.getChildCount(); i++) {
+                    for (int i = 0; i < childsAdapter._childList.size(); i++) {
 						if (!childsAdapter._selectedPositions.contains(i)) {
 							childsAdapter._selectedPositions.add(i);
 						}
@@ -104,6 +105,15 @@ public class MarkMultipleChildsDialog extends DialogFragment implements android.
 		
 		return view;
 	}
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+    }
 	
 	public void reloadChildListview()
 	{
@@ -111,19 +121,30 @@ public class MarkMultipleChildsDialog extends DialogFragment implements android.
 		childsAdapter = new ListviewChildsAdapter(getActivity(), childList);
 		
 		_childListview.setAdapter(childsAdapter);
-		childsAdapter.notifyDataSetChanged();
 	}
 	
 	@Override
 	public void onClick(View v)
 	{
 		switch (v.getId()) {
-			case R.id.btn_validate:
-				
-				dismiss();
+            case R.id.button16:
+                for (int i = 0; i < childsAdapter._childList.size(); i++) {
+                    if (childsAdapter._selectedPositions.contains(i)) {
+                        SkillMarkDAO skillMarkDAO = new SkillMarkDAO(getContext());
+
+                        if (skillMarkDAO.skillMarkExists(childsAdapter._childList.get(i).getId(), _skillCode)) {
+                            skillMarkDAO.updateSkillMark(childsAdapter._childList.get(i).getId(), _skillCode, _selectedMark);
+                        } else {
+                            skillMarkDAO.addSkillMark(childsAdapter._childList.get(i).getId(), _skillCode, _selectedMark);
+                        }
+                    }
+                }
+
+                reloadChildListview();
+                cboSelectAll.setChecked(false);
 				break;
-			
-			case R.id.btn_cancel:
+
+            case R.id.button15:
 				dismiss();
 				break;
 			default:
@@ -172,31 +193,49 @@ public class MarkMultipleChildsDialog extends DialogFragment implements android.
 		}
 		
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent)
-		{
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+
 			if (convertView == null) {
-				ViewHolder holder = new ViewHolder();
 				convertView = _activity.getLayoutInflater().inflate(R.layout.listview_skill_assesment_dialog_item, null);
+                holder = new ViewHolder();
 
 				holder._box = convertView.findViewById(R.id.checkBox3);
 				holder._txtName = convertView.findViewById(R.id.textView39);
 				holder._txtSurname = convertView.findViewById(R.id.textView40);
 				holder._txtMark = convertView.findViewById(R.id.textView41);
 
-				holder._box.setChecked(true);
-				holder._txtName.setText(_childList.get(position).getName());
-				holder._txtSurname.setText(_childList.get(position).getFirstname());
-				
-				holder._txtMark.setText(new SkillMarkDAO(getContext()).getSkillMark(_childList.get(position).getId(), _skillCode));
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
 
-				if (_selectedPositions.contains(position)) {
+            holder._txtName.setText(_childList.get(position).getName());
+            holder._txtSurname.setText(_childList.get(position).getFirstname());
+            holder._txtMark.setText(new SkillMarkDAO(getContext()).getSkillMark(_childList.get(position).getId(), _skillCode));
 
-					holder._box.setChecked(true);
-				} else {
-					holder._box.setChecked(false);
-				}
-			}
-			
+
+            holder._box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        if (!childsAdapter._selectedPositions.contains(position)) {
+                            childsAdapter._selectedPositions.add(position);
+                        }
+                    } else {
+                        if (childsAdapter._selectedPositions.contains(position)) {
+                            childsAdapter._selectedPositions.remove(Integer.valueOf(position));
+                        }
+                    }
+                }
+            });
+
+            if (_selectedPositions.contains(position)) {
+                holder._box.setChecked(true);
+            } else {
+                holder._box.setChecked(false);
+            }
+
 			return convertView;
 		}
 	}
