@@ -79,8 +79,7 @@ public class StudentAssessment2 extends Fragment
 							{
 								skillList.clear();
 								for (Skill s : new SkillDAO(_activity).getAllSkills()) {
-									double similarity = Utils.compareStrings(s.getCode(), editable.toString());
-									if (similarity > 0.9) {
+                                    if (s.getCode().toUpperCase().startsWith(editable.toString().toUpperCase())) {
 										skillList.add(s);
 									}
 								}
