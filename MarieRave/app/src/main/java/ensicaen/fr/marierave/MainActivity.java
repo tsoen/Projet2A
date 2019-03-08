@@ -1,21 +1,11 @@
 package ensicaen.fr.marierave;
 
-import android.content.res.AssetManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
+import java.util.List;
 
 import ensicaen.fr.marierave.Controllers.ChildDAO;
 import ensicaen.fr.marierave.Controllers.ClassroomDAO;
@@ -88,58 +78,33 @@ public class MainActivity extends AppCompatActivity
 			}
 		}
 
+		openFile(1);
 
-        try {
-            InputStream myInput;
-            // initialize asset manager
-            AssetManager assetManager = getAssets();
-            //  open excel file name as myexcelsheet.xls
-            myInput = assetManager.open("myexcelsheet.xls");
-            // Create a POI File System object
-            POIFSFileSystem myFileSystem = new POIFSFileSystem(myInput);
-            // Create a workbook using the File System
-            HSSFWorkbook myWorkBook = new HSSFWorkbook(myFileSystem);
-            // Get the first sheet from workbook
-            HSSFSheet mySheet = myWorkBook.getSheetAt(0);
-
-            // We now need something to iterate through the cells.
-            Iterator<Row> rowIter = mySheet.rowIterator();
-            int rowno = 0;
-
-            while (rowIter.hasNext()) {
-                Log.e("myapp", " row no " + rowno);
-
-                HSSFRow myRow = (HSSFRow) rowIter.next();
-                if (rowno != 0) {
-                    Iterator<Cell> cellIter = myRow.cellIterator();
-                    int colno = 0;
-                    String sno = "", date = " ", det = "";
-
-                    while (cellIter.hasNext()) {
-
-                        HSSFCell myCell = (HSSFCell) cellIter.next();
-                        if (colno == 0) {
-                            sno = myCell.toString();
-                        } else if (colno == 1) {
-                            date = myCell.toString();
-                        } else if (colno == 2) {
-                            det = myCell.toString();
-                        }
-                        colno++;
-                        Log.e("myapp", " Index :" + myCell.getColumnIndex() + " -- " + myCell.toString());
-
-                    }
-                    Log.e("myapp", sno + " " + date + " " + det);
-                }
-                rowno++;
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 
 	@Override
 	public void onBackPressed() { }
+
+	private void openFile(Integer CODE) {
+		Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+		i.setType("*/*");
+		startActivityForResult(i, CODE);
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		String Fpath = data.getDataString();
+
+		try {
+			InputStream is = getContentResolver().openInputStream(data.getData());
+
+			CSVFile csvFile = new CSVFile(is);
+			List<String[]> scoreList = csvFile.read();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 }
