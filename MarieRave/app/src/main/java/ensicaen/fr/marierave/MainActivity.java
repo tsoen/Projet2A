@@ -2,7 +2,9 @@ package ensicaen.fr.marierave;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import java.io.InputStream;
 import java.util.List;
@@ -20,6 +22,7 @@ import ensicaen.fr.marierave.Model.Skill;
 import ensicaen.fr.marierave.Model.Skillheader;
 import ensicaen.fr.marierave.Model.Subject;
 import ensicaen.fr.marierave.Model.Teacher;
+import ensicaen.fr.marierave.Views.AdministrationSkills;
 import ensicaen.fr.marierave.Views.ConnectionFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity
 		teacherDAO.addTeacher(new Teacher("Simon", "Loick", "sisi", "psisi"));
 		teacherDAO.addTeacher(new Teacher("admin", "admin", "admin", "admin"));
 
-        SubjectDAO subjectDAO = new SubjectDAO(this);
+        /*SubjectDAO subjectDAO = new SubjectDAO(this);
 		subjectDAO.addSubject(new Subject("FRANCAIS"));
 		subjectDAO.addSubject(new Subject("MATHS"));
 		subjectDAO.addSubject(new Subject("SPORT"));
@@ -70,41 +73,79 @@ public class MainActivity extends AppCompatActivity
 		skillDAO.addSkill(new Skill("FRL1", "Lire des mots", "Lire et écrire"));
 		skillDAO.addSkill(new Skill("FRE1", "Recopier un texte court", "Lire et écrire"));
 		skillDAO.addSkill(new Skill("FRL10", "Reconnaître les pronoms personnels", "Lire et écrire"));
-		skillDAO.addSkill(new Skill("MAN5", "Additionner", "Numération"));
+		skillDAO.addSkill(new Skill("MAN5", "Additionner", "Numération"));*/
 
         if (findViewById(R.id.fragment_container) != null) {
 			if (savedInstanceState == null) {
 				Utils.replaceFragments(ConnectionFragment.class, this, null, false);
 			}
 		}
-
-		openFile(1);
-
-
     }
 
 	@Override
 	public void onBackPressed() { }
-
-	private void openFile(Integer CODE) {
-		Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-		i.setType("*/*");
-		startActivityForResult(i, CODE);
-	}
-
+	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		String Fpath = data.getDataString();
-
-		try {
-			InputStream is = getContentResolver().openInputStream(data.getData());
-
-			CSVFile csvFile = new CSVFile(is);
-			List<String[]> scoreList = csvFile.read();
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		if (requestCode == 42) {
+			try {
+				Log.d("myapp", data.getData().toString());
+				
+				InputStream is = getContentResolver().openInputStream(data.getData());
+				
+				CSVFile csvFile = new CSVFile(is);
+				
+				List<String[]> scoreList = csvFile.read();
+				
+				boolean isSubject = false;
+				boolean isHeader = false;
+				
+				String subjectName = "";
+				String headerName = "";
+				
+				for (int i = 0; i < scoreList.size(); i++) {
+					
+					String[] row = scoreList.get(i);
+					
+					if (row[0].isEmpty()) {
+						
+						if (!isSubject) {
+							isSubject = true;
+							
+							subjectName = row[1];
+							
+							new SubjectDAO(this).addSubject(new Subject(subjectName));
+						}
+						else if (!isHeader) {
+							isHeader = true;
+							
+							headerName = row[1];
+							
+							new SkillheaderDAO(this).addSkillheader(new Skillheader(headerName, subjectName));
+						}
+					}
+					else {
+						new SkillDAO(this).addSkill(new Skill(row[0], row[1], headerName));
+						
+						isSubject = false;
+						isHeader = false;
+					}
+				}
+				
+				((AdministrationSkills) getSupportFragmentManager().findFragmentById(R.id.fragment_container)).reloadSkillListView(null);
+				((AdministrationSkills) getSupportFragmentManager().findFragmentById(R.id.fragment_container)).reloadSubjectListView();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle("Une erreur est survenue").setMessage("Aucune donnée n'a été récupérée")
+						.setCancelable(false).setPositiveButton("Fermer", null);
+				
+				AlertDialog alert = builder.create();
+				alert.show();
+				return;
+			}
 		}
-
+		
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 }

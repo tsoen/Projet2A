@@ -27,6 +27,7 @@ import ensicaen.fr.marierave.Model.Skill;
 import ensicaen.fr.marierave.Model.Skillheader;
 import ensicaen.fr.marierave.Model.Subject;
 import ensicaen.fr.marierave.R;
+import ensicaen.fr.marierave.Views.Dialogs.ImportFileDialog;
 import ensicaen.fr.marierave.Views.Dialogs.NewOrUpdateSkillDialog;
 import ensicaen.fr.marierave.Views.Dialogs.NewOrUpdateSkillheaderDialog;
 import ensicaen.fr.marierave.Views.Dialogs.NewOrUpdateSubjectDialog;
@@ -100,6 +101,20 @@ public class AdministrationSkills extends Fragment
 			public void onClick(View v)
 			{
 				getActivity().getSupportFragmentManager().popBackStack();
+			}
+		});
+		
+		Button btnImportSkills = view.findViewById(R.id.button25);
+		btnImportSkills.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				FragmentManager fm = getActivity().getSupportFragmentManager();
+				
+				ImportFileDialog dialog = new ImportFileDialog();
+				dialog.setTargetFragment(fm.findFragmentById(R.id.fragment_container), 0);
+				dialog.show(fm, "importFile");
 			}
 		});
 		

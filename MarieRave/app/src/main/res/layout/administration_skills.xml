@@ -70,5 +70,15 @@
         app:layout_constraintEnd_toStartOf="@+id/button4"
         app:layout_constraintTop_toTopOf="@+id/button4"/>
 
+    <Button
+        android:id="@+id/button25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Importer un livret"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_newSkillheader"
+        app:layout_constraintEnd_toStartOf="@+id/btn_newSkillheader"
+        app:layout_constraintTop_toTopOf="@+id/btn_newSkillheader"/>
+
 
 </android.support.constraint.ConstraintLayout>

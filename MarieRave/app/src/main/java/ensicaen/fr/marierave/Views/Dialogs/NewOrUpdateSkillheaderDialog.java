@@ -72,7 +72,6 @@ public class NewOrUpdateSkillheaderDialog extends DialogFragment implements andr
 					skillheaderDAO.addSkillheader(newSkillheader);
 				}
 				
-				
 				((AdministrationSkills) getTargetFragment()).reloadSkillListView(null);
 				
 				dismiss();

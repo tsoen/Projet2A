@@ -1,7 +1,5 @@
 package ensicaen.fr.marierave;
 
-import android.util.Log;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,8 +13,9 @@ public class CSVFile {
     public CSVFile(InputStream inputStream) {
         this.inputStream = inputStream;
     }
-
-    public List<String[]> read() {
+    
+    public List<String[]> read() throws RuntimeException
+    {
         List<String[]> resultList = new ArrayList<>();
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -24,11 +23,7 @@ public class CSVFile {
         try {
             String csvLine;
             while ((csvLine = reader.readLine()) != null) {
-                String[] row = csvLine.split(",");
-
-                for (int i = 0; i < row.length; i++) {
-                    Log.d("myapp", row[i]);
-                }
+                String[] row = csvLine.split(";");
 
                 resultList.add(row);
             }
@@ -36,9 +31,11 @@ public class CSVFile {
             throw new RuntimeException("Error in reading CSV file: " + ex);
         } finally {
             try {
-                inputStream.close();
+                if (inputStream != null) {
+                    inputStream.close();
+                }
             } catch (IOException e) {
-                throw new RuntimeException("Error while closing input stream: " + e);
+                //closing quietly
             }
         }
         return resultList;
