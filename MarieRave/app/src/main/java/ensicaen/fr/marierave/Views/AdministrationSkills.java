@@ -2,21 +2,44 @@ package ensicaen.fr.marierave.Views;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +71,7 @@ public class AdministrationSkills extends Fragment
 	public void onViewCreated(@NonNull final View view, Bundle savedInstanceState)
 	{
 		super.onViewCreated(view, savedInstanceState);
-		
+
 		skillsListview = view.findViewById(R.id.listCompetences);
 		topicListview = view.findViewById(R.id.listSubjects);
 		
@@ -96,7 +119,8 @@ public class AdministrationSkills extends Fragment
 		});
 		
 		ImageButton btnBack = view.findViewById(R.id.backButton);
-		btnBack.setOnClickListener(new View.OnClickListener() {
+		btnBack.setOnClickListener(new View.OnClickListener()
+		{
 			@Override
 			public void onClick(View v)
 			{
@@ -110,6 +134,8 @@ public class AdministrationSkills extends Fragment
 			@Override
 			public void onClick(View v)
 			{
+				test();
+				
 				FragmentManager fm = getActivity().getSupportFragmentManager();
 				Bundle bundle = new Bundle();
 				bundle.putString("mode", "importSkills");
@@ -167,6 +193,148 @@ public class AdministrationSkills extends Fragment
 		topicsAdapter.notifyDataSetChanged();
 	}
 	
+	public void test()
+	{
+		
+		//First Check if the external storage is writable
+		String state = Environment.getExternalStorageState();
+		if (!Environment.MEDIA_MOUNTED.equals(state)) {
+			Log.d("myapp", "ko");
+		}
+		
+		Bitmap screen = test5(getActivity().getWindow().findViewById(R.id.adminSkillsViewLayout));
+		
+		File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(), "myPdfFile.pdf");
+		
+		if (pdfFile.exists()) {
+			pdfFile.delete();
+			pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(), "myPdfFile.pdf");
+		}
+		
+		
+		try {
+			Document document = new Document();
+			
+			PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
+			document.open();
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			screen.compress(Bitmap.CompressFormat.PNG, 100, stream);
+			byte[] byteArray = stream.toByteArray();
+			addImage(document, byteArray);
+			document.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		Intent intent = new Intent(Intent.ACTION_VIEW);
+		Uri uri = Uri.fromFile(pdfFile);
+		intent.setDataAndType(uri, "application/pdf");
+		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+		startActivity(intent);
+		
+		/*Intent email = new Intent(Intent.ACTION_SEND);
+		email.putExtra(Intent.EXTRA_EMAIL, "receiver_email_address");
+		email.putExtra(Intent.EXTRA_SUBJECT, "subject");
+		email.putExtra(Intent.EXTRA_TEXT, "email body");
+		Uri uri = Uri.fromFile(pdfFile);
+		email.putExtra(Intent.EXTRA_STREAM, uri);
+		email.setType("application/pdf");
+		email.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		getActivity().startActivity(email);*/
+		
+	}
+	
+	public Bitmap test5(View view)
+	{
+		view.setDrawingCacheEnabled(true);
+		
+		ListAdapter adapter = skillsListview.getAdapter();
+		int itemscount = adapter.getCount();
+		int allitemsheight = 0;
+		int tx = (int) skillsListview.getX();
+		int ty = (int) skillsListview.getY();
+		
+		for (int i = 0; i < itemscount; i++) {
+			
+			View childView = adapter.getView(i, null, skillsListview);
+			childView.measure(View.MeasureSpec.makeMeasureSpec(skillsListview.getWidth(), View.MeasureSpec.EXACTLY), View.MeasureSpec
+					.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+			
+			childView.layout(0, 0, childView.getMeasuredWidth(), childView.getMeasuredHeight());
+			childView.setDrawingCacheEnabled(true);
+			childView.buildDrawingCache();
+			allitemsheight += childView.getMeasuredHeight();
+		}
+		
+		skillsListview.measure(View.MeasureSpec.makeMeasureSpec(this.skillsListview.getWidth() + tx + 300, View.MeasureSpec.EXACTLY), View.MeasureSpec
+				.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+		
+		Bitmap bm1 = view.getDrawingCache();
+		Bitmap bm2 = Bitmap.createBitmap(skillsListview.getMeasuredWidth(), allitemsheight, Bitmap.Config.ARGB_8888);
+		Bitmap bm = overlay(bm2, bm1);
+		
+		Canvas canvas = new Canvas(bm);
+		
+		canvas.translate(tx, ty);
+		
+		for (int i = 0; i < adapter.getCount(); i++) {
+			View childView = adapter.getView(i, null, this.skillsListview);
+			
+			childView.measure(View.MeasureSpec.makeMeasureSpec(this.skillsListview.getWidth(), View.MeasureSpec.EXACTLY), View.MeasureSpec
+					.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+			
+			childView.layout(0, 0, childView.getMeasuredWidth(), childView.getMeasuredHeight());
+			childView.setDrawingCacheEnabled(true);
+			childView.buildDrawingCache();
+			childView.getDrawingCache();
+			childView.draw(canvas);
+			canvas.translate(0, childView.getMeasuredHeight() + 2);
+		}
+		
+		return bm;
+	}
+	
+	public Bitmap overlay(Bitmap bmp1, Bitmap bmp2)
+	{
+		Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
+		Canvas canvas = new Canvas(bmOverlay);
+		canvas.drawBitmap(bmp1, new Matrix(), null);
+		canvas.drawBitmap(bmp2, 0, 0, null);
+		return bmOverlay;
+	}
+	
+	private void addImage(Document document, byte[] byteArray)
+	{
+		Image image = null;
+		try {
+			image = Image.getInstance(byteArray);
+		} catch (BadElementException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		
+		DisplayMetrics metrics = new DisplayMetrics();
+		display.getMetrics(metrics);
+		
+		image.scalePercent(25f);
+		
+		try {
+			document.add(image);
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 	private class ListviewSkillAdapter extends BaseAdapter
 	{
 		private List<Object> _skillsAndHeaders = new ArrayList<>();
@@ -190,13 +358,13 @@ public class AdministrationSkills extends Fragment
 			_skillsAndHeaders.remove(obj);
 			notifyDataSetChanged();
 		}
-
+		
 		@Override
 		public int getCount()
 		{
 			return _skillsAndHeaders.size();
 		}
-
+		
 		@Override
 		public Object getItem(int position)
 		{
@@ -230,8 +398,8 @@ public class AdministrationSkills extends Fragment
 			LayoutInflater mInflater = fragment.getLayoutInflater();
 			
 			final Object objectAt = _skillsAndHeaders.get(position);
-
-			if(objectAt instanceof Skill){
+			
+			if (objectAt instanceof Skill) {
 				convertView = mInflater.inflate(R.layout.listview_skill_admin_item, null);
 				
 				ViewHolder holder = new ViewHolder();
@@ -239,7 +407,7 @@ public class AdministrationSkills extends Fragment
 				holder._name = convertView.findViewById(R.id.txtSkill);
 				holder._btnEdit = convertView.findViewById(R.id.btnEdit);
 				holder._btnDelete = convertView.findViewById(R.id.button9);
-
+				
 				final Skill skill = (Skill) objectAt;
 				holder._code.setText(skill.getCode());
 				holder._name.setText(skill.getName());
@@ -264,32 +432,33 @@ public class AdministrationSkills extends Fragment
 				holder._btnDelete.setOnClickListener(new View.OnClickListener()
 				{
 					@Override
-					public void onClick(View view) {
+					public void onClick(View view)
+					{
 						AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 						builder.setMessage("Etes-vous sûr de vouloir supprimer la compétence ? Cette action est irréversible");
 						builder.setCancelable(true);
-						builder.setPositiveButton(
-								"Oui",
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog, int id) {
-										new SkillDAO(getContext()).deleteSkill(skill.getCode());
-										removeItem(skill);
-										dialog.cancel();
-									}
-								});
-						builder.setNegativeButton(
-								"Non",
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog, int id) {
-										dialog.cancel();
-									}
-								});
+						builder.setPositiveButton("Oui", new DialogInterface.OnClickListener()
+						{
+							public void onClick(DialogInterface dialog, int id)
+							{
+								new SkillDAO(getContext()).deleteSkill(skill.getCode());
+								removeItem(skill);
+								dialog.cancel();
+							}
+						});
+						builder.setNegativeButton("Non", new DialogInterface.OnClickListener()
+						{
+							public void onClick(DialogInterface dialog, int id)
+							{
+								dialog.cancel();
+							}
+						});
 						
 						builder.create().show();
 					}
 				});
 			}
-			else if(objectAt instanceof Subject){
+			else if (objectAt instanceof Subject) {
 				convertView = mInflater.inflate(R.layout.listview_skill_subject_admin_item, null);
 				
 				HeaderHolder subjectHolder = new HeaderHolder();
@@ -318,34 +487,34 @@ public class AdministrationSkills extends Fragment
 				subjectHolder._btnDelete.setOnClickListener(new View.OnClickListener()
 				{
 					@Override
-					public void onClick(View view) {
+					public void onClick(View view)
+					{
 						AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-						builder.setMessage("Etes-vous sûr de vouloir supprimer cette matière ? " +
-								"Toutes les sections et compétences associées seront supprimées. " +
+						builder.setMessage("Etes-vous sûr de vouloir supprimer cette matière ? " + "Toutes les sections et compétences associées seront supprimées. " +
 								"Cette action est irreversible.");
 						builder.setCancelable(true);
-						builder.setPositiveButton(
-								"Oui",
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog, int id) {
-										new SubjectDAO(getContext()).deleteSubject(subject.getName());
-										reloadSkillListView(null);
-										dialog.cancel();
-									}
-								});
-						builder.setNegativeButton(
-								"Non",
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog, int id) {
-										dialog.cancel();
-									}
-								});
+						builder.setPositiveButton("Oui", new DialogInterface.OnClickListener()
+						{
+							public void onClick(DialogInterface dialog, int id)
+							{
+								new SubjectDAO(getContext()).deleteSubject(subject.getName());
+								reloadSkillListView(null);
+								dialog.cancel();
+							}
+						});
+						builder.setNegativeButton("Non", new DialogInterface.OnClickListener()
+						{
+							public void onClick(DialogInterface dialog, int id)
+							{
+								dialog.cancel();
+							}
+						});
 						
 						builder.create().show();
 					}
 				});
 			}
-			else if(objectAt instanceof Skillheader){
+			else if (objectAt instanceof Skillheader) {
 				convertView = mInflater.inflate(R.layout.listview_skill_skillheader_admin_item, null);
 				
 				HeaderHolder skillheaderHolder = new HeaderHolder();
@@ -446,7 +615,7 @@ public class AdministrationSkills extends Fragment
 		{
 			if (convertView == null) {
 				ViewHolder holder = new ViewHolder();
-				convertView =  _activity.getLayoutInflater().inflate(R.layout.listview_topic_item, null);
+				convertView = _activity.getLayoutInflater().inflate(R.layout.listview_topic_item, null);
 				holder._txtTopic = convertView.findViewById(R.id.txtTopic);
 				holder._txtTopic.setText(_topicList.get(position).getName());
 			}

@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity
 		teacherDAO.addTeacher(new Teacher("Lhote", "Loick", "lolo", "plolo"));
 		teacherDAO.addTeacher(new Teacher("Simon", "Loick", "sisi", "psisi"));
 		teacherDAO.addTeacher(new Teacher("admin", "admin", "admin", "admin"));
-
-        /*SubjectDAO subjectDAO = new SubjectDAO(this);
+		
+		SubjectDAO subjectDAO = new SubjectDAO(this);
 		subjectDAO.addSubject(new Subject("FRANCAIS"));
 		subjectDAO.addSubject(new Subject("MATHS"));
 		subjectDAO.addSubject(new Subject("SPORT"));
@@ -68,12 +68,23 @@ public class MainActivity extends AppCompatActivity
 		skillheaderDAO.addSkillheader(new Skillheader("Lire et écrire", "FRANCAIS"));
 		skillheaderDAO.addSkillheader(new Skillheader("Numération", "MATHS"));
 		skillheaderDAO.addSkillheader(new Skillheader("Courir", "SPORT"));
+		skillheaderDAO.addSkillheader(new Skillheader("Courir1", "SPORT"));
+		skillheaderDAO.addSkillheader(new Skillheader("Courir2", "SPORT"));
+		skillheaderDAO.addSkillheader(new Skillheader("Courir3", "SPORT"));
+		skillheaderDAO.addSkillheader(new Skillheader("Courir4", "SPORT"));
+		skillheaderDAO.addSkillheader(new Skillheader("Courir5", "SPORT"));
+		skillheaderDAO.addSkillheader(new Skillheader("Courir6", "SPORT"));
+		skillheaderDAO.addSkillheader(new Skillheader("Courir7", "SPORT"));
+		skillheaderDAO.addSkillheader(new Skillheader("Courir8", "SPORT"));
+		skillheaderDAO.addSkillheader(new Skillheader("Courir9", "SPORT"));
+		skillheaderDAO.addSkillheader(new Skillheader("Courir10", "SPORT"));
+		skillheaderDAO.addSkillheader(new Skillheader("Courir11", "SPORT"));
 
         SkillDAO skillDAO = new SkillDAO(this);
 		skillDAO.addSkill(new Skill("FRL1", "Lire des mots", "Lire et écrire"));
 		skillDAO.addSkill(new Skill("FRE1", "Recopier un texte court", "Lire et écrire"));
 		skillDAO.addSkill(new Skill("FRL10", "Reconnaître les pronoms personnels", "Lire et écrire"));
-		skillDAO.addSkill(new Skill("MAN5", "Additionner", "Numération"));*/
+		skillDAO.addSkill(new Skill("MAN5", "Additionner", "Numération"));
 
         if (findViewById(R.id.fragment_container) != null) {
 			if (savedInstanceState == null) {
@@ -86,8 +97,10 @@ public class MainActivity extends AppCompatActivity
 	public void onBackPressed() { }
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
 		if (requestCode == 42) {
 			try {
+				
 				InputStream is = getContentResolver().openInputStream(data.getData());
 				
 				CSVFile csvFile = new CSVFile(is);
@@ -100,6 +113,10 @@ public class MainActivity extends AppCompatActivity
 				String subjectName = "";
 				String headerName = "";
 				
+				SubjectDAO subjectDAO = new SubjectDAO(this);
+				SkillheaderDAO skillheaderDAO = new SkillheaderDAO(this);
+				SkillDAO skillDAO = new SkillDAO(this);
+				
 				for (int i = 0; i < scoreList.size(); i++) {
 					
 					String[] row = scoreList.get(i);
@@ -111,18 +128,24 @@ public class MainActivity extends AppCompatActivity
 							
 							subjectName = row[1];
 							
-							new SubjectDAO(this).addSubject(new Subject(subjectName));
+							if (!subjectDAO.subjectExists(subjectName)) {
+								subjectDAO.addSubject(new Subject(subjectName));
+							}
 						}
 						else if (!isHeader) {
 							isHeader = true;
 							
 							headerName = row[1];
 							
-							new SkillheaderDAO(this).addSkillheader(new Skillheader(headerName, subjectName));
+							if (!skillheaderDAO.skillheaderExists(headerName)) {
+								skillheaderDAO.addSkillheader(new Skillheader(headerName, subjectName));
+							}
 						}
 					}
 					else {
-						new SkillDAO(this).addSkill(new Skill(row[0], row[1], headerName));
+						if (!skillDAO.skillExists(row[0])) {
+							skillDAO.addSkill(new Skill(row[0], row[1], headerName));
+						}
 						
 						isSubject = false;
 						isHeader = false;

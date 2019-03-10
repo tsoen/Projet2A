@@ -70,7 +70,7 @@ public class ImportFileDialog extends DialogFragment implements android.view.Vie
 			case R.id.imageButton3:
 				
 				int requestCode = 0;
-				if (mode.equals("importSkill")) {
+				if (mode.equals("importSkills")) {
 					requestCode = 42;
 				}
 				else if (mode.equals("importChilds")) {
