@@ -83,5 +83,16 @@ public class ClassroomDAO extends DAOBase {
 		
 		return res;
     }
+	
+	public boolean classroomExists(String name)
+	{
+		Cursor cursor = this.database.query(TABLE_NAME, new String[]{NAME}, NAME + " = ?", new String[]{name}, null, null, null, null);
+		
+		boolean exists = cursor.getCount() != 0;
+		
+		cursor.close();
+		
+		return exists;
+	}
 }
 

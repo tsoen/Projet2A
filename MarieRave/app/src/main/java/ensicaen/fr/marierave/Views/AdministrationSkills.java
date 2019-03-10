@@ -111,8 +111,11 @@ public class AdministrationSkills extends Fragment
 			public void onClick(View v)
 			{
 				FragmentManager fm = getActivity().getSupportFragmentManager();
+				Bundle bundle = new Bundle();
+				bundle.putString("mode", "importSkills");
 				
 				ImportFileDialog dialog = new ImportFileDialog();
+				dialog.setArguments(bundle);
 				dialog.setTargetFragment(fm.findFragmentById(R.id.fragment_container), 0);
 				dialog.show(fm, "importFile");
 			}

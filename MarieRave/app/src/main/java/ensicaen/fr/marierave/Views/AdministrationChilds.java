@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,13 @@ import ensicaen.fr.marierave.Controllers.ChildDAO;
 import ensicaen.fr.marierave.Model.Child;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
+import ensicaen.fr.marierave.Views.Dialogs.ImportFileDialog;
 import ensicaen.fr.marierave.Views.Dialogs.NewChildDialog;
 
 public class AdministrationChilds extends Fragment
 {
+	private ListView listview;
+	
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -45,12 +49,8 @@ public class AdministrationChilds extends Fragment
 			}
 		});
 		
-		List<Child> childList = new ChildDAO(getContext()).getAllChilds();
-		
-		ListViewAdapter adapter = new ListViewAdapter(getActivity(), childList);
-		final ListView listview = view.findViewById(R.id.listview1);
-		listview.setAdapter(adapter);
-		adapter.notifyDataSetChanged();
+		listview = view.findViewById(R.id.listview1);
+		reloadChildtListView();
 		
 		ImageButton btnNewChild = view.findViewById(R.id.button2);
 		btnNewChild.setOnClickListener(new View.OnClickListener() {
@@ -61,16 +61,39 @@ public class AdministrationChilds extends Fragment
 				dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 					@Override
 					public void onDismiss(final DialogInterface arg0) {
-						List<Child> childs = new ChildDAO(getContext()).getAllChilds();
-						ListViewAdapter adapter = new ListViewAdapter(getActivity(), childs);
-						listview.setAdapter(adapter);
+						reloadChildtListView();
 					}
 				});
 				
 				dialog.show();
 			}
 		});
+		
+		Button btnImport = view.findViewById(R.id.button26);
+		btnImport.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				FragmentManager fm = getActivity().getSupportFragmentManager();
+				Bundle bundle = new Bundle();
+				bundle.putString("mode", "importChilds");
+				
+				ImportFileDialog dialog = new ImportFileDialog();
+				dialog.setArguments(bundle);
+				dialog.setTargetFragment(fm.findFragmentById(R.id.fragment_container), 0);
+				dialog.show(fm, "importChild");
+			}
+		});
 	}
+	
+	public void reloadChildtListView()
+	{
+		ListViewAdapter topicsAdapter = new ListViewAdapter(getActivity(), new ChildDAO(getContext()).getAllChilds());
+		listview.setAdapter(topicsAdapter);
+		topicsAdapter.notifyDataSetChanged();
+	}
+	
 	//@TODO make a real transparent back image
 	private class ListViewAdapter extends BaseAdapter
 	{

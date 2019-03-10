@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import java.io.InputStream;
 import java.util.List;
@@ -22,6 +21,7 @@ import ensicaen.fr.marierave.Model.Skill;
 import ensicaen.fr.marierave.Model.Skillheader;
 import ensicaen.fr.marierave.Model.Subject;
 import ensicaen.fr.marierave.Model.Teacher;
+import ensicaen.fr.marierave.Views.AdministrationChilds;
 import ensicaen.fr.marierave.Views.AdministrationSkills;
 import ensicaen.fr.marierave.Views.ConnectionFragment;
 
@@ -88,8 +88,6 @@ public class MainActivity extends AppCompatActivity
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 42) {
 			try {
-				Log.d("myapp", data.getData().toString());
-				
 				InputStream is = getContentResolver().openInputStream(data.getData());
 				
 				CSVFile csvFile = new CSVFile(is);
@@ -144,6 +142,42 @@ public class MainActivity extends AppCompatActivity
 				alert.show();
 				return;
 			}
+		}
+		else if (requestCode == 43) {
+			try {
+				InputStream is = getContentResolver().openInputStream(data.getData());
+				
+				CSVFile csvFile = new CSVFile(is);
+				
+				List<String[]> childList = csvFile.read();
+				
+				ClassroomDAO classroomDAO = new ClassroomDAO(this);
+				ChildDAO childDAO = new ChildDAO(this);
+				
+				for (int i = 1; i < childList.size(); i++) {
+					
+					String[] row = childList.get(i);
+					
+					if (!classroomDAO.classroomExists(row[2])) {
+						classroomDAO.addClassroom(new Classroom(row[2]));
+					}
+					
+					childDAO.addChild(new Child(row[0], row[1], row[2]));
+				}
+				
+				((AdministrationChilds) getSupportFragmentManager().findFragmentById(R.id.fragment_container)).reloadChildtListView();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle("Une erreur est survenue").setMessage("Aucune donnée n'a été récupérée")
+						.setCancelable(false).setPositiveButton("Fermer", null);
+				
+				AlertDialog alert = builder.create();
+				alert.show();
+				return;
+			}
+			
 		}
 		
 		super.onActivityResult(requestCode, resultCode, data);
