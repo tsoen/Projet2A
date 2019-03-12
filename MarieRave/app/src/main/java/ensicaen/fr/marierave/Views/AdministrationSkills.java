@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -210,7 +211,7 @@ public class AdministrationSkills extends Fragment
 			Log.d("myapp", "ko");
 		}
 		
-		Bitmap screen = test5(getActivity().getWindow().findViewById(R.id.adminSkillsViewLayout));
+		List<Bitmap> screen = test5(getActivity().getWindow().findViewById(R.id.adminSkillsViewLayout));
 		
 		File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(), "myPdfFile.pdf");
 		
@@ -223,12 +224,18 @@ public class AdministrationSkills extends Fragment
 		try {
 			Document document = new Document();
 			
+			
 			PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
 			document.open();
-			ByteArrayOutputStream stream = new ByteArrayOutputStream();
-			screen.compress(Bitmap.CompressFormat.PNG, 100, stream);
-			byte[] byteArray = stream.toByteArray();
-			addImage(document, byteArray);
+			
+			for (int i = 0; i < screen.size(); i++) {
+				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				screen.get(i).compress(Bitmap.CompressFormat.PNG, 100, stream);
+				byte[] byteArray = stream.toByteArray();
+				document.newPage();
+				addImage(document, byteArray);
+			}
+			
 			document.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -252,9 +259,15 @@ public class AdministrationSkills extends Fragment
 		
 	}
 	
-	public Bitmap test5(View view)
+	public List<Bitmap> test5(View view)
 	{
 		view.setDrawingCacheEnabled(true);
+		
+		Display display = getActivity().getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		int horizontalHght = size.x;
+		int horizontalWdth = size.y;
 		
 		ListAdapter adapter = skillsListview.getAdapter();
 		int itemscount = adapter.getCount();
@@ -271,15 +284,20 @@ public class AdministrationSkills extends Fragment
 			childView.layout(0, 0, childView.getMeasuredWidth(), childView.getMeasuredHeight());
 			childView.setDrawingCacheEnabled(true);
 			childView.buildDrawingCache();
-			allitemsheight += childView.getMeasuredHeight();
+			allitemsheight += childView.getMeasuredHeight() + 2;
 		}
 		
-		skillsListview.measure(View.MeasureSpec.makeMeasureSpec(this.skillsListview.getWidth() + tx + 300, View.MeasureSpec.EXACTLY), View.MeasureSpec
+		skillsListview.measure(View.MeasureSpec.makeMeasureSpec(this.skillsListview.getWidth() + 500/*horizontalWdth*/, View.MeasureSpec.EXACTLY), View.MeasureSpec
 				.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
 		
-		Bitmap bm1 = view.getDrawingCache();
+		/*Bitmap bm1 = view.getDrawingCache();
+		//Bitmap bm2 = Bitmap.createBitmap(skillsListview.getMeasuredWidth(), horizontalHght, Bitmap.Config.ARGB_8888);
 		Bitmap bm2 = Bitmap.createBitmap(skillsListview.getMeasuredWidth(), allitemsheight, Bitmap.Config.ARGB_8888);
+		
 		Bitmap bm = overlay(bm2, bm1);
+		*/
+		
+		Bitmap bm = Bitmap.createBitmap(skillsListview.getMeasuredWidth(), allitemsheight + 400, Bitmap.Config.ARGB_8888);
 		
 		Canvas canvas = new Canvas(bm);
 		
@@ -299,7 +317,23 @@ public class AdministrationSkills extends Fragment
 			canvas.translate(0, childView.getMeasuredHeight() + 2);
 		}
 		
-		return bm;
+		return splitBitmaps(bm, 2);
+	}
+	
+	public List<Bitmap> splitBitmaps(Bitmap originalBm, int nbBitmaps)
+	{
+		
+		List<Bitmap> list = new ArrayList<>();
+		
+		for (int i = 0; i < nbBitmaps; i++) {
+			Bitmap bm1 = Bitmap.createBitmap(originalBm, 0, (originalBm.getHeight() / nbBitmaps) * i, originalBm.getWidth(), (originalBm.getHeight() / nbBitmaps));
+			list.add(bm1);
+		}
+		
+		/*Bitmap bm1 = Bitmap.createBitmap(originalBm, 0, 0, originalBm.getWidth(), (originalBm.getHeight() / 2));
+		Bitmap bm2 = Bitmap.createBitmap(originalBm, 0, (originalBm.getHeight() / 2), originalBm.getWidth(), (originalBm.getHeight() / 2));*/
+		
+		return list;
 	}
 	
 	public Bitmap overlay(Bitmap bmp1, Bitmap bmp2)
@@ -341,7 +375,6 @@ public class AdministrationSkills extends Fragment
 			e.printStackTrace();
 		}
 	}
-	
 	
 	private class ListviewSkillAdapter extends BaseAdapter
 	{

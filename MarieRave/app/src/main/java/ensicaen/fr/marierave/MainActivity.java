@@ -79,12 +79,29 @@ public class MainActivity extends AppCompatActivity
 		skillheaderDAO.addSkillheader(new Skillheader("Courir9", "SPORT"));
 		skillheaderDAO.addSkillheader(new Skillheader("Courir10", "SPORT"));
 		skillheaderDAO.addSkillheader(new Skillheader("Courir11", "SPORT"));
-
-        SkillDAO skillDAO = new SkillDAO(this);
+		
+		
+		SkillDAO skillDAO = new SkillDAO(this);
 		skillDAO.addSkill(new Skill("FRL1", "Lire des mots", "Lire et écrire"));
 		skillDAO.addSkill(new Skill("FRE1", "Recopier un texte court", "Lire et écrire"));
 		skillDAO.addSkill(new Skill("FRL10", "Reconnaître les pronoms personnels", "Lire et écrire"));
 		skillDAO.addSkill(new Skill("MAN5", "Additionner", "Numération"));
+		skillDAO.addSkill(new Skill("SPO1", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO2", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO3", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO4", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO5", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO6", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO7", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO8", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO9", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO10", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO11", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO12", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO13", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO14", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO15", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO16", "SPORT", "Courir"));
 
         if (findViewById(R.id.fragment_container) != null) {
 			if (savedInstanceState == null) {
