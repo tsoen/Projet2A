@@ -52,8 +52,8 @@ public class TeacherClassroomDAO extends DAOBase
 	
 	public List<Integer> getTeachersIdNotInClassroom(String classroomName)
 	{
-		String countQuery = "SELECT DISTINCT " + TEACHERID + " FROM " + TABLE_NAME + " WHERE " + TEACHERID + " NOT IN (SELECT " + TEACHERID + " FROM " + TABLE_NAME + " "
-				+ "WHERE " + CLASSROOMNAME +
+		String countQuery =
+				"SELECT DISTINCT " + TEACHERID + " FROM " + TABLE_NAME + " WHERE " + TEACHERID + " NOT IN (SELECT " + TEACHERID + " FROM " + TABLE_NAME + " WHERE " + CLASSROOMNAME +
 						" = '" + classroomName + "' )";
 		Cursor cursor = this.database.rawQuery(countQuery, null);
 		
@@ -90,9 +90,9 @@ public class TeacherClassroomDAO extends DAOBase
 			cursor.moveToFirst();
 			
 			do {
-				if (!cursor.getString(0).equals("Ecole")) {
-					classroomList.add(cursor.getString(0));
-				}
+                if (!cursor.getString(0).equals("Ecole")) {
+                    classroomList.add(cursor.getString(0));
+                }
 			} while (cursor.moveToNext());
 			
 			cursor.close();
@@ -100,9 +100,8 @@ public class TeacherClassroomDAO extends DAOBase
 		
 		return classroomList;
 	}
-	
-	public void deleteTeacherFromCLassroom(String classroomName, Integer teacherId)
-	{
-		this.database.delete(TABLE_NAME, CLASSROOMNAME + " = ? AND " + TEACHERID + " = ?", new String[]{classroomName, String.valueOf(teacherId)});
+
+	public void deleteTeacherFromCLassroom(String classroomName, Integer teacherId) {
+		this.database.delete(TABLE_NAME, CLASSROOMNAME + " = ? AND " + TEACHERID + " = ?", new String[]{classroomName, teacherId.toString()});
 	}
 }
