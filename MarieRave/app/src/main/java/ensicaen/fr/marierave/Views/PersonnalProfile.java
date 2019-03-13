@@ -2,7 +2,6 @@ package ensicaen.fr.marierave.Views;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -17,13 +16,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
@@ -147,7 +144,7 @@ public class PersonnalProfile extends Fragment
 		btnPDF.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				test();
+				generatePDFResults();
 			}
 		});
 	}
@@ -180,7 +177,7 @@ public class PersonnalProfile extends Fragment
 		skillsAdapter.notifyDataSetChanged();
 	}
 	
-	public void test()
+	public void generatePDFResults()
 	{
 		if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 			ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
@@ -193,7 +190,6 @@ public class PersonnalProfile extends Fragment
 			Log.d("myapp", "ko");
 		}
 		
-		Bitmap screen = test5(getActivity().getWindow().findViewById(R.id.PersonnalProfileViewLayout));
 		
 		File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(), "myPdfFile.pdf");
 		
@@ -207,10 +203,17 @@ public class PersonnalProfile extends Fragment
 			
 			PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
 			document.open();
-			ByteArrayOutputStream stream = new ByteArrayOutputStream();
-			screen.compress(Bitmap.CompressFormat.PNG, 100, stream);
-			byte[] byteArray = stream.toByteArray();
-			addImage(document, byteArray);
+			
+			List<Bitmap> screenList = generateBitmapsFromView(getActivity().getWindow().findViewById(R.id.PersonnalProfileViewLayout));
+			
+			for (int i = 0; i < screenList.size(); i++) {
+				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				screenList.get(i).compress(Bitmap.CompressFormat.PNG, 60, stream);
+				byte[] byteArray = stream.toByteArray();
+				document.newPage();
+				addImage(document, byteArray);
+			}
+			
 			document.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -231,18 +234,16 @@ public class PersonnalProfile extends Fragment
 		email.setType("application/pdf");
 		email.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		getActivity().startActivity(email);*/
-		
 	}
 	
-	public Bitmap test5(View view)
+	public List<Bitmap> generateBitmapsFromView(View view)
 	{
 		view.setDrawingCacheEnabled(true);
 		
 		Display display = getActivity().getWindowManager().getDefaultDisplay();
 		Point size = new Point();
 		display.getSize(size);
-		int horizontalHght = size.x;
-		int horizontalWdth = size.y;
+		int verticalHght = size.x;
 		
 		ListAdapter adapter = skillsListview.getAdapter();
 		int itemscount = adapter.getCount();
@@ -266,7 +267,8 @@ public class PersonnalProfile extends Fragment
 				.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
 		
 		Bitmap bm1 = view.getDrawingCache();
-		Bitmap bm2 = Bitmap.createBitmap(skillsListview.getMeasuredWidth(), horizontalHght, Bitmap.Config.ARGB_8888);
+		Bitmap bm2 = Bitmap.createBitmap(skillsListview.getMeasuredWidth(), allitemsheight + ty, Bitmap.Config.ARGB_8888);
+		
 		Bitmap bm = overlay(bm2, bm1);
 		
 		Canvas canvas = new Canvas(bm);
@@ -287,7 +289,30 @@ public class PersonnalProfile extends Fragment
 			canvas.translate(0, childView.getMeasuredHeight());
 		}
 		
-		return bm;
+		return splitBitmaps(bm, (int) Math.ceil((double) bm.getHeight() / verticalHght));
+	}
+	
+	public List<Bitmap> splitBitmaps(Bitmap originalBm, int nbBitmaps)
+	{
+		Point size = new Point();
+		getActivity().getWindowManager().getDefaultDisplay().getSize(size);
+		int verticalHght = size.x;
+		
+		List<Bitmap> list = new ArrayList<>();
+		
+		int offsetStart = 0;
+		int height;
+		for (int i = 0; i < nbBitmaps; i++) {
+			
+			height = Math.min(originalBm.getHeight() - offsetStart, verticalHght);
+			
+			Bitmap bm1 = Bitmap.createBitmap(originalBm, 0, offsetStart, originalBm.getWidth(), height);
+			
+			offsetStart += height;
+			list.add(bm1);
+		}
+		
+		return list;
 	}
 	
 	public Bitmap overlay(Bitmap bmp1, Bitmap bmp2)
@@ -305,27 +330,18 @@ public class PersonnalProfile extends Fragment
 		try {
 			image = Image.getInstance(byteArray);
 		} catch (BadElementException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
-		Display display = wm.getDefaultDisplay();
-		
-		DisplayMetrics metrics = new DisplayMetrics();
-		display.getMetrics(metrics);
 		
 		image.scalePercent(25f);
 		
 		try {
 			document.add(image);
 		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -102,6 +102,28 @@ public class MainActivity extends AppCompatActivity
 		skillDAO.addSkill(new Skill("SPO14", "SPORT", "Courir"));
 		skillDAO.addSkill(new Skill("SPO15", "SPORT", "Courir"));
 		skillDAO.addSkill(new Skill("SPO16", "SPORT", "Courir"));
+		
+		skillDAO.addSkill(new Skill("SPO17", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO18", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO19", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO20", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO21", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO22", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO23", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO24", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO25", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO26", "SPORT", "Courir"));
+		
+		skillDAO.addSkill(new Skill("SPO27", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO28", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO29", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO30", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO31", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO32", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO33", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO34", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO35", "SPORT", "Courir"));
+		skillDAO.addSkill(new Skill("SPO36", "SPORT", "Courir"));
 
         if (findViewById(R.id.fragment_container) != null) {
 			if (savedInstanceState == null) {
