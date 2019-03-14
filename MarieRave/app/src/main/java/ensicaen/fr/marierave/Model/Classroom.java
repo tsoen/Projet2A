@@ -2,6 +2,7 @@ package ensicaen.fr.marierave.Model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Classroom
 {
@@ -29,5 +30,13 @@ public class Classroom
 	@Override
 	public String toString(){
 		return _name;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Classroom classroom = (Classroom) o;
+		return Objects.equals(_name, classroom._name);
 	}
 }

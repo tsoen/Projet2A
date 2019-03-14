@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,9 +26,12 @@ import ensicaen.fr.marierave.Controllers.TeacherClassroomDAO;
 import ensicaen.fr.marierave.Model.Classroom;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
+import ensicaen.fr.marierave.Views.Dialogs.TeacherTakesClassroomDialog;
 
 public class TeacherHome extends Fragment
 {
+	private GridView gridview;
+
     @Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
 	{
@@ -36,14 +42,7 @@ public class TeacherHome extends Fragment
 	public void onViewCreated(@NonNull final View view, Bundle savedInstanceState)
 	{
         super.onViewCreated(view, savedInstanceState);
-		
-		List<String> classroomNames = new TeacherClassroomDAO(getContext()).getClassroomsWithTeacher(Utils.teacherLoggedInId);
-		List<Classroom> classrooms = new ArrayList<>();
-		ClassroomDAO classroomDAO = new ClassroomDAO(getContext());
-		for (String s : classroomNames) {
-			classrooms.add(classroomDAO.getClassroom(s));
-		}
-  
+
 		Button btn_admin = view.findViewById(R.id.btn_Admin);
 		if (!Utils.teacherLoggedInLogin.equals("admin")) {
 			btn_admin.setVisibility(View.INVISIBLE);
@@ -69,11 +68,22 @@ public class TeacherHome extends Fragment
 				Utils.replaceFragments(StudentAssessment1.class, getActivity(), bundle, true);
 			}
 		});
-	
-		GridViewAdapter adapter = new GridViewAdapter(getActivity(), classrooms);
-		final GridView gridview = view.findViewById(R.id.gridview_classes);
-		gridview.setAdapter(adapter);
-		
+
+		ImageButton btnAddClass = view.findViewById(R.id.btnAdd_Class);
+		btnAddClass.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				FragmentManager fm = getActivity().getSupportFragmentManager();
+
+				DialogFragment dialog = new TeacherTakesClassroomDialog();
+				dialog.setTargetFragment(fm.findFragmentById(R.id.fragment_container), 0);
+				dialog.show(fm, "takeClassroom");
+			}
+		});
+
+		gridview = view.findViewById(R.id.gridview_classes);
+		reloadClassroomListview();
+
 		gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
 			@Override
@@ -86,7 +96,19 @@ public class TeacherHome extends Fragment
 			}
 		});
 	}
-	
+
+	public void reloadClassroomListview() {
+		List<String> classroomNames = new TeacherClassroomDAO(getContext()).getClassroomsWithThisTeacher(Utils.teacherLoggedInId);
+		List<Classroom> classrooms = new ArrayList<>();
+		ClassroomDAO classroomDAO = new ClassroomDAO(getContext());
+		for (String s : classroomNames) {
+			classrooms.add(classroomDAO.getClassroom(s));
+		}
+
+		GridViewAdapter adapter = new GridViewAdapter(getActivity(), classrooms);
+		gridview.setAdapter(adapter);
+	}
+
 	private class GridViewAdapter extends BaseAdapter
 	{
 		private List<Classroom> _classList;

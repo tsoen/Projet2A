@@ -24,7 +24,7 @@ import ensicaen.fr.marierave.Model.Classroom;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Views.AdministrationHome;
 
-public class DialogDeleteClass extends DialogFragment implements View.OnClickListener
+public class DeleteClassroomDialog extends DialogFragment implements View.OnClickListener
 {
 	private GridView _classroomsGridview;
 	
