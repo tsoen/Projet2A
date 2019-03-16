@@ -1,11 +1,14 @@
 package ensicaen.fr.marierave;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import ensicaen.fr.marierave.Controllers.ChildDAO;
@@ -33,6 +36,15 @@ public class MainActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.application_layout_fragment_container);
+
+        if (Build.VERSION.SDK_INT >= 24) {
+            try {
+                Method m = StrictMode.class.getMethod("disableDeathOnFileUriExposure");
+                m.invoke(null);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         new DAOBase(this).clearDatabase();
 

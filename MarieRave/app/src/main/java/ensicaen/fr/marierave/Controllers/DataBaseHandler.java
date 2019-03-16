@@ -48,7 +48,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 		
 		db.execSQL("CREATE TABLE tableTeacher (" +
 				"Id INTEGER PRIMARY KEY, " +
-				"Name TEXT NOT NULL, " + "Firstname TEXT NOT NULL, " + "IdConnection TEXT NOT NULL, " + "Password TEXT NOT NULL);");
+                "Name TEXT NOT NULL, " + "Firstname TEXT NOT NULL, " + "IdConnection TEXT NOT NULL UNIQUE, " + "Password TEXT NOT NULL);");
 	
 		db.execSQL("CREATE TABLE tableTeacherClassroom (" +
 				"ClassroomName TEXT, " +

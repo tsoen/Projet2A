@@ -2,6 +2,7 @@ package ensicaen.fr.marierave.Views;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -218,22 +219,21 @@ public class PersonnalProfile extends Fragment
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		Uri uri = Uri.fromFile(pdfFile);
 		intent.setDataAndType(uri, "application/pdf");
 		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-		startActivity(intent);
-		
-		/*Intent email = new Intent(Intent.ACTION_SEND);
-		email.putExtra(Intent.EXTRA_EMAIL, "receiver_email_address");
-		email.putExtra(Intent.EXTRA_SUBJECT, "subject");
-		email.putExtra(Intent.EXTRA_TEXT, "email body");
-		Uri uri = Uri.fromFile(pdfFile);
-		email.putExtra(Intent.EXTRA_STREAM, uri);
-		email.setType("application/pdf");
-		email.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		getActivity().startActivity(email);*/
+
+        Intent pdfViewer = Intent.createChooser(intent, "Open File");
+        try {
+            startActivity(pdfViewer);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+
+            Toast.makeText(getContext(), "Aucune application permettant d'afficher un PDF n'a été détectée." +
+                    " Le fichier a été placé dans votre dossier de téléchargements", Toast.LENGTH_SHORT).show();
+        }
 	}
 	
 	public List<Bitmap> generateBitmapsFromView(View view)

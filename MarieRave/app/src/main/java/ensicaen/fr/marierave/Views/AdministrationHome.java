@@ -23,7 +23,7 @@ import ensicaen.fr.marierave.Controllers.ClassroomDAO;
 import ensicaen.fr.marierave.Model.Classroom;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
-import ensicaen.fr.marierave.Views.Dialogs.DialogDeleteClass;
+import ensicaen.fr.marierave.Views.Dialogs.DeleteClassroomDialog;
 import ensicaen.fr.marierave.Views.Dialogs.NewClassroomDialog;
 
 public class AdministrationHome extends Fragment
@@ -125,8 +125,8 @@ public class AdministrationHome extends Fragment
 			{
 				Bundle bundle = new Bundle();
 				FragmentManager fm = getActivity().getSupportFragmentManager();
-				
-				DialogFragment dialog = new DialogDeleteClass();
+
+				DialogFragment dialog = new DeleteClassroomDialog();
 				dialog.setArguments(bundle);
 				dialog.setTargetFragment(fm.findFragmentById(R.id.fragment_container), 0);
 				dialog.show(fm, "deleteTeacher");
