@@ -1,6 +1,8 @@
 package ensicaen.fr.marierave.Views;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -24,6 +26,7 @@ import ensicaen.fr.marierave.Controllers.TeacherDAO;
 import ensicaen.fr.marierave.Model.Child;
 import ensicaen.fr.marierave.Model.Teacher;
 import ensicaen.fr.marierave.R;
+import ensicaen.fr.marierave.Utils;
 import ensicaen.fr.marierave.Views.Dialogs.AddChildToClassroomDialog;
 import ensicaen.fr.marierave.Views.Dialogs.AddTeacherToClassroomDialog;
 
@@ -53,6 +56,36 @@ public class AdministrationClassroom extends Fragment implements android.view.Vi
 		
 		ImageButton btnBack = view.findViewById(R.id.backButton);
 		btnBack.setOnClickListener(this);
+		
+		ImageView btnLogOff = view.findViewById(R.id.imageView2);
+		btnLogOff.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+				builder.setMessage("Etes-vous sûr de vouloir vous déconnecter ?");
+				builder.setCancelable(true);
+				builder.setPositiveButton("Oui", new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int id)
+					{
+						Utils.replaceFragments(ConnectionFragment.class, getActivity(), null, false);
+						
+						dialog.cancel();
+					}
+				});
+				builder.setNegativeButton("Non", new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int id)
+					{
+						dialog.cancel();
+					}
+				});
+				
+				builder.create().show();
+			}
+		});
 		
 		_childsGridview = view.findViewById(R.id.gridviewChilds);
 		reloadChildsGridview();

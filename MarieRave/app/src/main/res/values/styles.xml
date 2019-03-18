@@ -57,7 +57,15 @@
     </style>
 
     <style name="switchButton">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
         <item name="android:background">@android:color/holo_green_light</item>
+    </style>
+
+    <style name="logOffButton">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@color/flahsyRed</item>
     </style>
 
     <style name="classroomButton">

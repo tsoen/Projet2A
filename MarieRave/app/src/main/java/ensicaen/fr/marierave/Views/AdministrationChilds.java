@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -46,6 +47,36 @@ public class AdministrationChilds extends Fragment
 			public void onClick(View v)
 			{
 				getActivity().getSupportFragmentManager().popBackStack();
+			}
+		});
+		
+		ImageView btnLogOff = view.findViewById(R.id.imageView2);
+		btnLogOff.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+				builder.setMessage("Etes-vous sûr de vouloir vous déconnecter ?");
+				builder.setCancelable(true);
+				builder.setPositiveButton("Oui", new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int id)
+					{
+						Utils.replaceFragments(ConnectionFragment.class, getActivity(), null, false);
+						
+						dialog.cancel();
+					}
+				});
+				builder.setNegativeButton("Non", new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int id)
+					{
+						dialog.cancel();
+					}
+				});
+				
+				builder.create().show();
 			}
 		});
 		

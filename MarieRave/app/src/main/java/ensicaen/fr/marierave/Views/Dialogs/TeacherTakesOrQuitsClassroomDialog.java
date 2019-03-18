@@ -88,19 +88,21 @@ public class TeacherTakesOrQuitsClassroomDialog extends DialogFragment implement
         switch (v.getId()) {
             case R.id.button24:
 	
-				Classroom classroom = (Classroom) _classroomsGridview.getAdapter().getItem(((GridViewAdapter) _classroomsGridview.getAdapter())._selectedPositions);
-
-                TeacherClassroomDAO teacherClassroomDAO = new TeacherClassroomDAO(getContext());
-	
-				if (mode.equals("add")) {
-					teacherClassroomDAO.addTeacherToClassroom(classroom.getName(), Utils.teacherLoggedInId);
+				if (((GridViewAdapter) _classroomsGridview.getAdapter())._selectedPositions != -1) {
+					Classroom classroom = (Classroom) _classroomsGridview.getAdapter().getItem(((GridViewAdapter) _classroomsGridview.getAdapter())._selectedPositions);
+		
+					TeacherClassroomDAO teacherClassroomDAO = new TeacherClassroomDAO(getContext());
+		
+					if (mode.equals("add")) {
+						teacherClassroomDAO.addTeacherToClassroom(classroom.getName(), Utils.teacherLoggedInId);
+					}
+					else if (mode.equals("delete")) {
+						teacherClassroomDAO.deleteTeacherFromCLassroom(classroom.getName(), Utils.teacherLoggedInId);
+					}
+		
+					((TeacherHome) getTargetFragment()).reloadClassroomListview();
 				}
-				else if (mode.equals("delete")) {
-					teacherClassroomDAO.deleteTeacherFromCLassroom(classroom.getName(), Utils.teacherLoggedInId);
-				}
-
-                ((TeacherHome) getTargetFragment()).reloadClassroomListview();
-
+				
                 dismiss();
                 break;
 

@@ -1,6 +1,8 @@
 package ensicaen.fr.marierave.Views;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -77,6 +79,36 @@ public class HomeClassroom extends Fragment
 			public void onClick(View v)
 			{
 				getActivity().getSupportFragmentManager().popBackStack();
+			}
+		});
+		
+		ImageView btnLogOff = view.findViewById(R.id.imageView2);
+		btnLogOff.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+				builder.setMessage("Etes-vous sûr de vouloir vous déconnecter ?");
+				builder.setCancelable(true);
+				builder.setPositiveButton("Oui", new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int id)
+					{
+						Utils.replaceFragments(ConnectionFragment.class, getActivity(), null, false);
+						
+						dialog.cancel();
+					}
+				});
+				builder.setNegativeButton("Non", new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int id)
+					{
+						dialog.cancel();
+					}
+				});
+				
+				builder.create().show();
 			}
 		});
 	}
