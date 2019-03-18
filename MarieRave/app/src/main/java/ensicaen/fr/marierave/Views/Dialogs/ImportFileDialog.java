@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,10 +60,10 @@ public class ImportFileDialog extends DialogFragment implements android.view.Vie
 			case R.id.imageButton:
 				storeFile();
 				
-				/*AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setMessage("Le fichier a été téléchargé dans le dossier Downloads/")
+				AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setMessage("Le fichier a été téléchargé dans le dossier Downloads/")
 						.setCancelable(false).setPositiveButton("Fermer", null);
 				AlertDialog alert = builder.create();
-				alert.show();*/
+				alert.show();
 				
 				dismiss();
 				break;

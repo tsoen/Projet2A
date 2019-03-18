@@ -1,7 +1,6 @@
 package ensicaen.fr.marierave.Views;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -103,17 +102,11 @@ public class AdministrationHome extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				NewClassroomDialog dialog = new NewClassroomDialog(getActivity());
-				dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-					@Override
-					public void onDismiss(final DialogInterface arg0) {
-						List<Classroom> classrooms = new ClassroomDAO(getContext()).getAllClassrooms();
-						GridViewAdapter adapter = new GridViewAdapter(getActivity(), classrooms);
-						gridview.setAdapter(adapter);
-					}
-				});
+				NewClassroomDialog dialog = new NewClassroomDialog();
 				
-				dialog.show();
+				FragmentManager fm = getActivity().getSupportFragmentManager();
+				dialog.setTargetFragment(fm.findFragmentById(R.id.fragment_container), 0);
+				dialog.show(fm, "newClassroom");
 			}
 		});
 		
@@ -123,11 +116,8 @@ public class AdministrationHome extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				Bundle bundle = new Bundle();
 				FragmentManager fm = getActivity().getSupportFragmentManager();
-
 				DialogFragment dialog = new DeleteClassroomDialog();
-				dialog.setArguments(bundle);
 				dialog.setTargetFragment(fm.findFragmentById(R.id.fragment_container), 0);
 				dialog.show(fm, "deleteTeacher");
 			}

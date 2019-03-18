@@ -1,10 +1,12 @@
 package ensicaen.fr.marierave.Views.Dialogs;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -14,35 +16,34 @@ import android.widget.Toast;
 import ensicaen.fr.marierave.Controllers.ClassroomDAO;
 import ensicaen.fr.marierave.Model.Classroom;
 import ensicaen.fr.marierave.R;
+import ensicaen.fr.marierave.Views.AdministrationHome;
 
-public class NewClassroomDialog extends Dialog implements android.view.View.OnClickListener {
-	
-	public NewClassroomDialog(Activity a) {
-		super(a);
-	}
+public class NewClassroomDialog extends DialogFragment implements android.view.View.OnClickListener
+{
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
+		View view = inflater.inflate(R.layout.dialog_new_classroom, container);
 		
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+		getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+		getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 		setCancelable(false);
 		
-		setContentView(R.layout.dialog_new_classroom);
-		
-		Button btnValidate = findViewById(R.id.btn_validate);
+		Button btnValidate = view.findViewById(R.id.btn_validate);
 		btnValidate.setOnClickListener(this);
 		
-		Button btnCancel = findViewById(R.id.btn_cancel);
+		Button btnCancel = view.findViewById(R.id.btn_cancel);
 		btnCancel.setOnClickListener(this);
+		
+		return view;
 	}
 	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.btn_validate:
-				EditText edtClassroomName = findViewById(R.id.edit_classroomName);
+				EditText edtClassroomName = v.findViewById(R.id.edit_classroomName);
 				
 				ClassroomDAO classroomDAO = new ClassroomDAO(getContext());
 				
@@ -51,6 +52,8 @@ public class NewClassroomDialog extends Dialog implements android.view.View.OnCl
 				} catch (SQLiteConstraintException e){
 					Toast.makeText(getContext(), "Une classe avec ce nom existe déjà !", Toast.LENGTH_SHORT).show();
 				}
+				
+				((AdministrationHome) getTargetFragment()).reloadClassroomListview();
 				
 				dismiss();
 				break;

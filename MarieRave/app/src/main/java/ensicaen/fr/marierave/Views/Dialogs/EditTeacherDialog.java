@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -29,11 +30,10 @@ public class EditTeacherDialog extends DialogFragment implements android.view.Vi
 		final View view = inflater.inflate(R.layout.dialog_edit_teacher, container);
 		
 		getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+		getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 		setCancelable(false);
 		
-		Integer teacherId = getArguments().getInt("teacherId");
-		
-		_teacher = new TeacherDAO(getContext()).getTeacher(teacherId);
+		_teacher = new TeacherDAO(getContext()).getTeacher(getArguments().getInt("teacherId"));
 		
 		edit_teacherName = view.findViewById(R.id.editText2);
 		edit_teacherName.setText(_teacher.getName());

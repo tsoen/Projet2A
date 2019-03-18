@@ -57,15 +57,11 @@ public class AdministrationChilds extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				NewChildDialog dialog = new NewChildDialog(getActivity());
-				dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-					@Override
-					public void onDismiss(final DialogInterface arg0) {
-						reloadChildtListView();
-					}
-				});
+				FragmentManager fm = getActivity().getSupportFragmentManager();
 				
-				dialog.show();
+				NewChildDialog dialog = new NewChildDialog();
+				dialog.setTargetFragment(fm.findFragmentById(R.id.fragment_container), 0);
+				dialog.show(fm, "newChild");
 			}
 		});
 		
