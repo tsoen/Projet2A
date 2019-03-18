@@ -26,7 +26,7 @@ import ensicaen.fr.marierave.Controllers.TeacherClassroomDAO;
 import ensicaen.fr.marierave.Model.Classroom;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
-import ensicaen.fr.marierave.Views.Dialogs.TeacherTakesClassroomDialog;
+import ensicaen.fr.marierave.Views.Dialogs.TeacherTakesOrQuitsClassroomDialog;
 
 public class TeacherHome extends Fragment
 {
@@ -74,9 +74,29 @@ public class TeacherHome extends Fragment
 			@Override
 			public void onClick(View view) {
 				FragmentManager fm = getActivity().getSupportFragmentManager();
-
-				DialogFragment dialog = new TeacherTakesClassroomDialog();
+				Bundle bundle = new Bundle();
+				bundle.putString("mode", "add");
+				
+				DialogFragment dialog = new TeacherTakesOrQuitsClassroomDialog();
 				dialog.setTargetFragment(fm.findFragmentById(R.id.fragment_container), 0);
+				dialog.setArguments(bundle);
+				dialog.show(fm, "takeClassroom");
+			}
+		});
+		
+		ImageButton btnDeleteClass = view.findViewById(R.id.btnDelete_Class);
+		btnDeleteClass.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View view)
+			{
+				FragmentManager fm = getActivity().getSupportFragmentManager();
+				Bundle bundle = new Bundle();
+				bundle.putString("mode", "delete");
+				
+				DialogFragment dialog = new TeacherTakesOrQuitsClassroomDialog();
+				dialog.setTargetFragment(fm.findFragmentById(R.id.fragment_container), 0);
+				dialog.setArguments(bundle);
 				dialog.show(fm, "takeClassroom");
 			}
 		});

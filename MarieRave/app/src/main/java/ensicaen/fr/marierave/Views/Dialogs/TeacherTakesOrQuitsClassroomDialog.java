@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ensicaen.fr.marierave.Controllers.ClassroomDAO;
@@ -24,33 +25,42 @@ import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
 import ensicaen.fr.marierave.Views.TeacherHome;
 
-public class TeacherTakesClassroomDialog extends DialogFragment implements View.OnClickListener {
+public class TeacherTakesOrQuitsClassroomDialog extends DialogFragment implements View.OnClickListener
+{
     private GridView _classroomsGridview;
-
-    private Integer teacherId;
-
+	
+	private String mode;
+    
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.dialog_teacher_takes_classroom, container);
 
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         setCancelable(false);
-
+	
+		mode = getArguments().getString("mode");
+        
         Button btnValidate = view.findViewById(R.id.button24);
         btnValidate.setOnClickListener(this);
 
         Button btnCancel = view.findViewById(R.id.button23);
         btnCancel.setOnClickListener(this);
-
-        teacherId = Utils.teacherLoggedInId;
-
-
-        List<String> classroomNames = new TeacherClassroomDAO(getContext()).getClassroomsWithThisTeacher(teacherId);
-
-        List<Classroom> classroomList = new ClassroomDAO(getContext()).getAllClassrooms();
-        for (String name : classroomNames) {
-            classroomList.remove(new Classroom(name));
-        }
+	
+		List<String> classroomNames = new TeacherClassroomDAO(getContext()).getClassroomsWithThisTeacher(Utils.teacherLoggedInId);
+	
+		List<Classroom> classroomList = new ArrayList<>();
+	
+		if (mode.equals("add")) {
+			classroomList = new ClassroomDAO(getContext()).getAllClassrooms();
+			for (String name : classroomNames) {
+				classroomList.remove(new Classroom(name));
+			}
+		}
+		else if (mode.equals("delete")) {
+			for (String name : classroomNames) {
+				classroomList.add(new Classroom(name));
+			}
+		}
 
         final GridViewAdapter adapter = new GridViewAdapter(getActivity(), classroomList);
         _classroomsGridview = view.findViewById(R.id.gridview_classes);
@@ -77,11 +87,17 @@ public class TeacherTakesClassroomDialog extends DialogFragment implements View.
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button24:
-
-                Classroom c = (Classroom) _classroomsGridview.getAdapter().getItem(((GridViewAdapter) _classroomsGridview.getAdapter())._selectedPositions);
+	
+				Classroom classroom = (Classroom) _classroomsGridview.getAdapter().getItem(((GridViewAdapter) _classroomsGridview.getAdapter())._selectedPositions);
 
                 TeacherClassroomDAO teacherClassroomDAO = new TeacherClassroomDAO(getContext());
-                teacherClassroomDAO.addTeacherToClassroom(c.getName(), teacherId);
+	
+				if (mode.equals("add")) {
+					teacherClassroomDAO.addTeacherToClassroom(classroom.getName(), Utils.teacherLoggedInId);
+				}
+				else if (mode.equals("delete")) {
+					teacherClassroomDAO.deleteTeacherFromCLassroom(classroom.getName(), Utils.teacherLoggedInId);
+				}
 
                 ((TeacherHome) getTargetFragment()).reloadClassroomListview();
 
