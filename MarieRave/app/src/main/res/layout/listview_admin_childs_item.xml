@@ -74,13 +74,13 @@
 
     <ImageButton
         android:id="@+id/button13"
+        style="@style/editButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/cell_shape_r"
-        style="@style/appraisalButton"
         app:layout_constraintBottom_toBottomOf="@+id/button12"
-        app:layout_constraintEnd_toStartOf="@+id/guideline17"
-        app:layout_constraintStart_toStartOf="@+id/guideline13"
+        app:layout_constraintEnd_toStartOf="@+id/guideline20"
+        app:layout_constraintStart_toStartOf="@+id/guideline17"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <android.support.constraint.Guideline
@@ -92,13 +92,13 @@
 
     <ImageButton
         android:id="@+id/button14"
+        style="@style/printButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/cell_shape_r"
-        style="@style/printButton"
         app:layout_constraintBottom_toBottomOf="@+id/button13"
-        app:layout_constraintEnd_toStartOf="@+id/guideline20"
-        app:layout_constraintStart_toStartOf="@+id/guideline17"
+        app:layout_constraintEnd_toStartOf="@+id/guideline17"
+        app:layout_constraintStart_toStartOf="@+id/guideline13"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <android.support.constraint.Guideline

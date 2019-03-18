@@ -23,7 +23,7 @@ import ensicaen.fr.marierave.Model.Child;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
 import ensicaen.fr.marierave.Views.Dialogs.ImportFileDialog;
-import ensicaen.fr.marierave.Views.Dialogs.NewChildDialog;
+import ensicaen.fr.marierave.Views.Dialogs.NewOrUpdateChildDialog;
 
 public class AdministrationChilds extends Fragment
 {
@@ -58,8 +58,11 @@ public class AdministrationChilds extends Fragment
 			public void onClick(View v)
 			{
 				FragmentManager fm = getActivity().getSupportFragmentManager();
+				Bundle bundle = new Bundle();
+				bundle.putString("mode", "new");
 				
-				NewChildDialog dialog = new NewChildDialog();
+				NewOrUpdateChildDialog dialog = new NewOrUpdateChildDialog();
+				dialog.setArguments(bundle);
 				dialog.setTargetFragment(fm.findFragmentById(R.id.fragment_container), 0);
 				dialog.show(fm, "newChild");
 			}
@@ -133,8 +136,8 @@ public class AdministrationChilds extends Fragment
 			private TextView _name;
 			private TextView _surname;
 			private ImageButton _btnConsult;
-			private ImageButton _btnResults;
 			private ImageButton _btnPrint;
+			private ImageButton _btnEdit;
 			private ImageButton _btnDelete;
 		}
 		
@@ -148,7 +151,7 @@ public class AdministrationChilds extends Fragment
 				holder._name = convertView.findViewById(R.id.textView6);
 				holder._surname = convertView.findViewById(R.id.textView8);
 				holder._btnConsult = convertView.findViewById(R.id.button12);
-				holder._btnResults = convertView.findViewById(R.id.button13);
+				holder._btnEdit = convertView.findViewById(R.id.button13);
 				holder._btnPrint = convertView.findViewById(R.id.button14);
 				holder._btnDelete = convertView.findViewById(R.id.button17);
 				
@@ -164,11 +167,20 @@ public class AdministrationChilds extends Fragment
 					}
 				});
 				
-				holder._btnResults.setOnClickListener(new View.OnClickListener() {
+				holder._btnEdit.setOnClickListener(new View.OnClickListener()
+				{
 					@Override
 					public void onClick(View v)
 					{
-						Utils.replaceFragments(PersonnalProfileResults.class, _activity, null, true);
+						FragmentManager fm = getActivity().getSupportFragmentManager();
+						Bundle bundle = new Bundle();
+						bundle.putString("mode", "edit");
+						bundle.putInt("childId", child.getId());
+						
+						NewOrUpdateChildDialog dialog = new NewOrUpdateChildDialog();
+						dialog.setArguments(bundle);
+						dialog.setTargetFragment(fm.findFragmentById(R.id.fragment_container), 0);
+						dialog.show(fm, "editChild");
 					}
 				});
 				

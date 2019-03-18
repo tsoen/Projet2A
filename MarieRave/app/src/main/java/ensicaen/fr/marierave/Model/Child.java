@@ -51,9 +51,19 @@ public class Child
 		return _name;
 	}
 	
+	public void setName(String name)
+	{
+		_name = name;
+	}
+	
 	public String getFirstname()
 	{
 		return _firstname;
+	}
+	
+	public void setFirstname(String firstname)
+	{
+		_firstname = firstname;
 	}
 	
 	public String getClassroom()
