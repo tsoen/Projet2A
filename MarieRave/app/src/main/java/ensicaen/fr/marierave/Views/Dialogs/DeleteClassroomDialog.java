@@ -75,16 +75,16 @@ public class DeleteClassroomDialog extends DialogFragment implements View.OnClic
 			case R.id.button24:
 				
 				ClassroomDAO classroomDAO = new ClassroomDAO(getContext());
-				Classroom c = (Classroom) _classroomsGridview.getAdapter().getItem(((GridViewAdapter) _classroomsGridview.getAdapter())._selectedPositions);
+				Classroom classroom = (Classroom) _classroomsGridview.getAdapter().getItem(((GridViewAdapter) _classroomsGridview.getAdapter())._selectedPositions);
 				
 				ChildDAO childDAO = new ChildDAO(getContext());
-				List<Child> childList = childDAO.getAllChildsInClassroom(c.getName());
+				List<Child> childList = childDAO.getAllChildsInClassroom(classroom.getName());
 				for (Child child : childList) {
 					child.setClassroom("Ecole");
 					childDAO.updateChild(child);
 				}
 				
-				classroomDAO.deleteClassroom(c.getName());
+				classroomDAO.deleteClassroom(classroom.getName());
 				
 				((AdministrationHome) getTargetFragment()).reloadClassroomListview();
 				

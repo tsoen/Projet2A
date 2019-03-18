@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 
+import ensicaen.fr.marierave.Controllers.TeacherDAO;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
 import ensicaen.fr.marierave.Views.TeacherHome;
@@ -39,7 +41,13 @@ public class ChangeAppModePasswordDialog extends DialogFragment implements andro
 	{
 		switch (v.getId()) {
 			case R.id.button10:
-				Utils.replaceFragments(TeacherHome.class, getActivity(), null, false);
+				
+				EditText txtPassword = getDialog().findViewById(R.id.editTextChange);
+				
+				if (txtPassword.getText().toString().equals(new TeacherDAO(getContext()).getTeacher(Utils.teacherLoggedInId).getPassword())) {
+					Utils.replaceFragments(TeacherHome.class, getActivity(), null, false);
+				}
+				
 				dismiss();
 				break;
 			

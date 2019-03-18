@@ -118,15 +118,15 @@ public class AddChildToClassroomDialog extends DialogFragment implements View.On
 				
 				ChildDAO childDAO = new ChildDAO(getContext());
 				for (int i : ((GridViewAdapter) _childsGridview.getAdapter())._selectedPositions) {
-					Child c = (Child) _childsGridview.getAdapter().getItem(i);
+					Child child = (Child) _childsGridview.getAdapter().getItem(i);
 					if (_mode.equals("Add")) {
-						c.setClassroom(_classroomName);
+						child.setClassroom(_classroomName);
 					}
 					else if (_mode.equals("Delete")) {
-						c.setClassroom("Ecole");
+						child.setClassroom("Ecole");
 					}
 					
-					childDAO.updateChild(c);
+					childDAO.updateChild(child);
 				}
 				
 				((AdministrationClassroom) getTargetFragment()).reloadChildsGridview();

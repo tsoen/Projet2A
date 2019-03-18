@@ -20,7 +20,6 @@ import ensicaen.fr.marierave.Views.AdministrationHome;
 
 public class NewClassroomDialog extends DialogFragment implements android.view.View.OnClickListener
 {
-	
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -43,7 +42,7 @@ public class NewClassroomDialog extends DialogFragment implements android.view.V
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.btn_validate:
-				EditText edtClassroomName = v.findViewById(R.id.edit_classroomName);
+				EditText edtClassroomName = getDialog().findViewById(R.id.edit_classroomName);
 				
 				ClassroomDAO classroomDAO = new ClassroomDAO(getContext());
 				

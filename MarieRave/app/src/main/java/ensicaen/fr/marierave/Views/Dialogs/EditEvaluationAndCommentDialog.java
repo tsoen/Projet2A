@@ -104,10 +104,10 @@ public class EditEvaluationAndCommentDialog extends DialogFragment implements Vi
 	@Override
 	public void onClick(View v)
 	{
-		TextView textView = getDialog().findViewById(R.id.textView17);
-		
 		switch (v.getId()) {
 			case R.id.btn_validate:
+				TextView textView = getDialog().findViewById(R.id.textView17);
+				
 				SkillMarkDAO skillMarkDAO = new SkillMarkDAO(getContext());
 				SkillCommentDAO skillCommentDAO = new SkillCommentDAO(getContext());
 				

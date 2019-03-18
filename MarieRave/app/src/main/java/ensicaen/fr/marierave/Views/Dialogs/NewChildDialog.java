@@ -50,16 +50,21 @@ public class NewChildDialog extends DialogFragment implements android.view.View.
 	}
 	
 	@Override
-	public void onClick(View v) {
+	public void onClick(View v)
+	{
 		switch (v.getId()) {
 			case R.id.btn_validate:
-				EditText edtChildName = v.findViewById(R.id.edit_childName);
-				EditText edtChildSurname = v.findViewById(R.id.edit_childSurname);
-				Spinner spinnerClassrooms = v.findViewById(R.id.spinner_classrooms);
+				EditText edtChildName = getDialog().findViewById(R.id.edit_childName);
+				EditText edtChildSurname = getDialog().findViewById(R.id.edit_childSurname);
+				Spinner spinnerClassrooms = getDialog().findViewById(R.id.spinner_classrooms);
 				
 				ChildDAO childDAO = new ChildDAO(getContext());
 				
-				childDAO.addChild(new Child(edtChildName.getText().toString(), edtChildSurname.getText().toString(), ((Classroom)spinnerClassrooms.getSelectedItem()).getName()));
+				if (!edtChildName.getText().toString().isEmpty() && !edtChildSurname.getText().toString().isEmpty()) {
+					childDAO.addChild(new Child(edtChildName.getText().toString(), edtChildSurname.getText().toString(),
+							((Classroom) spinnerClassrooms.getSelectedItem())
+							.getName()));
+				}
 				
 				((AdministrationChilds) getTargetFragment()).reloadChildtListView();
 				
