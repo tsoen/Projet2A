@@ -2,8 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             android:padding="5dp">
+                                             android:layout_height="match_parent">
 
     <RadioGroup
         android:id="@+id/radio_group_assess"
@@ -59,11 +58,13 @@
     <EditText
         android:id="@+id/textView17"
         android:layout_width="0dp"
-        android:layout_height="334dp"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:gravity="top|start"
+        app:layout_constraintBottom_toTopOf="@+id/btn_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView18"/>
@@ -76,7 +77,8 @@
         android:layout_marginBottom="8dp"
         android:text="Valider"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <Button
         android:id="@+id/btn_cancel"
@@ -86,12 +88,12 @@
         android:layout_marginBottom="8dp"
         android:text="Annuler"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <TextView
         android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/textStyle1"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="Ajouter un commentaire :"
@@ -100,10 +102,9 @@
 
     <TextView
         android:id="@+id/textView19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/textStyle1"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Modifier l'évaluation de l'élève sur cette compétence :"
         app:layout_constraintEnd_toEndOf="parent"

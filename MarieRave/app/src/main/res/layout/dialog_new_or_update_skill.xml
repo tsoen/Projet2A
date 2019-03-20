@@ -15,19 +15,20 @@
 
         <TextView
             android:id="@+id/textView16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textStyle1"
             android:text="Code :"
             app:layout_constraintBottom_toBottomOf="@+id/edit_skillCode"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView11"
             app:layout_constraintTop_toTopOf="@+id/edit_skillCode"/>
 
         <EditText
             android:id="@+id/edit_skillCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="@+id/edit_skillName"
             app:layout_constraintStart_toStartOf="@+id/edit_skillName"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -35,56 +36,63 @@
             android:id="@+id/btn_validate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:text="Valider"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/spinner_skillheaders"
             app:layout_constraintTop_toBottomOf="@+id/spinner_skillheaders"/>
 
         <Button
             android:id="@+id/btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="Annuler"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView12"
             app:layout_constraintTop_toTopOf="@+id/btn_validate"/>
 
         <TextView
             android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textStyle1"
             android:text="Intitulé :"
             app:layout_constraintBottom_toBottomOf="@+id/edit_skillName"
-            app:layout_constraintStart_toStartOf="@+id/textView16"
+            app:layout_constraintStart_toStartOf="@+id/textView12"
             app:layout_constraintTop_toTopOf="@+id/edit_skillName"/>
 
         <EditText
             android:id="@+id/edit_skillName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             android:ems="10"
             android:inputType="textPersonName"
-            app:layout_constraintStart_toEndOf="@+id/textView11"
+            app:layout_constraintEnd_toEndOf="@+id/spinner_skillheaders"
+            app:layout_constraintStart_toEndOf="@+id/textView12"
+            app:layout_constraintStart_toStartOf="@+id/spinner_skillheaders"
             app:layout_constraintTop_toBottomOf="@+id/edit_skillCode"/>
 
         <TextView
             android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textStyle1"
+            android:layout_marginStart="8dp"
             android:text="Section :"
             app:layout_constraintBottom_toBottomOf="@+id/spinner_skillheaders"
-            app:layout_constraintStart_toStartOf="@+id/textView11"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/spinner_skillheaders"/>
 
         <Spinner
             android:id="@+id/spinner_skillheaders"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/edit_skillName"
-            app:layout_constraintStart_toStartOf="@+id/edit_skillName"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView12"
             app:layout_constraintTop_toBottomOf="@+id/edit_skillName"/>
 
     </android.support.constraint.ConstraintLayout>
+
 </android.support.constraint.ConstraintLayout>

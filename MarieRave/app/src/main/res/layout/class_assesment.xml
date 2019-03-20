@@ -69,11 +69,10 @@
 
     <TextView
         android:id="@+id/textView37"
-        android:layout_width="76dp"
-        android:layout_height="0dp"
+        style="@style/textStyle1"
         android:layout_marginEnd="8dp"
         android:gravity="center_vertical"
-        android:text="Mode auto-évaluation :"
+        android:text="Mode auto-\névaluation :"
         app:layout_constraintBottom_toBottomOf="@+id/openAssessment4"
         app:layout_constraintEnd_toStartOf="@+id/openAssessment4"
         app:layout_constraintTop_toTopOf="@+id/openAssessment4"/>
@@ -97,10 +96,9 @@
 
     <TextView
         android:id="@+id/classname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/textStyle1"
         android:layout_marginTop="16dp"
-        android:text="Classname"
+        android:text="Nom de la classe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>

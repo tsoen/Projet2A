@@ -2,15 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             android:padding="5dp">
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.35"/>
+                                             android:layout_height="match_parent">
 
     <GridView
         android:id="@+id/gridview_childsToAdd"
@@ -23,19 +15,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView15"/>
 
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tout sélectionner"
-            app:layout_constraintBottom_toBottomOf="@+id/textView13"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView13"/>
+    <CheckBox
+        android:id="@+id/checkBox"
+        style="@style/textStyle1"
+        android:layout_marginEnd="8dp"
+        android:text="Tout sélectionner"
+        app:layout_constraintBottom_toBottomOf="@+id/textView13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView13"/>
 
         <TextView
             android:id="@+id/textView13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textStyle1"
             android:layout_marginEnd="8dp"
             android:text="enfant(s) sélectionné(s)"
             app:layout_constraintBottom_toBottomOf="@+id/textView15"
@@ -44,29 +35,27 @@
 
         <TextView
             android:id="@+id/textView14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textStyle1"
             android:layout_marginEnd="8dp"
             android:text="0"
             app:layout_constraintBottom_toBottomOf="@+id/textView13"
             app:layout_constraintEnd_toStartOf="@+id/textView13"
             app:layout_constraintTop_toTopOf="@+id/textView13"/>
 
-        <TextView
-            android:id="@+id/textView15"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Sélectionnez les enfants à ajouter à la classe"
-            app:layout_constraintEnd_toStartOf="@+id/guideline22"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:id="@+id/textView15"
+        style="@style/textStyle1"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Sélectionnez les enfants à ajouter à la classe"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
         android:id="@+id/btn_validate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:text="Valider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btn_cancel"/>
@@ -75,6 +64,7 @@
         android:id="@+id/btn_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Annuler"
         app:layout_constraintStart_toStartOf="parent"

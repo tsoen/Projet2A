@@ -14,8 +14,7 @@
 
         <TextView
             android:id="@+id/textView30"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textStyle1"
             android:layout_marginStart="8dp"
             android:text="Nom :"
             app:layout_constraintBottom_toBottomOf="@+id/editText2"
@@ -24,8 +23,7 @@
 
         <TextView
             android:id="@+id/textView31"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textStyle1"
             android:text="Prenom :"
             app:layout_constraintBottom_toBottomOf="@+id/editText3"
             app:layout_constraintStart_toStartOf="@+id/textView30"
@@ -33,8 +31,7 @@
 
         <TextView
             android:id="@+id/textView32"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textStyle1"
             android:text="Identifiant :"
             app:layout_constraintBottom_toBottomOf="@+id/editText4"
             app:layout_constraintStart_toStartOf="@+id/textView31"
@@ -42,8 +39,7 @@
 
         <TextView
             android:id="@+id/textView33"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textStyle1"
             android:text="Mot de passe :"
             app:layout_constraintBottom_toBottomOf="@+id/editText5"
             app:layout_constraintStart_toStartOf="@+id/textView32"

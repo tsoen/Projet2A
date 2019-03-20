@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -106,8 +107,16 @@ public class AddChildToClassroomDialog extends DialogFragment implements View.On
 			}
 		});
 		
-		
 		return view;
+	}
+	
+	@Override
+	public void onResume()
+	{
+		super.onResume();
+		WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
+		params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+		getDialog().getWindow().setAttributes(params);
 	}
 	
 	@Override

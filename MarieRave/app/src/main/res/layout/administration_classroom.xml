@@ -22,10 +22,9 @@
 
     <TextView
         android:id="@+id/className"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/textStyle1"
         android:layout_marginTop="16dp"
-        android:text="Class Name"
+        android:text="Nom de la classe"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -61,8 +60,7 @@
 
     <TextView
         android:id="@+id/students"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/textStyle1"
         android:text="Elèves : "
         app:layout_constraintBottom_toBottomOf="@+id/addStudent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -87,8 +85,7 @@
 
     <TextView
         android:id="@+id/teachers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/textStyle1"
         android:layout_marginTop="8dp"
         android:text="Enseignants :"
         app:layout_constraintEnd_toEndOf="parent"

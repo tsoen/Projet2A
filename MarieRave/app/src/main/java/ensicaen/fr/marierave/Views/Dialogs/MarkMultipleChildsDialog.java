@@ -109,10 +109,10 @@ public class MarkMultipleChildsDialog extends DialogFragment implements android.
     @Override
     public void onResume() {
         super.onResume();
-        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+		WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
         params.height = ViewGroup.LayoutParams.MATCH_PARENT;
-        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+		getDialog().getWindow().setAttributes(params);
     }
 	
 	public void reloadChildListview()

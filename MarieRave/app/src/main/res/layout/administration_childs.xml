@@ -200,8 +200,7 @@
 
     <TextView
         android:id="@+id/textView26"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/textStyle1"
         android:layout_marginEnd="8dp"
         android:text="Rechercher un élève : "
         app:layout_constraintBottom_toBottomOf="@+id/search_bar"

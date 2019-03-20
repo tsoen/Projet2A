@@ -33,7 +33,7 @@ public class TeacherTakesOrQuitsClassroomDialog extends DialogFragment implement
     
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.dialog_teacher_takes_classroom, container);
+		final View view = inflater.inflate(R.layout.dialog_teacher_takes_or_quits_classroom, container);
 
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         setCancelable(false);

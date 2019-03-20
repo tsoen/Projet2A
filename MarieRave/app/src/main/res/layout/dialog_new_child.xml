@@ -16,8 +16,8 @@
 
         <TextView
             android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textStyle1"
+            android:layout_marginStart="8dp"
             android:text="Nom :"
             app:layout_constraintBottom_toBottomOf="@+id/edit_childName"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,8 +27,10 @@
             android:id="@+id/edit_childName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="@+id/edit_childSurname"
             app:layout_constraintStart_toStartOf="@+id/edit_childSurname"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -36,9 +38,11 @@
             android:id="@+id/btn_validate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:text="Valider"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/spinner_classrooms"
             app:layout_constraintTop_toBottomOf="@+id/spinner_classrooms"/>
 
         <Button
@@ -46,13 +50,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Annuler"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_validate"
+            app:layout_constraintStart_toStartOf="@+id/textView12"
             app:layout_constraintTop_toTopOf="@+id/btn_validate"/>
 
         <TextView
             android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textStyle1"
             android:text="Prénom :"
             app:layout_constraintBottom_toBottomOf="@+id/edit_childSurname"
             app:layout_constraintStart_toStartOf="@+id/textView9"
@@ -64,15 +68,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:ems="10"
             android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView11"
             app:layout_constraintTop_toBottomOf="@+id/edit_childName"/>
 
         <TextView
             android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textStyle1"
             android:text="Classe :"
             app:layout_constraintBottom_toBottomOf="@+id/spinner_classrooms"
             app:layout_constraintStart_toStartOf="@+id/textView11"

@@ -102,6 +102,15 @@ public class EditEvaluationAndCommentDialog extends DialogFragment implements Vi
 	}
 	
 	@Override
+	public void onResume()
+	{
+		super.onResume();
+		WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
+		params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+		getDialog().getWindow().setAttributes(params);
+	}
+	
+	@Override
 	public void onClick(View v)
 	{
 		switch (v.getId()) {

@@ -50,8 +50,8 @@
     </style>
     <style name="removeButton">
         <item name="android:src">@drawable/remove</item>
-        <item name="android:layout_height">50dp</item>
         <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:adjustViewBounds">false</item>
         <item name="android:background">?android:colorBackground</item>
@@ -73,6 +73,14 @@
         <item name="android:src">@drawable/classroom</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:background">?android:colorBackground</item>
+    </style>
+
+    <style name="textStyle1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
 </resources>
