@@ -10,7 +10,8 @@
         android:background="@drawable/cell_shape_notop"
         android:ellipsize="end"
         android:padding="5dp"
-        android:singleLine="true">
+        android:singleLine="true"
+        android:text="Matiere">
     </TextView>
 
 </android.support.constraint.ConstraintLayout>

@@ -17,21 +17,19 @@
 
     <ImageButton
         android:id="@+id/btnAdd_Class"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         style="@style/newButton"
         android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/btnDelete_Class"
         app:layout_constraintEnd_toStartOf="@+id/btnDelete_Class"
-        app:layout_constraintTop_toTopOf="@+id/btnDelete_Class" />
+        app:layout_constraintTop_toTopOf="@+id/btnDelete_Class"/>
 
     <ImageButton
         android:id="@+id/btnDelete_Class"
         style="@style/removeButton"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/openAssessment" />
+        app:layout_constraintTop_toBottomOf="@+id/openAssessment"/>
 
     <Button
         android:id="@+id/btn_Admin"
