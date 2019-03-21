@@ -1,6 +1,7 @@
 package ensicaen.fr.marierave.Views.Dialogs;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -212,8 +213,27 @@ public class MarkMultipleChildsDialog extends DialogFragment implements android.
 
             holder._txtName.setText(_childList.get(position).getName());
             holder._txtSurname.setText(_childList.get(position).getFirstname());
-            holder._txtMark.setText(new SkillMarkDAO(getContext()).getSkillMark(_childList.get(position).getId(), _skillCode));
 
+			switch (new SkillMarkDAO(getContext()).getSkillMark(_childList.get(position).getId(), _skillCode)) {
+				case "A":
+					holder._txtMark.setBackgroundColor(Color.parseColor("#088A08"));
+					break;
+
+				case "B":
+					holder._txtMark.setBackgroundColor(Color.parseColor("#00FF40"));
+					break;
+
+				case "C":
+					holder._txtMark.setBackgroundColor(Color.parseColor("#FFD500"));
+					break;
+
+				case "D":
+					holder._txtMark.setBackgroundColor(Color.parseColor("#FF0000"));
+					break;
+
+				default:
+					break;
+			}
 
             holder._box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override

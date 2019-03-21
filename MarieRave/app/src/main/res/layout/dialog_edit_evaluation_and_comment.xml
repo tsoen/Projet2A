@@ -17,11 +17,21 @@
         app:layout_constraintTop_toBottomOf="@+id/textView19">
 
         <RadioButton
-            android:id="@+id/darkGreen"
+            android:id="@+id/red"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="32dp"
-            android:buttonTint="#088A08"
+            android:buttonTint="#FF0000"
+            android:scaleX="3"
+            android:scaleY="3"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <RadioButton
+            android:id="@+id/yellow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="32dp"
+            android:buttonTint="#FFD500"
             android:scaleX="3"
             android:scaleY="3"/>
 
@@ -35,23 +45,13 @@
             android:scaleY="3"/>
 
         <RadioButton
-            android:id="@+id/yellow"
+            android:id="@+id/darkGreen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="32dp"
-            android:buttonTint="#ffd500"
+            android:buttonTint="#088A08"
             android:scaleX="3"
-            android:scaleY="3"/>
-
-        <RadioButton
-            android:id="@+id/red"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="32dp"
-            android:buttonTint="#FF0000"
-            android:scaleX="3"
-            android:scaleY="3"
-            app:layout_constraintVertical_bias="1.0"/>
+            android:scaleY="3" />
 
     </RadioGroup>
 

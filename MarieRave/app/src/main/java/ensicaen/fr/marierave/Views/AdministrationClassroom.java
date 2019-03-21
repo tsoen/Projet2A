@@ -189,12 +189,12 @@ public class AdministrationClassroom extends Fragment implements android.view.Vi
 	{
         private List<Child> _childList;
 		private Activity _activity;
-		
-		GridViewChildsAdapter(Activity activity, List<Child> productList)
+
+		GridViewChildsAdapter(Activity activity, List<Child> childList)
 		{
 			super();
 			_activity = activity;
-            _childList = productList;
+			_childList = childList;
 		}
 		
 		@Override
@@ -287,8 +287,8 @@ public class AdministrationClassroom extends Fragment implements android.view.Vi
 				holder._profilePic = convertView.findViewById(R.id.imgProfilePicture);
 				holder._txtName = convertView.findViewById(R.id.txtName);
 				holder._txtFirstname = convertView.findViewById(R.id.txtSurname);
-				
-				holder._profilePic.setImageResource(R.mipmap.ic_launcher_round);
+
+				holder._profilePic.setImageResource(R.drawable.garcon_icon);
 				holder._txtName.setText(_teacherList.get(position).getName());
 				holder._txtFirstname.setText(_teacherList.get(position).getFirstname());
 			}

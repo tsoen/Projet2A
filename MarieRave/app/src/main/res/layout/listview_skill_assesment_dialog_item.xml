@@ -16,8 +16,8 @@
 
         <TextView
             android:id="@+id/textView41"
-            style="@style/textStyle1"
-            android:text="Note"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/textView40"
             app:layout_constraintLeft_toLeftOf="@+id/guideline15"
             app:layout_constraintRight_toRightOf="parent"

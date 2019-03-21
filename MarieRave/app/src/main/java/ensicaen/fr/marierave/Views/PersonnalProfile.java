@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.net.Uri;
@@ -33,17 +34,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
@@ -216,13 +213,11 @@ public class PersonnalProfile extends Fragment
 			return;
 		}
 		
-		//First Check if the external storage is writable
 		String state = Environment.getExternalStorageState();
 		if (!Environment.MEDIA_MOUNTED.equals(state)) {
 			Log.d("myapp", "ko");
 		}
-		
-		
+
 		File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(), "myPdfFile.pdf");
 		
 		if (pdfFile.exists()) {
@@ -357,22 +352,12 @@ public class PersonnalProfile extends Fragment
 	
 	private void addImage(Document document, byte[] byteArray)
 	{
-		Image image = null;
 		try {
-			image = Image.getInstance(byteArray);
-		} catch (BadElementException e) {
-			e.printStackTrace();
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		image.scalePercent(25f);
-		
-		try {
+            Image image = Image.getInstance(byteArray);
+            image.scalePercent(25f);
 			document.add(image);
-		} catch (DocumentException e) {
+
+        } catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -486,8 +471,27 @@ public class PersonnalProfile extends Fragment
 					final Skill item = (Skill) _skillsAndHeaders.get(position);
 					holder._code.setText(item.getCode());
 					holder._name.setText(item.getName());
-					holder._result.setText(new SkillMarkDAO(getContext()).getSkillMark(_childId, item.getCode()));
-					
+                    switch (new SkillMarkDAO(getContext()).getSkillMark(_childId, item.getCode())) {
+                        case "A":
+                            holder._result.setBackgroundColor(Color.parseColor("#088A08"));
+                            break;
+
+                        case "B":
+                            holder._result.setBackgroundColor(Color.parseColor("#00FF40"));
+                            break;
+
+                        case "C":
+                            holder._result.setBackgroundColor(Color.parseColor("#FFD500"));
+                            break;
+
+                        case "D":
+                            holder._result.setBackgroundColor(Color.parseColor("#FF0000"));
+                            break;
+
+                        default:
+                            break;
+                    }
+
 					holder._btnEdit.setOnClickListener(new View.OnClickListener()
 					{
 						@Override
