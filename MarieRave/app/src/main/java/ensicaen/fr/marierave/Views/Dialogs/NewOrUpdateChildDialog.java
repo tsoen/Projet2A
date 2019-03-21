@@ -75,8 +75,8 @@ public class NewOrUpdateChildDialog extends DialogFragment implements android.vi
 				Spinner spinnerClassrooms = getDialog().findViewById(R.id.spinner_classrooms);
 				
 				ChildDAO childDAO = new ChildDAO(getContext());
-				
-				if (!edtChildName.getText().toString().isEmpty() && !edtChildFirstname.getText().toString().isEmpty()) {
+
+				if (!edtChildName.getText().toString().isEmpty() && !edtChildFirstname.getText().toString().isEmpty() && spinnerClassrooms.getSelectedItem() != null) {
 					if (mode.equals("edit")) {
 						Child child = childDAO.getChild(getArguments().getInt("childId"));
 						child.setName(edtChildName.getText().toString());
