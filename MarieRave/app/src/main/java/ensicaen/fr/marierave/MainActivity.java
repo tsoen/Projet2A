@@ -13,7 +13,6 @@ import java.util.List;
 
 import ensicaen.fr.marierave.Controllers.ChildDAO;
 import ensicaen.fr.marierave.Controllers.ClassroomDAO;
-import ensicaen.fr.marierave.Controllers.DAOBase;
 import ensicaen.fr.marierave.Controllers.SkillDAO;
 import ensicaen.fr.marierave.Controllers.SkillheaderDAO;
 import ensicaen.fr.marierave.Controllers.SubjectDAO;
@@ -46,12 +45,14 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-        new DAOBase(this).clearDatabase();
+		//new DAOBase(this).clearDatabase();
 
         ClassroomDAO classroomDAO = new ClassroomDAO(this);
-
         classroomDAO.addClassroom(new Classroom("Ecole")); //!! DO NOT REMOVE UNTIL ARCHITECTURE CHANGE !!\\
+		TeacherDAO teacherDAO = new TeacherDAO(this);
+		teacherDAO.addTeacher(new Teacher("admin", "admin", "admin", "admin"));
 
+		/*
         classroomDAO.addClassroom(new Classroom("CP"));
 		classroomDAO.addClassroom(new Classroom("CE1"));
 
@@ -136,6 +137,7 @@ public class MainActivity extends AppCompatActivity
 		skillDAO.addSkill(new Skill("SPO34", "SPORT", "Courir"));
 		skillDAO.addSkill(new Skill("SPO35", "SPORT", "Courir"));
 		skillDAO.addSkill(new Skill("SPO36", "SPORT", "Courir"));
+*/
 
         if (findViewById(R.id.fragment_container) != null) {
 			if (savedInstanceState == null) {
