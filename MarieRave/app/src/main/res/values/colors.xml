@@ -10,4 +10,6 @@
     <color name="nonAgressiveGreen">#3FBC2F</color>
     <color name="flahsyRed">#C94837</color>
     <color name="lightestGrey">#edf5fb</color>
+    <color name="test">#ffffff</color>
+    <color name="testint">#383d7e</color>
 </resources>

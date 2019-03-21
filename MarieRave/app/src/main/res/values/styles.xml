@@ -4,14 +4,13 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@android:color/holo_blue_dark
+        </item> <!-- bar d'etat au dessus -->
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <style name="backButton">
-        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_width">50dp</item>
         <item name="android:layout_height">50dp</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:adjustViewBounds">false</item>
         <item name="android:background">?android:colorBackground</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:src">@drawable/images</item>
@@ -82,5 +81,4 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
-
 </resources>

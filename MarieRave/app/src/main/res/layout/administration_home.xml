@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="5dp">
 
     <ImageButton
         android:id="@+id/backButton"
@@ -14,33 +16,36 @@
     <ImageView
         android:id="@+id/imageView2"
         style="@style/logOffButton"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_lock_power_off"/>
+        app:srcCompat="@android:drawable/ic_lock_power_off" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_weight="1"
-        android:text="Competences"
+        android:drawableStart="@drawable/skill"
+        android:drawablePadding="5dp"
+        android:text="Compétences"
+        android:textColor="@color/test"
+        app:backgroundTint="@color/testint"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backButton"/>
+        app:layout_constraintTop_toBottomOf="@+id/backButton"
+        tools:ignore="RtlSymmetry" />
 
     <Button
         android:id="@+id/button5"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_weight="1"
+        android:drawableStart="@drawable/student"
+        android:drawablePadding="5dp"
         android:text="Eleves"
+        android:textColor="@color/test"
+        app:backgroundTint="@color/testint"
         app:layout_constraintBottom_toBottomOf="@+id/button4"
         app:layout_constraintLeft_toRightOf="@+id/button4"
-        app:layout_constraintTop_toTopOf="@+id/button4"/>
+        app:layout_constraintTop_toTopOf="@+id/button4" />
 
     <ImageButton
         android:id="@+id/button6"
@@ -54,7 +59,6 @@
     <ImageButton
         android:id="@+id/button7"
         style="@style/removeButton"
-        android:layout_marginEnd="8dp"
         android:layout_weight="1"
         app:layout_constraintBottom_toBottomOf="@+id/textView19"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -63,9 +67,7 @@
         android:id="@+id/gridview1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:horizontalSpacing="15dp"
         android:numColumns="4"
         android:verticalSpacing="15dp"
@@ -73,7 +75,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView19"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
     <Button
         android:id="@+id/button3"
