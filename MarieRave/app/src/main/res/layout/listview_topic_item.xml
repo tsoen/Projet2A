@@ -11,7 +11,8 @@
         android:ellipsize="end"
         android:padding="5dp"
         android:singleLine="true"
-        android:text="Matiere">
-    </TextView>
+        android:text="Matiere"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"></TextView>
 
 </android.support.constraint.ConstraintLayout>

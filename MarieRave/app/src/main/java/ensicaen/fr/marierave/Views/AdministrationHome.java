@@ -123,7 +123,7 @@ public class AdministrationHome extends Fragment
 			{
 				
 				Bundle bundle = new Bundle();
-				TextView className = v.findViewById(R.id.button8);
+                TextView className = v.findViewById(R.id.className);
 				bundle.putString("classroomName", className.getText().toString());
 				
 				Utils.replaceFragments(AdministrationClassroom.class, getActivity(), bundle, true);
@@ -197,7 +197,7 @@ public class AdministrationHome extends Fragment
 		
 		private class ViewHolder
 		{
-			private TextView _classButton;
+            private TextView _className;
 		}
 		
 		@Override
@@ -206,8 +206,8 @@ public class AdministrationHome extends Fragment
 			if (convertView == null) {
 				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_list_classes_item, null);
 				final ViewHolder holder = new ViewHolder();
-				holder._classButton = convertView.findViewById(R.id.button8);
-				holder._classButton.setText(_classList.get(position).getName());
+                holder._className = convertView.findViewById(R.id.className);
+                holder._className.setText(_classList.get(position).getName());
 			}
 			
 			return convertView;

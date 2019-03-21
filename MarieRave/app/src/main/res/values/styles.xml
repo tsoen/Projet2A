@@ -11,8 +11,6 @@
         <item name="android:layout_width">70dp</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:layout_marginStart">8dp</item>
-        <item name="android:layout_marginTop">8dp</item>
         <item name="android:adjustViewBounds">false</item>
         <item name="android:background">?android:colorBackground</item>
         <item name="android:scaleType">fitCenter</item>
@@ -56,25 +54,27 @@
         <item name="android:adjustViewBounds">false</item>
         <item name="android:background">?android:colorBackground</item>
     </style>
-
     <style name="switchButton">
         <item name="android:layout_width">50dp</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:background">@android:color/holo_green_light</item>
     </style>
-
     <style name="logOffButton">
         <item name="android:layout_width">50dp</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:background">@color/flahsyRed</item>
     </style>
-
     <style name="classroomButton">
         <item name="android:src">@drawable/classroom</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:background">?android:colorBackground</item>
     </style>
 
+    <style name="childPicture">
+        <item name="android:src">@drawable/garcon_icon</item>
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+    </style>
     <style name="textStyle1">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

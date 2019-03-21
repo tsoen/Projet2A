@@ -142,7 +142,7 @@ public class TeacherHome extends Fragment
 			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
 			{
 				Bundle bundle = new Bundle();
-				TextView className = view.findViewById(R.id.button8);
+                TextView className = view.findViewById(R.id.className);
 				bundle.putString("classroomName", className.getText().toString());
 				Utils.replaceFragments(HomeClassroom.class, getActivity(), bundle, true);
 			}
@@ -202,7 +202,7 @@ public class TeacherHome extends Fragment
 			if (convertView == null) {
 				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_list_classes_item, null);
 				final ViewHolder holder = new ViewHolder();
-				holder._className = convertView.findViewById(R.id.button8);
+                holder._className = convertView.findViewById(R.id.className);
 				holder._className.setText(_classList.get(position).getName());
 			}
 			

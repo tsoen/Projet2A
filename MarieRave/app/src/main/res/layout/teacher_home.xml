@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent"
-                                             tools:context=".MainActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/openAssessment"
         style="@style/switchButton"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_popup_sync"/>
+        app:srcCompat="@android:drawable/ic_popup_sync" />
 
     <ImageButton
         android:id="@+id/btnAdd_Class"
@@ -27,35 +25,29 @@
         android:id="@+id/btnDelete_Class"
         style="@style/removeButton"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/openAssessment"/>
+        app:layout_constraintTop_toBottomOf="@+id/openAssessment" />
 
     <Button
         android:id="@+id/btn_Admin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="Administratif"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <GridView
         android:id="@+id/gridview_classes"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:horizontalSpacing="15dp"
         android:numColumns="4"
         android:verticalSpacing="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView28"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
     <TextView
         android:id="@+id/textView18"
@@ -81,10 +73,9 @@
     <ImageView
         android:id="@+id/imageView2"
         style="@style/logOffButton"
-        android:layout_marginEnd="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/openAssessment"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/openAssessment"
-        app:srcCompat="@android:drawable/ic_lock_power_off"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_lock_power_off" />
 
 </android.support.constraint.ConstraintLayout>

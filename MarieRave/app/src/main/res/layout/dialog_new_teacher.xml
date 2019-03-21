@@ -15,37 +15,32 @@
 
         <TextView
             android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            style="@style/textStyle1"
             android:text="Nom :"
             app:layout_constraintBottom_toBottomOf="@+id/edit_teacherName"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/edit_teacherName"/>
+            app:layout_constraintTop_toTopOf="@+id/edit_teacherName" />
 
         <EditText
             android:id="@+id/edit_teacherName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/edit_teacherFirstname"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btn_validate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="16dp"
             android:text="Valider"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/edit_teacherFirstname"
-            app:layout_constraintTop_toBottomOf="@+id/edit_teacherFirstname"/>
+            app:layout_constraintTop_toBottomOf="@+id/edit_teacherFirstname" />
 
         <Button
             android:id="@+id/btn_cancel"
@@ -58,8 +53,7 @@
 
         <TextView
             android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/textStyle1"
             android:text="Prénom :"
             app:layout_constraintBottom_toBottomOf="@+id/edit_teacherFirstname"
             app:layout_constraintStart_toStartOf="@+id/textView9"

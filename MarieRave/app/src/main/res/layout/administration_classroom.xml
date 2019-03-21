@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -35,7 +34,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:horizontalSpacing="10dp"
-        android:numColumns="5"
+        android:numColumns="7"
         android:verticalSpacing="10dp"
         android:background="@color/lightestGrey"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -51,7 +50,7 @@
         android:layout_marginBottom="8dp"
         android:background="@color/lightestGrey"
         android:horizontalSpacing="10dp"
-        android:numColumns="5"
+        android:numColumns="7"
         android:verticalSpacing="10dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline27"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +64,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/addStudent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/addStudent"/>
+        app:layout_constraintTop_toTopOf="@+id/guideline27" />
 
     <ImageButton
         android:id="@+id/addStudent"
@@ -78,19 +77,18 @@
     <ImageButton
         android:id="@+id/removeStudent"
         style="@style/removeButton"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline27"/>
+        app:layout_constraintTop_toTopOf="@+id/guideline27" />
 
     <TextView
         android:id="@+id/teachers"
         style="@style/textStyle1"
-        android:layout_marginTop="8dp"
         android:text="Enseignants :"
+        app:layout_constraintBottom_toBottomOf="@+id/addTeacher"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backButton"/>
+        app:layout_constraintTop_toTopOf="@+id/addTeacher" />
 
     <ImageButton
         android:id="@+id/addTeacher"
