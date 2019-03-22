@@ -10,16 +10,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/dialogLayoutPadding">
 
         <TextView
             android:id="@+id/textView30"
             style="@style/textStyle1"
-            android:layout_marginStart="8dp"
             android:text="Nom :"
             app:layout_constraintBottom_toBottomOf="@+id/editText2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/editText2"/>
+            app:layout_constraintTop_toTopOf="@+id/editText2" />
 
         <TextView
             android:id="@+id/textView31"
@@ -49,13 +49,11 @@
             android:id="@+id/editText2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/editText3"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/editText3"
@@ -91,22 +89,20 @@
 
         <Button
             android:id="@+id/button19"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="8dp"
+            style="@style/dialogButton"
+            android:layout_marginTop="16dp"
             android:text="Valider"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/editText5"
-            app:layout_constraintTop_toBottomOf="@+id/editText5"/>
+            app:layout_constraintTop_toBottomOf="@+id/editText5" />
 
         <Button
             android:id="@+id/button22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/dialogButton"
+            android:layout_marginEnd="8dp"
             android:text="Annuler"
             app:layout_constraintBottom_toBottomOf="@+id/button19"
-            app:layout_constraintStart_toStartOf="@+id/textView33"
-            app:layout_constraintTop_toTopOf="@+id/button19"/>
+            app:layout_constraintEnd_toStartOf="@+id/button19"
+            app:layout_constraintTop_toTopOf="@+id/button19" />
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

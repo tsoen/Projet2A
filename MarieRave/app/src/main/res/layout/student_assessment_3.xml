@@ -55,8 +55,6 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/skillChoice"
         app:layout_constraintStart_toStartOf="@+id/skillChoice"
@@ -89,7 +87,7 @@
                 android:layout_margin="32dp"
                 android:buttonTint="#ffd500"
                 android:scaleX="3"
-                android:scaleY="3"/>
+                android:scaleY="3" />
 
             <RadioButton
                 android:id="@+id/green"
@@ -98,7 +96,7 @@
                 android:layout_margin="32dp"
                 android:buttonTint="#00FF40"
                 android:scaleX="3"
-                android:scaleY="3"/>
+                android:scaleY="3" />
 
 
             <RadioButton
