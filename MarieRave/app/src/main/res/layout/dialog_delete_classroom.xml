@@ -18,9 +18,9 @@
         <TextView
             android:id="@+id/textView34"
             style="@style/textStyle1"
-            android:text="Sélectionner la classe à supprimer :"
+            android:text="Sélectionner la classe à supprimer"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <GridView
             android:id="@+id/gridview_classes"

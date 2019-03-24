@@ -27,12 +27,12 @@
         <TextView
             android:id="@+id/textView40"
             style="@style/textStyle1"
-            android:text="Prenom"
+            android:text="Prénom"
             app:layout_constraintBottom_toBottomOf="@+id/textView39"
             app:layout_constraintLeft_toLeftOf="@+id/guideline16"
             app:layout_constraintRight_toLeftOf="@+id/guideline15"
             app:layout_constraintTop_toTopOf="@+id/textView39"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"/>
 
         <TextView
             android:id="@+id/textView39"

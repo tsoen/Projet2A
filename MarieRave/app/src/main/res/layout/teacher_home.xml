@@ -5,13 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <Button
+        android:id="@+id/btn_Admin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/gears"
+        android:paddingStart="-2dp"
+        android:text="Administratif"
+        android:textColor="@color/test"
+        app:backgroundTint="@color/testint"
+        app:layout_constraintBottom_toBottomOf="@+id/openAssessment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/openAssessment"
+        tools:ignore="RtlSymmetry"/>
+
+    <Button
         android:id="@+id/openAssessment"
-        style="@style/switchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:drawableEnd="@drawable/assessment"
+        android:text="Auto-évaluation "
+        android:textColor="@color/test"
+        app:backgroundTint="@color/testint"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_popup_sync" />
+        app:layout_constraintVertical_bias="0.61"
+        tools:ignore="RtlSymmetry"/>
 
     <ImageButton
         android:id="@+id/btnAdd_Class"
@@ -28,19 +49,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/openAssessment" />
 
-    <Button
-        android:id="@+id/btn_Admin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableStart="@drawable/gears"
-        android:paddingStart="-2dp"
-        android:text="Administratif"
-        android:textColor="@color/test"
-        app:backgroundTint="@color/testint"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="RtlSymmetry" />
-
     <GridView
         android:id="@+id/gridview_classes"
         android:layout_width="0dp"
@@ -55,16 +63,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
     <TextView
-        android:id="@+id/textView18"
-        style="@style/textStyle1"
-        android:layout_marginEnd="8dp"
-        android:gravity="center_vertical"
-        android:text="Mode auto-\névaluation :"
-        app:layout_constraintBottom_toBottomOf="@+id/openAssessment"
-        app:layout_constraintEnd_toStartOf="@+id/openAssessment"
-        app:layout_constraintTop_toTopOf="@+id/openAssessment"/>
-
-    <TextView
         android:id="@+id/textView28"
         style="@style/textStyle1"
         android:text="Mes classes"
@@ -76,9 +74,8 @@
     <ImageView
         android:id="@+id/imageView2"
         style="@style/logOffButton"
-        app:layout_constraintBottom_toBottomOf="@+id/openAssessment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_lock_power_off" />
+        app:srcCompat="@android:drawable/ic_lock_power_off"/>
 
 </android.support.constraint.ConstraintLayout>

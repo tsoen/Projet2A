@@ -146,6 +146,9 @@
         android:id="@+id/search_bar4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:drawablePadding="5dp"
+        android:hint="Rechercher un élève"
         app:layout_constraintEnd_toStartOf="@+id/guideline31"
         app:layout_constraintStart_toStartOf="@+id/guideline18"
         app:layout_constraintTop_toTopOf="@+id/backButton"/>
@@ -185,14 +188,5 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.65"/>
-
-    <TextView
-        android:id="@+id/textView27"
-        style="@style/textStyle1"
-        android:layout_marginEnd="8dp"
-        android:text="Rechercher un enseignant :"
-        app:layout_constraintBottom_toBottomOf="@+id/search_bar4"
-        app:layout_constraintEnd_toStartOf="@+id/guideline18"
-        app:layout_constraintTop_toTopOf="@+id/search_bar4"/>
 
 </android.support.constraint.ConstraintLayout>

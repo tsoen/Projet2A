@@ -16,13 +16,13 @@
         <item name="android:src">@drawable/images</item>
     </style>
     <style name="editButton">
+        <item name="android:padding">5dp</item>
         <item name="android:src">@drawable/edit</item>
         <item name="android:scaleType">fitCenter</item>
     </style>
     <style name="deleteButton">
         <item name="android:src">@android:drawable/ic_delete</item>
         <item name="android:scaleType">fitCenter</item>
-        <item name="android:background">?android:colorBackground</item>
     </style>
     <style name="consultButton">
         <item name="android:src">@drawable/consult</item>

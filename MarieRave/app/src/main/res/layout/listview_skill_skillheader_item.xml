@@ -4,7 +4,7 @@
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             android:background="@drawable/cell_shape_r">
+                                             android:background="@drawable/categorie_cell">
 
     <TextView
         android:id="@+id/txtLittleHeader"
@@ -14,12 +14,13 @@
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline11"
         app:layout_constraintStart_toStartOf="@+id/guideline10"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:text="LitleSubject" />
+        tools:text="Catégorie"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline10"
@@ -33,6 +34,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.75"/>
+        app:layout_constraintGuide_percent="0.8"/>
 
 </android.support.constraint.ConstraintLayout>

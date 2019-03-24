@@ -21,9 +21,9 @@
         android:id="@+id/txt_skillCode"
         style="@style/textStyle1"
         android:layout_marginTop="8dp"
-        android:text="Code de la competence"
+        android:text="Code de la compétence"
         app:layout_constraintEnd_toEndOf="@+id/imageView"
         app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"/>
 
 </android.support.constraint.ConstraintLayout>

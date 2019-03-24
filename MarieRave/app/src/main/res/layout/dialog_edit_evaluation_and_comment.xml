@@ -58,13 +58,14 @@
         android:id="@+id/textView17"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         android:gravity="top|start"
+        android:hint="Ajouter un commentaire"
         app:layout_constraintBottom_toTopOf="@+id/btn_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+        app:layout_constraintTop_toBottomOf="@+id/radio_group_assess"/>
 
     <Button
         android:id="@+id/btn_validate"
@@ -83,18 +84,10 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_validate" />
 
     <TextView
-        android:id="@+id/textView18"
-        style="@style/textStyle1"
-        android:layout_marginTop="16dp"
-        android:text="Ajouter un commentaire :"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radio_group_assess" />
-
-    <TextView
         android:id="@+id/textView19"
         style="@style/textStyle1"
-        android:text="Modifier l'évaluation de l'élève sur cette compétence :"
+        android:text="Modifier l'évaluation de l'élève sur cette compétence"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 </android.support.constraint.ConstraintLayout>

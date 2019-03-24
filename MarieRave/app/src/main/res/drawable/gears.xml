@@ -3,7 +3,7 @@
 
     <item
         android:drawable="@mipmap/gearspng"
-        android:width="70sp"
-        android:height="40sp" />
+        android:width="75sp"
+        android:height="43sp"/>
 
 </layer-list>

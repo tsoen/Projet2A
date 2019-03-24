@@ -5,11 +5,13 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorCell">#015093</color>
     <color name="white">#FFFFFF</color>
-    <color name="sweetBlue">#747adc</color>
-    <color name="sweetOrange">#d6aa59</color>
+    <color name="sweetBlue">#747ADC</color>
+    <color name="sweetOrange">#D6AA59</color>
     <color name="nonAgressiveGreen">#3FBC2F</color>
     <color name="flahsyRed">#C94837</color>
-    <color name="lightestGrey">#edf5fb</color>
-    <color name="test">#ffffff</color>
-    <color name="testint">#383d7e</color>
+    <color name="lightestGrey">#EDF5FB</color>
+    <color name="test">#FFFFFF</color>
+    <color name="testint">#383D7E</color>
+    <color name="matiereItem">#0060B1</color>
+    <color name="categorieItem">#0078E6</color>
 </resources>

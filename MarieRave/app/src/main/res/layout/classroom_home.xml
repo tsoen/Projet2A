@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             xmlns:tools="http://schemas.android.com/tools">
+
+    <Button
+        android:id="@+id/openAssessment3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:drawableEnd="@drawable/assessment"
+        android:text="Auto-évaluation "
+        android:textColor="@color/test"
+        app:backgroundTint="@color/testint"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.61"
+        tools:ignore="RtlSymmetry"/>
+
+    <ImageButton
+        android:id="@+id/backButton"
+        style="@style/backButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        style="@style/logOffButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_lock_power_off" />
+
+    <Button
+        android:id="@+id/btnResults"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Evaluation globale"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/openAssessment3"/>
+
+    <Button
+        android:id="@+id/btnGlobalResults"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Bilan"
+        app:layout_constraintBottom_toBottomOf="@+id/btnResults"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/btnResults"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <TextView
+        android:id="@+id/txtClassroomName"
+        style="@style/textStyle1"
+        android:layout_marginTop="8dp"
+        android:text="Nom de la classe"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/btnGlobalResults" />
+
+    <GridView
+        android:id="@+id/gridviewProfiles"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:horizontalSpacing="10dp"
+        android:numColumns="5"
+        android:verticalSpacing="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtClassroomName"/>
+
+</android.support.constraint.ConstraintLayout>

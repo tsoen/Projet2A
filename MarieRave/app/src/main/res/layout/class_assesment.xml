@@ -2,8 +2,24 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/openAssessment4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:drawableEnd="@drawable/assessment"
+        android:text="Auto-évaluation "
+        android:textColor="@color/test"
+        app:backgroundTint="@color/testint"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.61"
+        tools:ignore="RtlSymmetry"/>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/skillsHeaderLayout"
@@ -21,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.15" />
+            app:layout_constraintGuide_percent="0.15"/>
 
         <TextView
             android:layout_width="0dp"
@@ -30,10 +46,12 @@
             android:padding="5dp"
             android:text="@string/sNo"
             android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline12"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:layout_width="0dp"
@@ -42,11 +60,20 @@
             android:padding="5dp"
             android:text="@string/product"
             android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline32"
             app:layout_constraintStart_toStartOf="@+id/guideline12"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"/>
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.8"/>
 
     </android.support.constraint.ConstraintLayout>
 
@@ -61,34 +88,18 @@
         android:padding="5dp"
         android:text="Matière"
         android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backButton" />
-
-    <TextView
-        android:id="@+id/textView37"
-        style="@style/textStyle1"
-        android:layout_marginEnd="8dp"
-        android:gravity="center_vertical"
-        android:text="Mode auto-\névaluation :"
-        app:layout_constraintBottom_toBottomOf="@+id/openAssessment4"
-        app:layout_constraintEnd_toStartOf="@+id/openAssessment4"
-        app:layout_constraintTop_toTopOf="@+id/openAssessment4"/>
-
-    <ImageView
-        android:id="@+id/openAssessment4"
-        style="@style/switchButton"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_popup_sync" />
+        app:layout_constraintTop_toBottomOf="@+id/backButton"/>
 
     <ImageView
         android:id="@+id/imageView2"
         style="@style/logOffButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/openAssessment4"
-        app:srcCompat="@android:drawable/ic_lock_power_off" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_lock_power_off"/>
 
     <TextView
         android:id="@+id/classname"
@@ -108,12 +119,11 @@
     <ListView
         android:id="@+id/skills"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_height="0dp"
         android:background="@drawable/cell_shape_l"
-        android:divider="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/skillsHeaderLayout"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="@+id/skillsHeaderLayout"
         app:layout_constraintTop_toTopOf="@+id/jumpToSubject"/>
 
     <ListView

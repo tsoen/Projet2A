@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:drawable="@mipmap/skill"
+        android:drawable="@mipmap/assessment"
         android:width="43sp"
         android:height="43sp"/>
 </layer-list>

@@ -22,9 +22,9 @@
 
     <TextView
         android:id="@+id/welcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/textStyle1"
         android:layout_marginTop="16dp"
+        android:text="Bonjour Prénom"
         app:layout_constraintEnd_toEndOf="@+id/image"
         app:layout_constraintStart_toStartOf="@+id/image"
         app:layout_constraintTop_toBottomOf="@+id/image"/>
@@ -32,7 +32,7 @@
     <TextView
         android:id="@+id/enterSkill"
         style="@style/textStyle1"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:text="Quelle compétence souhaites-tu évaluer ?"
         app:layout_constraintEnd_toEndOf="@+id/welcome"
         app:layout_constraintStart_toStartOf="@+id/welcome"
@@ -42,7 +42,7 @@
         android:id="@+id/skill"
         android:layout_width="426dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="@+id/enterSkill"
         app:layout_constraintStart_toStartOf="@+id/enterSkill"
         app:layout_constraintTop_toBottomOf="@+id/enterSkill"/>

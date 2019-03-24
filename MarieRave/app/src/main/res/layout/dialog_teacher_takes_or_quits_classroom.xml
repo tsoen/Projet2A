@@ -16,9 +16,9 @@
         <TextView
             android:id="@+id/textView34"
             style="@style/textStyle1"
-            android:text="Sélectionnez la classe où vous enseignez :"
+            android:text="Sélectionnez la classe où vous enseignez"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <GridView
             android:id="@+id/gridview_classes"

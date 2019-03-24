@@ -8,37 +8,39 @@
     <TextView
         android:id="@+id/textView42"
         style="@style/textStyle1"
-        android:text="Télécharger le modèle de document pour importer les compétences :"
+        android:text="Télécharger le modèle de document pour importer les compétences"
         app:layout_constraintBottom_toBottomOf="@+id/imageButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageButton" />
+        app:layout_constraintTop_toTopOf="@+id/imageButton"/>
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="52dp"
-        android:layout_height="59dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="8dp"
+        android:backgroundTint="@color/testint"
         app:layout_constraintStart_toEndOf="@+id/textView42"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@color/nonAgressiveGreen" />
+        app:srcCompat="@android:drawable/stat_sys_download"/>
 
     <TextView
         android:id="@+id/textView44"
         style="@style/textStyle1"
-        android:text="Sélectionner le document contenant les compétences à importer :"
+        android:text="Sélectionner le document contenant les compétences à importer"
         app:layout_constraintBottom_toBottomOf="@+id/imageButton3"
         app:layout_constraintStart_toStartOf="@+id/textView42"
-        app:layout_constraintTop_toTopOf="@+id/imageButton3" />
+        app:layout_constraintTop_toTopOf="@+id/imageButton3"/>
 
     <ImageButton
         android:id="@+id/imageButton3"
-        android:layout_width="55dp"
-        android:layout_height="63dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/testint"
         app:layout_constraintEnd_toEndOf="@+id/imageButton"
         app:layout_constraintStart_toStartOf="@+id/imageButton"
         app:layout_constraintTop_toBottomOf="@+id/imageButton"
-        app:srcCompat="@color/flahsyRed"/>
+        app:srcCompat="@android:drawable/stat_sys_upload"/>
 
     <Button
         android:id="@+id/button29"

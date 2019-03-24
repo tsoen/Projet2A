@@ -18,9 +18,9 @@
 
     <TextView
         android:id="@+id/welcome2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/textStyle1"
         android:layout_marginTop="16dp"
+        android:text="Bonjour Prénom"
         app:layout_constraintEnd_toEndOf="@+id/image2"
         app:layout_constraintStart_toStartOf="@+id/image2"
         app:layout_constraintTop_toBottomOf="@+id/image2"/>
@@ -58,7 +58,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/skillChoice"
         app:layout_constraintStart_toStartOf="@+id/skillChoice"
-        app:layout_constraintTop_toBottomOf="@+id/skillChoice">
+        app:layout_constraintTop_toBottomOf="@+id/txt_skillName">
 
         <RadioGroup
             android:id="@+id/radio_group_assess"
@@ -78,7 +78,7 @@
                 android:buttonTint="#FF0000"
                 android:scaleX="3"
                 android:scaleY="3"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="1.0"/>
 
             <RadioButton
                 android:id="@+id/yellow"
@@ -87,7 +87,7 @@
                 android:layout_margin="32dp"
                 android:buttonTint="#ffd500"
                 android:scaleX="3"
-                android:scaleY="3" />
+                android:scaleY="3"/>
 
             <RadioButton
                 android:id="@+id/green"
@@ -96,7 +96,7 @@
                 android:layout_margin="32dp"
                 android:buttonTint="#00FF40"
                 android:scaleX="3"
-                android:scaleY="3" />
+                android:scaleY="3"/>
 
 
             <RadioButton
@@ -106,7 +106,7 @@
                 android:layout_margin="32dp"
                 android:buttonTint="#088A08"
                 android:scaleX="3"
-                android:scaleY="3" />
+                android:scaleY="3"/>
 
         </RadioGroup>
 
@@ -114,9 +114,9 @@
 
     <TextView
         android:id="@+id/txt_skillName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/textStyle1"
         android:layout_marginTop="8dp"
+        android:text="Nom de la compétence"
         app:layout_constraintEnd_toEndOf="@+id/skill"
         app:layout_constraintStart_toStartOf="@+id/skill"
         app:layout_constraintTop_toBottomOf="@+id/skill"/>

@@ -4,7 +4,7 @@
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             android:background="@drawable/blue_cell_shape">
+                                             android:background="@drawable/matiere_cell">
 
     <TextView
         android:id="@+id/txtBigHeader"
@@ -14,12 +14,13 @@
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:text="Subject" />
+        tools:text="Matière"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline5"
@@ -33,6 +34,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.75"/>
+        app:layout_constraintGuide_percent="0.8"/>
 
 </android.support.constraint.ConstraintLayout>

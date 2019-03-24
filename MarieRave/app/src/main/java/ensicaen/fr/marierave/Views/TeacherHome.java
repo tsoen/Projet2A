@@ -60,7 +60,7 @@ public class TeacherHome extends Fragment
 			});
 		}
 		
-		ImageView openAssessment = view.findViewById(R.id.openAssessment);
+		Button openAssessment = view.findViewById(R.id.openAssessment);
 		openAssessment.setOnClickListener(new View.OnClickListener()
 		{
 			@Override

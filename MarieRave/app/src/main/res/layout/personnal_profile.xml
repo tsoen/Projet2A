@@ -31,10 +31,10 @@
     <TextView
         android:id="@+id/txtSurname"
         style="@style/textStyle1"
-        android:text="Prenom"
+        android:text="Prénom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtName" />
+        app:layout_constraintTop_toBottomOf="@+id/txtName"/>
 
     <ImageButton
         android:id="@+id/btnResults"
@@ -74,16 +74,18 @@
     <TextView
         android:id="@+id/textTopicsHeader"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorCell"
         android:gravity="center"
         android:padding="5dp"
         android:text="Matière"
         android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/listSkills"
         app:layout_constraintEnd_toStartOf="@+id/guideline15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/skillsHeaderLayout" />
+        app:layout_constraintTop_toTopOf="@+id/skillsHeaderLayout"/>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/skillsHeaderLayout"
@@ -119,15 +121,17 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="5dp"
             android:text="@string/sNo"
             android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline12"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:layout_width="0dp"
@@ -136,11 +140,13 @@
             android:padding="5dp"
             android:text="@string/product"
             android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline13"
             app:layout_constraintStart_toStartOf="@+id/guideline12"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"/>
 
         <TextView
             android:layout_width="0dp"
@@ -149,10 +155,12 @@
             android:padding="5dp"
             android:text="@string/price"
             android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline14"
             app:layout_constraintStart_toStartOf="@+id/guideline13"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
     </android.support.constraint.ConstraintLayout>
 

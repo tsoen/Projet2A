@@ -31,7 +31,7 @@ public class HomeClassroom extends Fragment
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		return inflater.inflate(R.layout.home_classroom, container, false);
+		return inflater.inflate(R.layout.classroom_home, container, false);
 	}
 	
 	@Override
@@ -79,6 +79,17 @@ public class HomeClassroom extends Fragment
 			public void onClick(View v)
 			{
 				getActivity().getSupportFragmentManager().popBackStack();
+			}
+		});
+		
+		Button openAssessment = view.findViewById(R.id.openAssessment3);
+		openAssessment.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Bundle bundle = new Bundle();
+				Utils.replaceFragments(StudentAssessment1.class, getActivity(), bundle, true);
 			}
 		});
 		
