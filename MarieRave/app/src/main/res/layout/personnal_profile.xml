@@ -74,7 +74,7 @@
     <TextView
         android:id="@+id/textTopicsHeader"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@color/colorCell"
         android:gravity="center"
         android:padding="5dp"
@@ -110,7 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.75" />
+            app:layout_constraintGuide_percent="0.75"/>
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline14"
@@ -121,7 +121,7 @@
 
         <TextView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:gravity="center"
             android:padding="5dp"
             android:text="@string/sNo"

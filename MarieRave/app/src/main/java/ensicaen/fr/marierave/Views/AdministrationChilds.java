@@ -247,6 +247,10 @@ public class AdministrationChilds extends Fragment
 				holder._class.setText(_childList.get(position).getClassroom());
 				holder._name.setText(_childList.get(position).getName());
 				holder._surname.setText(_childList.get(position).getFirstname());
+				
+				if (position % 2 == 0) {
+					convertView.setBackgroundResource(R.color.listPaircolor);
+				}
 			}
 			
 			return convertView;

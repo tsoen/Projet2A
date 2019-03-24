@@ -20,13 +20,10 @@
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/simpleButton"
         android:drawableStart="@drawable/skills"
         android:drawablePadding="5dp"
         android:text="Compétences"
-        android:textColor="@color/test"
-        app:backgroundTint="@color/testint"
         app:layout_constraintBottom_toBottomOf="@+id/backButton"
         app:layout_constraintEnd_toStartOf="@+id/guideline22"
         app:layout_constraintStart_toEndOf="@+id/backButton"
@@ -36,13 +33,10 @@
 
     <Button
         android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/simpleButton"
         android:drawableStart="@drawable/student"
         android:drawablePadding="5dp"
         android:text="Eleves"
-        android:textColor="@color/test"
-        app:backgroundTint="@color/testint"
         app:layout_constraintBottom_toBottomOf="@+id/button4"
         app:layout_constraintEnd_toStartOf="@+id/guideline28"
         app:layout_constraintLeft_toRightOf="@+id/button4"
@@ -82,13 +76,10 @@
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/simpleButton"
         android:drawableStart="@drawable/teachers"
         android:drawablePadding="5dp"
         android:text="Enseignants"
-        android:textColor="@color/test"
-        app:backgroundTint="@color/testint"
         app:layout_constraintBottom_toBottomOf="@+id/button5"
         app:layout_constraintEnd_toStartOf="@+id/imageView2"
         app:layout_constraintStart_toStartOf="@+id/guideline28"

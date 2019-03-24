@@ -7,11 +7,10 @@
     <TextView
         android:id="@+id/textView"
         style="@style/textStyle1"
-        android:gravity="center"
-        android:text="Nom de la classe"
-        app:layout_constraintEnd_toStartOf="@+id/guideline12"
+        android:text="Nom classe"
+        android:padding="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline12"
@@ -24,6 +23,7 @@
         android:id="@+id/textView6"
         style="@style/textStyle1"
         android:text="Nom"
+        android:padding="5dp"
         app:layout_constraintStart_toStartOf="@+id/guideline12"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,6 +38,7 @@
         android:id="@+id/textView8"
         style="@style/textStyle1"
         android:text="Prénom"
+        android:padding="5dp"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
         app:layout_constraintTop_toTopOf="parent"/>
 

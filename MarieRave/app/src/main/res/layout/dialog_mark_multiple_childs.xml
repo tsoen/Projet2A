@@ -110,9 +110,9 @@
             android:id="@+id/button15"
             style="@style/dialogButton"
             android:layout_marginEnd="8dp"
-            android:text="Annuler"
+            android:text="Fermer"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button16" />
+            app:layout_constraintEnd_toStartOf="@+id/button16"/>
 
         <Button
             android:id="@+id/button16"

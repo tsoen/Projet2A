@@ -35,8 +35,8 @@
 
     <Button
         android:id="@+id/btnResults"
+        style="@style/simpleButton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:text="Evaluation globale"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="1.0"
@@ -45,8 +45,8 @@
 
     <Button
         android:id="@+id/btnGlobalResults"
+        style="@style/simpleButton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:text="Bilan"
         app:layout_constraintBottom_toBottomOf="@+id/btnResults"
         app:layout_constraintEnd_toEndOf="parent"

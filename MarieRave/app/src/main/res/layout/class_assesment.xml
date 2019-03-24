@@ -8,13 +8,10 @@
 
     <Button
         android:id="@+id/openAssessment4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/simpleButton"
         android:layout_marginEnd="8dp"
         android:drawableEnd="@drawable/assessment"
         android:text="Auto-évaluation "
-        android:textColor="@color/test"
-        app:backgroundTint="@color/testint"
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toStartOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent"
@@ -30,7 +27,7 @@
         app:layout_constraintBottom_toTopOf="@+id/skills"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/txtSurname">
+        app:layout_constraintTop_toTopOf="@+id/textTopicsHeader2">
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline12"
@@ -73,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.8"/>
+            app:layout_constraintGuide_percent="0.75"/>
 
     </android.support.constraint.ConstraintLayout>
 
@@ -119,9 +116,9 @@
     <ListView
         android:id="@+id/skills"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/cell_shape_l"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:divider="@null"
         app:layout_constraintEnd_toEndOf="@+id/skillsHeaderLayout"
         app:layout_constraintStart_toStartOf="@+id/skillsHeaderLayout"
         app:layout_constraintTop_toTopOf="@+id/jumpToSubject"/>
@@ -130,6 +127,7 @@
         android:id="@+id/jumpToSubject"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:divider="@null"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="@+id/textTopicsHeader2"

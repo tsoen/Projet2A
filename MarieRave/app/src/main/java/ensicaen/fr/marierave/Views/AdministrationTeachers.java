@@ -215,6 +215,10 @@ public class AdministrationTeachers extends Fragment
 				holder._surname.setText(_teacherList.get(position).getFirstname());
 				holder._idConnection.setText(_teacherList.get(position).getIdConnection());
 				holder._password.setText(_teacherList.get(position).getPassword());
+				
+				if (position % 2 == 0) {
+					convertView.setBackgroundResource(R.color.listPaircolor);
+				}
 			}
 			
 			return convertView;

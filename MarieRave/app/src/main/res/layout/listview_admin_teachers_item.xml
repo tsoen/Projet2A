@@ -5,9 +5,18 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/textView22"
+        style="@style/textStyle1"
+        android:text="Nom"
+        android:padding="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
         android:id="@+id/textView21"
         style="@style/textStyle1"
         android:text="Prénom"
+        android:padding="5dp"
         app:layout_constraintStart_toStartOf="@+id/guideline21"
         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -17,13 +26,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.15"/>
-
-    <TextView
-        android:id="@+id/textView22"
-        style="@style/textStyle1"
-        android:text="Nom"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline23"
@@ -68,6 +70,7 @@
         android:id="@+id/textView20"
         style="@style/textStyle1"
         android:text="Identifiant"
+        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView21"
         app:layout_constraintStart_toStartOf="@+id/guideline23"
         app:layout_constraintTop_toTopOf="parent" />
@@ -76,6 +79,7 @@
         android:id="@+id/textView23"
         style="@style/textStyle1"
         android:text="Mot de passe"
+        android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView20"
         app:layout_constraintStart_toStartOf="@+id/guideline24"
         app:layout_constraintTop_toTopOf="parent" />
