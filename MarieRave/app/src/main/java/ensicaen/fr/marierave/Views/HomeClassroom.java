@@ -3,6 +3,7 @@ package ensicaen.fr.marierave.Views;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -171,7 +172,10 @@ public class HomeClassroom extends Fragment
 				holder._txtName = convertView.findViewById(R.id.txtName);
 				holder._txtSurname = convertView.findViewById(R.id.txtSurname);
 				
-				holder._profilePic.setImageResource(R.mipmap.ic_launcher_round);
+				Bitmap img = Utils.getChildPersonnalPicture(getContext(), _productList.get(position).getId());
+				if (img != null) {
+					holder._profilePic.setImageBitmap(img);
+				}
 				holder._txtName.setText(_productList.get(position).getName());
 				holder._txtSurname.setText(_productList.get(position).getFirstname());
 				

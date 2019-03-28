@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/PersonnalProfileViewLayout">
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:id="@+id/PersonnalProfileViewLayout"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
 
     <ImageButton
         android:id="@+id/backButton"
         style="@style/backButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageView
         android:id="@+id/imgPersonnalPicture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/ic_launcher"
+        style="@style/childPicture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/txtName"
@@ -26,7 +24,7 @@
         android:text="Nom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgPersonnalPicture" />
+        app:layout_constraintTop_toBottomOf="@+id/imgPersonnalPicture"/>
 
     <TextView
         android:id="@+id/txtSurname"
@@ -40,29 +38,31 @@
         android:id="@+id/btnResults"
         style="@style/appraisalButton"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
         android:layout_weight="0.1"
+        app:layout_constraintBottom_toBottomOf="@+id/btnPDF"
         app:layout_constraintEnd_toStartOf="@+id/btnPDF"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ImageButton
         android:id="@+id/btnPDF"
         style="@style/printButton"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
         android:layout_marginEnd="8dp"
         android:layout_weight="0.1"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toStartOf="@+id/imageView2"
         app:layout_constraintStart_toEndOf="@+id/btnResults"
-        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+        app:layout_constraintTop_toTopOf="@+id/imageView2"/>
 
     <ImageView
         android:id="@+id/imageView2"
         style="@style/logOffButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_lock_power_off" />
+        app:srcCompat="@android:drawable/ic_lock_power_off"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline15"
@@ -103,7 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.15" />
+            app:layout_constraintGuide_percent="0.15"/>
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline13"
@@ -117,7 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.9" />
+            app:layout_constraintGuide_percent="0.9"/>
 
         <TextView
             android:layout_width="0dp"
@@ -173,7 +173,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline15"
         app:layout_constraintStart_toStartOf="@+id/textTopicsHeader"
         app:layout_constraintTop_toBottomOf="@+id/skillsHeaderLayout"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"/>
 
     <ListView
         android:id="@+id/listSkills"
@@ -186,7 +186,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline15"
         app:layout_constraintTop_toBottomOf="@+id/skillsHeaderLayout"
-        app:layout_constraintVertical_bias="0.741" />
+        app:layout_constraintVertical_bias="0.741"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline3"
@@ -194,5 +194,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.7"/>
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/txtName"
+        app:layout_constraintStart_toEndOf="@+id/imgPersonnalPicture"
+        app:srcCompat="@drawable/edit"/>
 
 </android.support.constraint.ConstraintLayout>

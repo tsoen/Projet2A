@@ -6,7 +6,6 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -29,7 +28,7 @@ public class NewOrUpdateSkillDialog extends DialogFragment implements android.vi
 	{
 		View view = inflater.inflate(R.layout.dialog_new_or_update_skill, container);
 		
-		getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+		getDialog().setTitle("Indiquer les paramètres de la compétence");
 		getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 		setCancelable(false);
 		

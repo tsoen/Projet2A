@@ -1,16 +1,20 @@
 package ensicaen.fr.marierave;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.io.File;
 
-import static java.lang.Math.max;
+import ensicaen.fr.marierave.Controllers.ChildDAO;
+import ensicaen.fr.marierave.Model.Child;
 
 public class Utils
 {
@@ -46,58 +50,14 @@ public class Utils
 		}
 	}
 	
-	public static double compareStrings(String str1, String str2)
+	public static Bitmap getChildPersonnalPicture(Context context, Integer childId)
 	{
 		
-		// pairs de 2 caractères qui composent la 1ère chaîne //
-		ArrayList<String> pairs1 = wordLetterPairs(str1.toUpperCase());
-		// pairs de 2 caractères qui composent la 2ème chaîne //
-		ArrayList<String> pairs2 = wordLetterPairs(str2.toUpperCase());
+		Child child = new ChildDAO(context).getChild(childId);
 		
-		int similarity = 0;
-		int totalSize = pairs1.size() + pairs2.size();
+		String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator + "ANEC" + File.separator + child
+				.getFirstname() + "_" + child.getName() + "_" + child.getId() + ".jpg";
 		
-		for (String pair1 : pairs1) {
-			
-			for (String pair2 : pairs2) {
-				if (pair1.equals(pair2)) {
-					similarity++;
-					pairs2.remove(pair2);
-					break;
-				}
-			}
-		}
-		
-		return (2.0 * similarity) / totalSize;
-	}
-	
-	private static ArrayList<String> wordLetterPairs(String str)
-	{
-		ArrayList<String> allPairs = new ArrayList<>();
-		
-		// sépare les mots de la chaîne et les place dans un tableau //
-		String[] words = str.split("\\s");
-		
-		// parcours des mots de la chaîne //
-		for (String word : words) {
-			// découpe le mot en chaînes de 2 caractères //
-			String[] pairsInWord = letterPairs(word);
-			
-			allPairs.addAll(Arrays.asList(pairsInWord));
-		}
-		
-		return allPairs;
-	}
-	
-	private static String[] letterPairs(String str)
-	{
-		int numPairs = max(0, str.length() - 1);
-		
-		String[] pairs = new String[numPairs];
-		for (int i = 0; i < numPairs; i++) {
-			pairs[i] = str.substring(i, i + 2);
-		}
-		
-		return pairs;
+		return BitmapFactory.decodeFile(path);
 	}
 }

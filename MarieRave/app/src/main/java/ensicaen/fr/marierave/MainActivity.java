@@ -3,10 +3,12 @@ package ensicaen.fr.marierave;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
+import java.io.File;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -44,7 +46,10 @@ public class MainActivity extends AppCompatActivity
                 e.printStackTrace();
             }
         }
-
+		
+		File wallpaperDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator + "ANEC/");
+		wallpaperDirectory.mkdirs();
+		
 		//new DAOBase(this).clearDatabase();
 
         ClassroomDAO classroomDAO = new ClassroomDAO(this);
@@ -253,7 +258,11 @@ public class MainActivity extends AppCompatActivity
 				alert.show();
 				return;
 			}
+		}
+		else if (requestCode == 1 && resultCode == RESULT_OK) {
 			
+			
+		
 		}
 		
 		super.onActivityResult(requestCode, resultCode, data);

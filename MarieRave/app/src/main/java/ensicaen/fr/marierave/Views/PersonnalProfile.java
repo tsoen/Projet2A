@@ -57,6 +57,7 @@ import ensicaen.fr.marierave.Model.Subject;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
 import ensicaen.fr.marierave.Views.Dialogs.EditEvaluationAndCommentDialog;
+import ensicaen.fr.marierave.Views.Dialogs.EditPersonnalPictureDialog;
 
 public class PersonnalProfile extends Fragment
 {
@@ -78,6 +79,29 @@ public class PersonnalProfile extends Fragment
 		_childId = getArguments().getInt("childId");
 		
 		Child child = new ChildDAO(getContext()).getChild(_childId);
+		
+		ImageView personnalPicture = view.findViewById(R.id.imgPersonnalPicture);
+		
+		Bitmap img = Utils.getChildPersonnalPicture(getContext(), _childId);
+		if (img != null) {
+			personnalPicture.setImageBitmap(img);
+		}
+		
+		ImageView editPictureButton = view.findViewById(R.id.imageView3);
+		editPictureButton.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Bundle bundle = new Bundle();
+				bundle.putInt("childId", _childId);
+				
+				EditPersonnalPictureDialog dialog = new EditPersonnalPictureDialog();
+				dialog.setArguments(bundle);
+				dialog.setTargetFragment(getParentFragment(), 0);
+				dialog.show(getActivity().getSupportFragmentManager(), "editPicture");
+			}
+		});
 		
 		TextView txtName = view.findViewById(R.id.txtName);
 		txtName.setText(child.getName());
@@ -210,7 +234,6 @@ public class PersonnalProfile extends Fragment
 	{
 		if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 			ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
-			return;
 		}
 		
 		String state = Environment.getExternalStorageState();

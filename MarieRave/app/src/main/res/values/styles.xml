@@ -7,6 +7,11 @@
         <item name="colorPrimaryDark">@android:color/holo_blue_dark
         </item> <!-- bar d'etat au dessus -->
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:dialogTheme">@style/CustomDialog</item>
+    </style>
+
+    <style name="CustomDialog" parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="android:windowNoTitle">false</item>
     </style>
     <style name="backButton">
         <item name="android:layout_width">50dp</item>
@@ -69,11 +74,10 @@
         <item name="android:scaleType">fitCenter</item>
         <item name="android:background">?android:colorBackground</item>
     </style>
-
     <style name="childPicture">
         <item name="android:src">@drawable/garcon_icon</item>
-        <item name="android:layout_width">50dp</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">70dp</item>
     </style>
     <style name="textStyle1">
         <item name="android:layout_width">wrap_content</item>
@@ -82,31 +86,26 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
-
     <style name="layoutPadding">
         <item name="android:padding">5dp</item>
     </style>
-
     <style name="dialogLayoutPadding">
         <item name="android:paddingTop">12dp</item>
         <item name="android:paddingEnd">8dp</item>
         <item name="android:paddingBottom">8dp</item>
         <item name="android:paddingStart">24dp</item>
     </style>
-
     <style name="dialogButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/testint</item>
     </style>
-
     <style name="simpleButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/test</item>
         <item name="android:backgroundTint">@color/testint</item>
     </style>
-
     <style name="listviewHeaderText">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@android:color/white</item>
@@ -114,5 +113,4 @@
         <item name="android:gravity">center</item>
         <item name="android:padding">5dp</item>
     </style>
-
 </resources>

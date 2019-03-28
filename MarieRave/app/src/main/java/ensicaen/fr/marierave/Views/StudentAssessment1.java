@@ -75,8 +75,7 @@ public class StudentAssessment1 extends Fragment
 								{
 									childList.clear();
 									for (Child c : new ChildDAO(getContext()).getAllChilds()) {
-										double similarity = Utils.compareStrings(c.getFirstname(), editable.toString());
-										if (similarity > 0.9) {
+										if (c.getFirstname().toUpperCase().startsWith(editable.toString().toUpperCase())) {
 											childList.add(c);
 										}
 									}

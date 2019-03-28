@@ -6,7 +6,6 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +22,7 @@ public class NewOrUpdateSubjectDialog extends DialogFragment implements android.
 	{
 		View view = inflater.inflate(R.layout.dialog_new_or_update_subject, container);
 		
-		getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+		getDialog().setTitle("Indiquer les paramètres de la matière");
 		getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 		setCancelable(false);
 		

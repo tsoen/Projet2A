@@ -3,6 +3,7 @@ package ensicaen.fr.marierave.Views;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -231,8 +232,11 @@ public class AdministrationClassroom extends Fragment implements android.view.Vi
 				holder._profilePic = convertView.findViewById(R.id.imgProfilePicture);
 				holder._txtName = convertView.findViewById(R.id.txtName);
 				holder._txtSurname = convertView.findViewById(R.id.txtSurname);
-
-                holder._profilePic.setImageResource(R.drawable.garcon_icon);
+				
+				Bitmap img = Utils.getChildPersonnalPicture(getContext(), _childList.get(position).getId());
+				if (img != null) {
+					holder._profilePic.setImageBitmap(img);
+				}
                 holder._txtName.setText(_childList.get(position).getName());
                 holder._txtSurname.setText(_childList.get(position).getFirstname());
 			}

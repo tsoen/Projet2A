@@ -66,9 +66,10 @@
         style="@style/textStyle1"
         android:layout_marginTop="8dp"
         android:text="Nom de la classe"
+        android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/btnGlobalResults" />
+        app:layout_constraintTop_toBottomOf="@+id/btnGlobalResults"/>
 
     <GridView
         android:id="@+id/gridviewProfiles"
