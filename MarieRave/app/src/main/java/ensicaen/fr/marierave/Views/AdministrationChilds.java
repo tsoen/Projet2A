@@ -198,6 +198,18 @@ public class AdministrationChilds extends Fragment
 					}
 				});
 				
+				holder._btnPrint.setOnClickListener(new View.OnClickListener()
+				{
+					@Override
+					public void onClick(View v)
+					{
+						Bundle bundle = new Bundle();
+						bundle.putInt("childId", child.getId());
+						
+						Utils.replaceFragments(PrintPDF.class, getActivity(), bundle, true);
+					}
+				});
+				
 				holder._btnEdit.setOnClickListener(new View.OnClickListener()
 				{
 					@Override

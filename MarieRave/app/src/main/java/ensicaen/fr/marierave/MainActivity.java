@@ -47,102 +47,106 @@ public class MainActivity extends AppCompatActivity
             }
         }
 		
-		File wallpaperDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator + "ANEC/");
-		wallpaperDirectory.mkdirs();
-		
-		//new DAOBase(this).clearDatabase();
-
-        ClassroomDAO classroomDAO = new ClassroomDAO(this);
-        classroomDAO.addClassroom(new Classroom("Ecole")); //!! DO NOT REMOVE UNTIL ARCHITECTURE CHANGE !!\\
-		TeacherDAO teacherDAO = new TeacherDAO(this);
-		teacherDAO.addTeacher(new Teacher("admin", "admin", "admin", "admin"));
-
-		/*
-        classroomDAO.addClassroom(new Classroom("CP"));
-		classroomDAO.addClassroom(new Classroom("CE1"));
-
-        ChildDAO childDAO = new ChildDAO(this);
-		childDAO.addChild(new Child("Soen", "Timothee", "CP"));
-		childDAO.addChild(new Child("Rey", "Raphael", "CE1"));
-		childDAO.addChild(new Child("Morretton", "Julie", "CP"));
-        childDAO.addChild(new Child("Morretton", "Julie", "CP"));
-        childDAO.addChild(new Child("Morretton", "Julie", "CP"));
-        childDAO.addChild(new Child("Morretton", "Julie", "CP"));
-        childDAO.addChild(new Child("Morretton", "Julie", "CP"));
-        childDAO.addChild(new Child("Rey", "Raphael", "CP"));
-
-
-		TeacherDAO teacherDAO = new TeacherDAO(this);
-		teacherDAO.addTeacher(new Teacher("Lhote", "Loick", "lolo", "plolo"));
-		teacherDAO.addTeacher(new Teacher("Simon", "Loick", "sisi", "psisi"));
-		teacherDAO.addTeacher(new Teacher("admin", "admin", "admin", "admin"));
-		
-		SubjectDAO subjectDAO = new SubjectDAO(this);
-		subjectDAO.addSubject(new Subject("FRANCAIS"));
-		subjectDAO.addSubject(new Subject("MATHS"));
-		subjectDAO.addSubject(new Subject("SPORT"));
-
-        SkillheaderDAO skillheaderDAO = new SkillheaderDAO(this);
-		skillheaderDAO.addSkillheader(new Skillheader("Lire et écrire", "FRANCAIS"));
-		skillheaderDAO.addSkillheader(new Skillheader("Numération", "MATHS"));
-		skillheaderDAO.addSkillheader(new Skillheader("Courir", "SPORT"));
-		skillheaderDAO.addSkillheader(new Skillheader("Courir1", "SPORT"));
-		skillheaderDAO.addSkillheader(new Skillheader("Courir2", "SPORT"));
-		skillheaderDAO.addSkillheader(new Skillheader("Courir3", "SPORT"));
-		skillheaderDAO.addSkillheader(new Skillheader("Courir4", "SPORT"));
-		skillheaderDAO.addSkillheader(new Skillheader("Courir5", "SPORT"));
-		skillheaderDAO.addSkillheader(new Skillheader("Courir6", "SPORT"));
-		skillheaderDAO.addSkillheader(new Skillheader("Courir7", "SPORT"));
-		skillheaderDAO.addSkillheader(new Skillheader("Courir8", "SPORT"));
-		skillheaderDAO.addSkillheader(new Skillheader("Courir9", "SPORT"));
-		skillheaderDAO.addSkillheader(new Skillheader("Courir10", "SPORT"));
-		skillheaderDAO.addSkillheader(new Skillheader("Courir11", "SPORT"));
+		File directoryANEC = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator + "ANEC/");
+		directoryANEC.mkdirs();
 		
 		
-		SkillDAO skillDAO = new SkillDAO(this);
-		skillDAO.addSkill(new Skill("FRL1", "Lire des mots", "Lire et écrire"));
-		skillDAO.addSkill(new Skill("FRE1", "Recopier un texte court", "Lire et écrire"));
-		skillDAO.addSkill(new Skill("FRL10", "Reconnaître les pronoms personnels", "Lire et écrire"));
-		skillDAO.addSkill(new Skill("MAN5", "Additionner", "Numération"));
-		skillDAO.addSkill(new Skill("SPO1", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO2", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO3", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO4", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO5", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO6", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO7", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO8", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO9", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO10", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO11", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO12", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO13", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO14", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO15", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO16", "SPORT", "Courir"));
-		
-		skillDAO.addSkill(new Skill("SPO17", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO18", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO19", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO20", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO21", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO22", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO23", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO24", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO25", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO26", "SPORT", "Courir"));
-		
-		skillDAO.addSkill(new Skill("SPO27", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO28", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO29", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO30", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO31", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO32", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO33", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO34", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO35", "SPORT", "Courir"));
-		skillDAO.addSkill(new Skill("SPO36", "SPORT", "Courir"));
-*/
+		try {
+			//new DAOBase(this).clearDatabase();
+			
+			ClassroomDAO classroomDAO = new ClassroomDAO(this);
+			classroomDAO.addClassroom(new Classroom("Ecole")); //!! DO NOT REMOVE UNTIL ARCHITECTURE CHANGE !!\\
+			TeacherDAO teacherDAO = new TeacherDAO(this);
+			teacherDAO.addTeacher(new Teacher("admin", "admin", "admin", "admin"));
+			
+			
+			classroomDAO.addClassroom(new Classroom("CP"));
+			classroomDAO.addClassroom(new Classroom("CE1"));
+			
+			ChildDAO childDAO = new ChildDAO(this);
+			childDAO.addChild(new Child("Soen", "Timothee", "CP"));
+			childDAO.addChild(new Child("Rey", "Raphael", "CE1"));
+			childDAO.addChild(new Child("Morretton", "Julie", "CP"));
+			childDAO.addChild(new Child("Morretton", "Julie", "CP"));
+			childDAO.addChild(new Child("Morretton", "Julie", "CP"));
+			childDAO.addChild(new Child("Morretton", "Julie", "CP"));
+			childDAO.addChild(new Child("Morretton", "Julie", "CP"));
+			childDAO.addChild(new Child("Rey", "Raphael", "CP"));
+			
+			
+			teacherDAO = new TeacherDAO(this);
+			teacherDAO.addTeacher(new Teacher("Lhote", "Loick", "lolo", "plolo"));
+			teacherDAO.addTeacher(new Teacher("Simon", "Loick", "sisi", "psisi"));
+			teacherDAO.addTeacher(new Teacher("admin", "admin", "admin", "admin"));
+			
+			SubjectDAO subjectDAO = new SubjectDAO(this);
+			subjectDAO.addSubject(new Subject("FRANCAIS"));
+			subjectDAO.addSubject(new Subject("MATHS"));
+			subjectDAO.addSubject(new Subject("SPORT"));
+			
+			SkillheaderDAO skillheaderDAO = new SkillheaderDAO(this);
+			skillheaderDAO.addSkillheader(new Skillheader("Lire et écrire", "FRANCAIS"));
+			skillheaderDAO.addSkillheader(new Skillheader("Numération", "MATHS"));
+			skillheaderDAO.addSkillheader(new Skillheader("Courir", "SPORT"));
+			skillheaderDAO.addSkillheader(new Skillheader("Courir1", "SPORT"));
+			skillheaderDAO.addSkillheader(new Skillheader("Courir2", "SPORT"));
+			skillheaderDAO.addSkillheader(new Skillheader("Courir3", "SPORT"));
+			skillheaderDAO.addSkillheader(new Skillheader("Courir4", "SPORT"));
+			skillheaderDAO.addSkillheader(new Skillheader("Courir5", "SPORT"));
+			skillheaderDAO.addSkillheader(new Skillheader("Courir6", "SPORT"));
+			skillheaderDAO.addSkillheader(new Skillheader("Courir7", "SPORT"));
+			skillheaderDAO.addSkillheader(new Skillheader("Courir8", "SPORT"));
+			skillheaderDAO.addSkillheader(new Skillheader("Courir9", "SPORT"));
+			skillheaderDAO.addSkillheader(new Skillheader("Courir10", "SPORT"));
+			skillheaderDAO.addSkillheader(new Skillheader("Courir11", "SPORT"));
+			
+			
+			SkillDAO skillDAO = new SkillDAO(this);
+			skillDAO.addSkill(new Skill("FRL1", "Lire des mots", "Lire et écrire"));
+			skillDAO.addSkill(new Skill("FRE1", "Recopier un texte court", "Lire et écrire"));
+			skillDAO.addSkill(new Skill("FRL10", "Reconnaître les pronoms personnels", "Lire et écrire"));
+			skillDAO.addSkill(new Skill("MAN5", "Additionner", "Numération"));
+			skillDAO.addSkill(new Skill("SPO1", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO2", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO3", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO4", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO5", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO6", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO7", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO8", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO9", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO10", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO11", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO12", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO13", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO14", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO15", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO16", "SPORT", "Courir"));
+			
+			skillDAO.addSkill(new Skill("SPO17", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO18", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO19", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO20", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO21", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO22", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO23", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO24", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO25", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO26", "SPORT", "Courir"));
+			
+			skillDAO.addSkill(new Skill("SPO27", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO28", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO29", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO30", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO31", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO32", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO33", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO34", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO35", "SPORT", "Courir"));
+			skillDAO.addSkill(new Skill("SPO36", "SPORT", "Courir"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
         if (findViewById(R.id.fragment_container) != null) {
 			if (savedInstanceState == null) {

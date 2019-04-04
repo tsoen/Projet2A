@@ -5,16 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DAOBase {
     
-    private final static int VERSION = 1;
-
-    private final static String NOM = "database";
-
     public SQLiteDatabase database;
 
     private DataBaseHandler handler;
     
     public DAOBase(Context context) {
-        this.handler = new DataBaseHandler(context, NOM, null, VERSION);
+		this.handler = DataBaseHandler.getInstance(context);
         this.open();
     }
     
@@ -34,7 +30,7 @@ public class DAOBase {
     
     public void clearDatabase()
     {
-        this.handler.onUpgrade(database, VERSION, 100);
+		this.handler.onUpgrade(database, DataBaseHandler.getVersion(), 100);
     }
 }
 

@@ -2,14 +2,30 @@ package ensicaen.fr.marierave.Controllers;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DataBaseHandler extends SQLiteOpenHelper {
-    
-    public DataBaseHandler(Context context, String name, CursorFactory factory, int version) {
-        super(context, name, factory, version);
-    }
+	
+	private static DataBaseHandler mInstance = null;
+	
+	private final static int VERSION = 1;
+	
+	private final static String NOM = "database";
+	
+	private DataBaseHandler(Context context)
+	{
+		super(context, NOM, null, VERSION);
+	}
+	
+	public static DataBaseHandler getInstance(Context ctx)
+	{
+		
+		if (mInstance == null) {
+			mInstance = new DataBaseHandler(ctx.getApplicationContext());
+		}
+		
+		return mInstance;
+	}
     
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -79,4 +95,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 		
 		onCreate(db);
     }
+	
+	public static int getVersion()
+	{
+		return VERSION;
+	}
 }

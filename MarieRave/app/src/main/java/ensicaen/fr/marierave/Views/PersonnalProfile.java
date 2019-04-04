@@ -1,27 +1,14 @@
 package ensicaen.fr.marierave.Views;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.Point;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,18 +16,10 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.pdf.PdfWriter;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
@@ -197,7 +176,10 @@ public class PersonnalProfile extends Fragment
 		btnPDF.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				generatePDFResults();
+				Bundle bundle = new Bundle();
+				bundle.putInt("childId", _childId);
+				
+				Utils.replaceFragments(PrintPDF.class, getActivity(), bundle, true);
 			}
 		});
 	}
@@ -228,161 +210,6 @@ public class PersonnalProfile extends Fragment
 		
 		skillsListview.setAdapter(skillsAdapter);
 		skillsAdapter.notifyDataSetChanged();
-	}
-	
-	public void generatePDFResults()
-	{
-		if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-			ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
-		}
-		
-		String state = Environment.getExternalStorageState();
-		if (!Environment.MEDIA_MOUNTED.equals(state)) {
-			Log.d("myapp", "ko");
-		}
-
-		File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(), "myPdfFile.pdf");
-		
-		if (pdfFile.exists()) {
-			pdfFile.delete();
-			pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(), "myPdfFile.pdf");
-		}
-		
-		try {
-			Document document = new Document();
-			
-			PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
-			document.open();
-			
-			List<Bitmap> screenList = generateBitmapsFromView(getActivity().getWindow().findViewById(R.id.PersonnalProfileViewLayout));
-			
-			for (int i = 0; i < screenList.size(); i++) {
-				ByteArrayOutputStream stream = new ByteArrayOutputStream();
-				screenList.get(i).compress(Bitmap.CompressFormat.PNG, 60, stream);
-				byte[] byteArray = stream.toByteArray();
-				document.newPage();
-				addImage(document, byteArray);
-			}
-			
-			document.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		Intent intent = new Intent(Intent.ACTION_VIEW);
-		Uri uri = Uri.fromFile(pdfFile);
-		intent.setDataAndType(uri, "application/pdf");
-		intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
-        Intent pdfViewer = Intent.createChooser(intent, "Open File");
-        try {
-            startActivity(pdfViewer);
-        } catch (ActivityNotFoundException e) {
-            e.printStackTrace();
-
-            Toast.makeText(getContext(), "Aucune application permettant d'afficher un PDF n'a été détectée." +
-                    " Le fichier a été placé dans votre dossier de téléchargements", Toast.LENGTH_SHORT).show();
-        }
-	}
-	
-	public List<Bitmap> generateBitmapsFromView(View view)
-	{
-		view.setDrawingCacheEnabled(true);
-		
-		Display display = getActivity().getWindowManager().getDefaultDisplay();
-		Point size = new Point();
-		display.getSize(size);
-		int verticalHght = size.x;
-		
-		ListAdapter adapter = skillsListview.getAdapter();
-		int itemscount = adapter.getCount();
-		int allitemsheight = 0;
-		int tx = (int) skillsListview.getX();
-		int ty = (int) skillsListview.getY();
-		
-		for (int i = 0; i < itemscount; i++) {
-			
-			View childView = adapter.getView(i, null, skillsListview);
-			childView.measure(View.MeasureSpec.makeMeasureSpec(skillsListview.getWidth(), View.MeasureSpec.EXACTLY), View.MeasureSpec
-					.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-			
-			childView.layout(0, 0, childView.getMeasuredWidth(), childView.getMeasuredHeight());
-			childView.setDrawingCacheEnabled(true);
-			childView.buildDrawingCache();
-			allitemsheight += childView.getMeasuredHeight();
-		}
-		
-		skillsListview.measure(View.MeasureSpec.makeMeasureSpec(this.skillsListview.getWidth() + 500/*horizontalWdth*/, View.MeasureSpec.EXACTLY), View.MeasureSpec
-				.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-		
-		Bitmap bm1 = view.getDrawingCache();
-		Bitmap bm2 = Bitmap.createBitmap(skillsListview.getMeasuredWidth(), allitemsheight + ty, Bitmap.Config.ARGB_8888);
-		
-		Bitmap bm = overlay(bm2, bm1);
-		
-		Canvas canvas = new Canvas(bm);
-		
-		canvas.translate(tx, ty);
-		
-		for (int i = 0; i < adapter.getCount(); i++) {
-			View childView = adapter.getView(i, null, this.skillsListview);
-			
-			childView.measure(View.MeasureSpec.makeMeasureSpec(this.skillsListview.getWidth(), View.MeasureSpec.EXACTLY), View.MeasureSpec
-					.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-			
-			childView.layout(0, 0, childView.getMeasuredWidth(), childView.getMeasuredHeight());
-			childView.setDrawingCacheEnabled(true);
-			childView.buildDrawingCache();
-			childView.getDrawingCache();
-			childView.draw(canvas);
-			canvas.translate(0, childView.getMeasuredHeight());
-		}
-		
-		return splitBitmaps(bm, (int) Math.ceil((double) bm.getHeight() / verticalHght));
-	}
-	
-	public List<Bitmap> splitBitmaps(Bitmap originalBm, int nbBitmaps)
-	{
-		Point size = new Point();
-		getActivity().getWindowManager().getDefaultDisplay().getSize(size);
-		int verticalHght = size.x;
-		
-		List<Bitmap> list = new ArrayList<>();
-		
-		int offsetStart = 0;
-		int height;
-		for (int i = 0; i < nbBitmaps; i++) {
-			
-			height = Math.min(originalBm.getHeight() - offsetStart, verticalHght);
-			
-			Bitmap bm1 = Bitmap.createBitmap(originalBm, 0, offsetStart, originalBm.getWidth(), height);
-			
-			offsetStart += height;
-			list.add(bm1);
-		}
-		
-		return list;
-	}
-	
-	public Bitmap overlay(Bitmap bmp1, Bitmap bmp2)
-	{
-		Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
-		Canvas canvas = new Canvas(bmOverlay);
-		canvas.drawBitmap(bmp1, new Matrix(), null);
-		canvas.drawBitmap(bmp2, 0, 0, null);
-		return bmOverlay;
-	}
-	
-	private void addImage(Document document, byte[] byteArray)
-	{
-		try {
-            Image image = Image.getInstance(byteArray);
-            image.scalePercent(25f);
-			document.add(image);
-
-        } catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	private class ListviewSkillAdapter extends BaseAdapter
