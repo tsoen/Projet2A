@@ -79,6 +79,7 @@ public class MarkMultipleChildsDialog extends DialogFragment implements android.
 						_selectedMark = "D";
 						break;
 					default:
+						_selectedMark = "";
 						break;
 				}
 			}
@@ -120,7 +121,6 @@ public class MarkMultipleChildsDialog extends DialogFragment implements android.
 	{
 		List<Child> childList = new ChildDAO(getContext()).getAllChildsInClassroom(_classroomName);
 		childsAdapter = new ListviewChildsAdapter(getActivity(), childList);
-		
 		_childListview.setAdapter(childsAdapter);
 	}
 	
@@ -182,7 +182,7 @@ public class MarkMultipleChildsDialog extends DialogFragment implements android.
 		@Override
 		public long getItemId(int position)
 		{
-			return position;
+			return _childList.get(position).getId();
 		}
 		
 		private class ViewHolder
@@ -210,11 +210,13 @@ public class MarkMultipleChildsDialog extends DialogFragment implements android.
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-
-            holder._txtName.setText(_childList.get(position).getName());
-            holder._txtSurname.setText(_childList.get(position).getFirstname());
-
-			switch (new SkillMarkDAO(getContext()).getSkillMark(_childList.get(position).getId(), _skillCode)) {
+			
+			Child child = _childList.get(position);
+			
+			holder._txtName.setText(child.getName());
+			holder._txtSurname.setText(child.getFirstname());
+			
+			switch (new SkillMarkDAO(getContext()).getSkillMark(child.getId(), _skillCode)) {
 				case "A":
 					holder._txtMark.setBackgroundColor(Color.parseColor("#088A08"));
 					break;
@@ -232,6 +234,7 @@ public class MarkMultipleChildsDialog extends DialogFragment implements android.
 					break;
 
 				default:
+					holder._txtMark.setBackgroundColor(0x00000000);
 					break;
 			}
 

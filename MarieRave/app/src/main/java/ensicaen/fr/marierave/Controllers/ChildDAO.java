@@ -79,7 +79,6 @@ public class ChildDAO extends DAOBase {
 		if (cursor.moveToFirst()) {
 			do {
 				Child child = new Child(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
-				
 				childList.add(child);
 			} while (cursor.moveToNext());
 		}

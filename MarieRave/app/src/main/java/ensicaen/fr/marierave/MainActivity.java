@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity
 		File directoryANEC = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator + "ANEC/");
 		directoryANEC.mkdirs();
 		
+		//TODO remove admin admin accueil + hint identifiant mot de passe
+		//TODO remove this try catch
 		
 		try {
 			//new DAOBase(this).clearDatabase();

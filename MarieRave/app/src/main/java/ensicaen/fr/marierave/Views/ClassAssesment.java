@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -105,6 +106,15 @@ public class ClassAssesment extends Fragment
 		
 		ListView topicListview = view.findViewById(R.id.jumpToSubject);
 		topicListview.setAdapter(topicsAdapter);
+		
+		topicListview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+			{
+				reloadSkillListView((Subject) parent.getAdapter().getItem(position));
+			}
+		});
 	}
 	
 	public void reloadSkillListView(Subject filterSubject)

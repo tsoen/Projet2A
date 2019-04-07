@@ -124,7 +124,6 @@ public class AdministrationChilds extends Fragment
 		topicsAdapter.notifyDataSetChanged();
 	}
 	
-	//@TODO make a real transparent back image
 	private class ListViewAdapter extends BaseAdapter
 	{
 		private List<Child> _childList;

@@ -27,7 +27,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -45,6 +44,7 @@ import java.util.List;
 import java.util.TreeSet;
 
 import ensicaen.fr.marierave.Controllers.ChildDAO;
+import ensicaen.fr.marierave.Controllers.SkillCommentDAO;
 import ensicaen.fr.marierave.Controllers.SkillDAO;
 import ensicaen.fr.marierave.Controllers.SkillMarkDAO;
 import ensicaen.fr.marierave.Controllers.SkillheaderDAO;
@@ -54,7 +54,6 @@ import ensicaen.fr.marierave.Model.Skill;
 import ensicaen.fr.marierave.Model.Skillheader;
 import ensicaen.fr.marierave.Model.Subject;
 import ensicaen.fr.marierave.R;
-import ensicaen.fr.marierave.Views.Dialogs.EditEvaluationAndCommentDialog;
 
 public class PrintPDF extends Fragment
 {
@@ -94,6 +93,12 @@ public class PrintPDF extends Fragment
 		
 		Child child = new ChildDAO(getContext()).getChild(_childId);
 		
+		TextView txtName = view.findViewById(R.id.textView43);
+		txtName.setText(child.getFirstname() + " " + child.getName());
+		
+		TextView txtSurname = view.findViewById(R.id.textView45);
+		txtSurname.setText(child.getClassroom());
+		
 		skillsListview = view.findViewById(R.id.listSkills);
 		reloadSkillListView(null);
 		skillsListview.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -111,8 +116,6 @@ public class PrintPDF extends Fragment
 				}
 			}
 		});
-		
-		
 	}
 	
 	private static class BackgroundTask extends AsyncTask<Void, Integer, Void>
@@ -226,8 +229,6 @@ public class PrintPDF extends Fragment
 				byte[] byteArray = stream.toByteArray();
 				document.newPage();
 				addImage(document, byteArray);
-				
-				
 			}
 			
 			document.close();
@@ -261,6 +262,7 @@ public class PrintPDF extends Fragment
 		Point size = new Point();
 		display.getSize(size);
 		int verticalHght = size.x;
+		int horizontalWdth = size.y;
 		
 		ListAdapter adapter = skillsListview.getAdapter();
 		int itemscount = adapter.getCount();
@@ -305,6 +307,8 @@ public class PrintPDF extends Fragment
 			canvas.translate(0, childView.getMeasuredHeight());
 		}
 		
+		verticalHght += verticalHght * 0.5;
+		
 		return splitBitmaps(bm, (int) Math.ceil((double) bm.getHeight() / verticalHght));
 	}
 	
@@ -313,6 +317,8 @@ public class PrintPDF extends Fragment
 		Point size = new Point();
 		getActivity().getWindowManager().getDefaultDisplay().getSize(size);
 		int verticalHght = size.x;
+		
+		verticalHght += verticalHght * 0.5;
 		
 		List<Bitmap> list = new ArrayList<>();
 		
@@ -324,7 +330,7 @@ public class PrintPDF extends Fragment
 			
 			Bitmap bm1 = Bitmap.createBitmap(originalBm, 0, offsetStart, originalBm.getWidth(), height);
 			
-			offsetStart += height;
+			offsetStart += height - 30;
 			list.add(bm1);
 		}
 		
@@ -435,7 +441,7 @@ public class PrintPDF extends Fragment
 			private TextView _code;
 			private TextView _name;
 			private TextView _result;
-			private ImageButton _btnEdit;
+			private TextView _comment;
 		}
 		
 		private class HeaderHolder
@@ -451,12 +457,12 @@ public class PrintPDF extends Fragment
 			switch (getItemViewType(position)) {
 				case TYPE_ITEM:
 					ViewHolder holder = new ViewHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_item, null);
+					convertView = mInflater.inflate(R.layout.listview_skill_pdf_item, null);
 					
 					holder._code = convertView.findViewById(R.id.txtCode);
 					holder._result = convertView.findViewById(R.id.txtResult);
 					holder._name = convertView.findViewById(R.id.txtSkill);
-					holder._btnEdit = convertView.findViewById(R.id.btnEdit);
+					holder._comment = convertView.findViewById(R.id.textView46);
 					
 					final Skill item = (Skill) _skillsAndHeaders.get(position);
 					holder._code.setText(item.getCode());
@@ -482,33 +488,20 @@ public class PrintPDF extends Fragment
 							break;
 					}
 					
-					holder._btnEdit.setOnClickListener(new View.OnClickListener()
-					{
-						@Override
-						public void onClick(View v)
-						{
-							Bundle bundle = new Bundle();
-							bundle.putInt("ChildId", _childId);
-							bundle.putString("Skill", item.getCode());
-							
-							EditEvaluationAndCommentDialog dialog = new EditEvaluationAndCommentDialog();
-							dialog.setArguments(bundle);
-							dialog.setTargetFragment(_fragment, 0);
-							dialog.show(_activity.getSupportFragmentManager(), "editEvaluation");
-						}
-					});
+					holder._comment.setText(new SkillCommentDAO(getContext()).getSkillcomment(_childId, item.getCode()));
+					
 					break;
 				
 				case TYPE_BIG_SEPARATOR:
 					HeaderHolder holderBigHeader = new HeaderHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_subject_item, null);
+					convertView = mInflater.inflate(R.layout.listview_skill_subject_pdf_item, null);
 					holderBigHeader._header = convertView.findViewById(R.id.txtBigHeader);
 					holderBigHeader._header.setText((String) _skillsAndHeaders.get(position));
 					break;
 				
 				case TYPE_LITTLE_SEPARATOR:
 					HeaderHolder holderHeader = new HeaderHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_skillheader_item, null);
+					convertView = mInflater.inflate(R.layout.listview_skill_skillheader_pdf_item, null);
 					holderHeader._header = convertView.findViewById(R.id.txtLittleHeader);
 					holderHeader._header.setText((String) _skillsAndHeaders.get(position));
 					convertView.setTag(holderHeader);

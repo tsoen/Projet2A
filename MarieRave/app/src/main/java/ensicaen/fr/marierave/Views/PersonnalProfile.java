@@ -339,7 +339,7 @@ public class PersonnalProfile extends Fragment
                             break;
 
                         default:
-                            break;
+							break;
                     }
 
 					holder._btnEdit.setOnClickListener(new View.OnClickListener()
