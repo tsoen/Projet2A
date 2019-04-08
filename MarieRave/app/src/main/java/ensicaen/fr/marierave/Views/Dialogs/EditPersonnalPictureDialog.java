@@ -16,6 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.Picasso;
+
 import java.io.File;
 
 import ensicaen.fr.marierave.Controllers.ChildDAO;
@@ -62,6 +66,8 @@ public class EditPersonnalPictureDialog extends DialogFragment implements View.O
 							.getAbsolutePath() + File.separator + "ANEC", fileName);
 					
 					Uri photoURI = Uri.fromFile(image);
+					Picasso.get().invalidate(photoURI);
+					Picasso.get().load(photoURI).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE);
 					takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
 					getActivity().startActivityForResult(takePictureIntent, 1);
 				}
@@ -70,21 +76,26 @@ public class EditPersonnalPictureDialog extends DialogFragment implements View.O
 				break;
 			
 			case R.id.button27:
-
+				
+				if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+					ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+				}
+				
 				Child child = new ChildDAO(getContext()).getChild(getArguments().getInt("childId"));
 
 				String fileName = child.getFirstname() + "_" + child.getName() + "_" + child.getId() + ".jpg";
 
 				File image = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
 						.getAbsolutePath() + File.separator + "ANEC", fileName);
-
+				
+				Picasso.get().invalidate(Uri.fromFile(image));
+				Picasso.get().load(Uri.fromFile(image)).networkPolicy(NetworkPolicy.NO_CACHE).memoryPolicy(MemoryPolicy.NO_CACHE);
 
 				Intent i = new Intent(Intent.ACTION_GET_CONTENT);
 				i.setType("*/*");
 				Utils.tempFileUri = image.getAbsolutePath();
-
 				getActivity().startActivityForResult(i, 50);
-
+				
 				dismiss();
 				break;
 			default:

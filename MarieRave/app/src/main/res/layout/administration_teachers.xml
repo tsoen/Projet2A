@@ -129,7 +129,7 @@
         android:layout_height="wrap_content"
         android:drawableStart="@android:drawable/ic_menu_search"
         android:drawablePadding="5dp"
-        android:hint="Rechercher un élève"
+        android:hint="Rechercher un enseignant"
         app:layout_constraintEnd_toStartOf="@+id/guideline31"
         app:layout_constraintStart_toStartOf="@+id/guideline18"
         app:layout_constraintTop_toTopOf="@+id/backButton"/>

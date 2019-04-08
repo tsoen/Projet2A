@@ -59,12 +59,7 @@ public class PersonnalProfile extends Fragment
 		
 		Child child = new ChildDAO(getContext()).getChild(_childId);
 		
-		ImageView personnalPicture = view.findViewById(R.id.imgPersonnalPicture);
-		
-		Bitmap img = Utils.getChildPersonnalPicture(getContext(), _childId);
-		if (img != null) {
-			personnalPicture.setImageBitmap(img);
-		}
+		reloadPicture();
 		
 		ImageView editPictureButton = view.findViewById(R.id.imageView3);
 		editPictureButton.setOnClickListener(new View.OnClickListener()
@@ -182,6 +177,16 @@ public class PersonnalProfile extends Fragment
 				Utils.replaceFragments(PrintPDF.class, getActivity(), bundle, true);
 			}
 		});
+	}
+	
+	public void reloadPicture()
+	{
+		ImageView personnalPicture = getView().findViewById(R.id.imgPersonnalPicture);
+		
+		Bitmap img = Utils.getChildPersonnalPicture(getContext(), _childId);
+		if (img != null) {
+			personnalPicture.setImageBitmap(img);
+		}
 	}
 	
 	public void reloadSkillListView(Subject filterSubject)

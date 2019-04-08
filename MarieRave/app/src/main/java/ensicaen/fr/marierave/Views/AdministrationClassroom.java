@@ -3,7 +3,6 @@ package ensicaen.fr.marierave.Views;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -18,6 +17,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -226,20 +228,31 @@ public class AdministrationClassroom extends Fragment implements android.view.Vi
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent)
 		{
+			ViewHolder holder;
+			
 			if (convertView == null) {
 				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_classroom_guy_item, null);
-				GridViewChildsAdapter.ViewHolder holder = new GridViewChildsAdapter.ViewHolder();
+				
+				holder = new ViewHolder();
 				holder._profilePic = convertView.findViewById(R.id.imgProfilePicture);
 				holder._txtName = convertView.findViewById(R.id.txtName);
 				holder._txtSurname = convertView.findViewById(R.id.txtSurname);
 				
-				Bitmap img = Utils.getChildPersonnalPicture(getContext(), _childList.get(position).getId());
-				if (img != null) {
-					holder._profilePic.setImageBitmap(img);
-				}
-                holder._txtName.setText(_childList.get(position).getName());
-                holder._txtSurname.setText(_childList.get(position).getFirstname());
+				convertView.setTag(holder);
 			}
+			else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+			
+			if (Utils.getChildPersonnalPicture(getContext(), _childList.get(position).getId()) != null) {
+				Picasso.get().load(new File(Utils.getChildPersonnalPicturePath(getContext(), _childList.get(position).getId()))).into(holder._profilePic);
+			}
+			else {
+				Picasso.get().load(R.drawable.garcon_icon).into(holder._profilePic);
+			}
+			
+			holder._txtName.setText(_childList.get(position).getName());
+			holder._txtSurname.setText(_childList.get(position).getFirstname());
 			
 			return convertView;
 		}

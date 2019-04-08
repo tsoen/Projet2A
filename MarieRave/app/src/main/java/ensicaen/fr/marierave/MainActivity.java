@@ -7,10 +7,8 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -32,6 +30,7 @@ import ensicaen.fr.marierave.Model.Teacher;
 import ensicaen.fr.marierave.Views.AdministrationChilds;
 import ensicaen.fr.marierave.Views.AdministrationSkills;
 import ensicaen.fr.marierave.Views.ConnectionFragment;
+import ensicaen.fr.marierave.Views.PersonnalProfile;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -269,23 +268,19 @@ public class MainActivity extends AppCompatActivity
 				return;
 			}
 		}
-		else if (requestCode == 1 && resultCode == RESULT_OK) {
-
-
-		} else if (requestCode == 50) {
-
-
-			File src = new File(data.getData().getPath());
+		else if (requestCode == 1) {
+			((PersonnalProfile) getSupportFragmentManager().findFragmentById(R.id.fragment_container)).reloadPicture();
+		}
+		else if (requestCode == 50) {
+			
+			if (data.getData() == null) {
+				return;
+			}
+			
 			File dst = new File(Utils.tempFileUri);
-
-
-			Log.d("myapp", src.getAbsolutePath());
-			Log.d("myapp", dst.getAbsolutePath());
-
-
-			try (InputStream in = new FileInputStream(src)) {
+			
+			try (InputStream in = getContentResolver().openInputStream(data.getData())) {
 				try (OutputStream out = new FileOutputStream(dst)) {
-					// Transfer bytes from in to out
 					byte[] buf = new byte[1024];
 					int len;
 					while ((len = in.read(buf)) > 0) {
@@ -295,6 +290,8 @@ public class MainActivity extends AppCompatActivity
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
+			((PersonnalProfile) getSupportFragmentManager().findFragmentById(R.id.fragment_container)).reloadPicture();
 		}
 
 		super.onActivityResult(requestCode, resultCode, data);

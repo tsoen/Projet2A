@@ -51,14 +51,17 @@ public class Utils
 		}
 	}
 	
-	public static Bitmap getChildPersonnalPicture(Context context, Integer childId)
+	public static String getChildPersonnalPicturePath(Context context, Integer childId)
 	{
 		
 		Child child = new ChildDAO(context).getChild(childId);
 		
-		String path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator + "ANEC" + File.separator + child
+		return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator + "ANEC" + File.separator + child
 				.getFirstname() + "_" + child.getName() + "_" + child.getId() + ".jpg";
-		
-		return BitmapFactory.decodeFile(path);
+	}
+	
+	public static Bitmap getChildPersonnalPicture(Context context, Integer childId)
+	{
+		return BitmapFactory.decodeFile(getChildPersonnalPicturePath(context, childId));
 	}
 }
