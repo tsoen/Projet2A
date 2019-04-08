@@ -7,12 +7,11 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
@@ -273,10 +272,16 @@ public class MainActivity extends AppCompatActivity
 		else if (requestCode == 1 && resultCode == RESULT_OK) {
 
 
-		} else if (requestCode == 50 && resultCode == RESULT_OK) {
+		} else if (requestCode == 50) {
+
 
 			File src = new File(data.getData().getPath());
-			File dst = (File) data.getExtras().get("imageFile");
+			File dst = new File(Utils.tempFileUri);
+
+
+			Log.d("myapp", src.getAbsolutePath());
+			Log.d("myapp", dst.getAbsolutePath());
+
 
 			try (InputStream in = new FileInputStream(src)) {
 				try (OutputStream out = new FileOutputStream(dst)) {
@@ -287,13 +292,11 @@ public class MainActivity extends AppCompatActivity
 						out.write(buf, 0, len);
 					}
 				}
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 }

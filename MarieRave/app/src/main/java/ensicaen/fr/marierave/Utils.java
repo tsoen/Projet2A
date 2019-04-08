@@ -20,6 +20,7 @@ public class Utils
 {
 	public static Integer teacherLoggedInId = 0;
 	public static String teacherLoggedInLogin = "";
+	public static String tempFileUri = "";
 	
 	/**
 	 * Switchs the fragment displayed in the application

@@ -21,6 +21,7 @@ import java.io.File;
 import ensicaen.fr.marierave.Controllers.ChildDAO;
 import ensicaen.fr.marierave.Model.Child;
 import ensicaen.fr.marierave.R;
+import ensicaen.fr.marierave.Utils;
 
 public class EditPersonnalPictureDialog extends DialogFragment implements View.OnClickListener
 {
@@ -62,7 +63,7 @@ public class EditPersonnalPictureDialog extends DialogFragment implements View.O
 					
 					Uri photoURI = Uri.fromFile(image);
 					takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-					startActivityForResult(takePictureIntent, 1);
+					getActivity().startActivityForResult(takePictureIntent, 1);
 				}
 
 				dismiss();
@@ -73,12 +74,14 @@ public class EditPersonnalPictureDialog extends DialogFragment implements View.O
 				Child child = new ChildDAO(getContext()).getChild(getArguments().getInt("childId"));
 
 				String fileName = child.getFirstname() + "_" + child.getName() + "_" + child.getId() + ".jpg";
+
 				File image = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
 						.getAbsolutePath() + File.separator + "ANEC", fileName);
 
+
 				Intent i = new Intent(Intent.ACTION_GET_CONTENT);
 				i.setType("*/*");
-				i.putExtra("imageFile", image);
+				Utils.tempFileUri = image.getAbsolutePath();
 
 				getActivity().startActivityForResult(i, 50);
 
