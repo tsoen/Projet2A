@@ -64,12 +64,24 @@ public class EditPersonnalPictureDialog extends DialogFragment implements View.O
 					takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
 					startActivityForResult(takePictureIntent, 1);
 				}
-				
-				
+
 				dismiss();
 				break;
 			
 			case R.id.button27:
+
+				Child child = new ChildDAO(getContext()).getChild(getArguments().getInt("childId"));
+
+				String fileName = child.getFirstname() + "_" + child.getName() + "_" + child.getId() + ".jpg";
+				File image = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+						.getAbsolutePath() + File.separator + "ANEC", fileName);
+
+				Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+				i.setType("*/*");
+				i.putExtra("imageFile", image);
+
+				getActivity().startActivityForResult(i, 50);
+
 				dismiss();
 				break;
 			default:
