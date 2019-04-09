@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity
 		}
 		else if (requestCode == 50) {
 			
-			if (data.getData() == null) {
+			if (data == null || data.getData() == null) {
 				return;
 			}
 			
