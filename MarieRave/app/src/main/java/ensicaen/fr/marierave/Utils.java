@@ -22,6 +22,8 @@ public class Utils
 	public static String teacherLoggedInLogin = "";
 	public static String tempFileUri = "";
 	
+	public static final String ANEC_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + File.separator + "ANEC" + File.separator;
+	
 	/**
 	 * Switchs the fragment displayed in the application
 	 * Can be called from inside a FragmentClass
@@ -53,11 +55,9 @@ public class Utils
 	
 	public static String getChildPersonnalPicturePath(Context context, Integer childId)
 	{
-		
 		Child child = new ChildDAO(context).getChild(childId);
 		
-		return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator + "ANEC" + File.separator + child
-				.getFirstname() + "_" + child.getName() + "_" + child.getId() + ".jpg";
+		return ANEC_PATH + child.getFirstname() + "_" + child.getName() + "_" + child.getId() + ".jpg";
 	}
 	
 	public static Bitmap getChildPersonnalPicture(Context context, Integer childId)

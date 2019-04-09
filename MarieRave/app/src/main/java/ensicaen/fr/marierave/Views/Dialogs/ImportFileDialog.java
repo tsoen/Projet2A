@@ -26,6 +26,8 @@ import java.io.OutputStream;
 
 import ensicaen.fr.marierave.R;
 
+import static ensicaen.fr.marierave.Utils.ANEC_PATH;
+
 public class ImportFileDialog extends DialogFragment implements android.view.View.OnClickListener
 {
 	private String mode;
@@ -109,7 +111,7 @@ public class ImportFileDialog extends DialogFragment implements android.view.Vie
 			
 			InputStream in = getActivity().getAssets().open(filename);
 			
-			OutputStream out = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/" + filename);
+			OutputStream out = new FileOutputStream(ANEC_PATH + filename);
 			
 			byte[] buffer = new byte[512];
 			int read;

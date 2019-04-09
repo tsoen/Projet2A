@@ -3,7 +3,6 @@ package ensicaen.fr.marierave;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +31,8 @@ import ensicaen.fr.marierave.Views.AdministrationSkills;
 import ensicaen.fr.marierave.Views.ConnectionFragment;
 import ensicaen.fr.marierave.Views.PersonnalProfile;
 
+import static ensicaen.fr.marierave.Utils.ANEC_PATH;
+
 public class MainActivity extends AppCompatActivity
 {
 	@Override
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity
             }
         }
 		
-		File directoryANEC = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + File.separator + "ANEC/");
+		File directoryANEC = new File(ANEC_PATH);
 		directoryANEC.mkdirs();
 		
 		try {
