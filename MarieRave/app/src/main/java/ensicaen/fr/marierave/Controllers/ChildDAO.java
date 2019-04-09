@@ -30,11 +30,11 @@ public class ChildDAO extends DAOBase {
         values.put(FIRSTNAME, child.getFirstname());
         values.put(CLASSROOM, child.getClassroom());
 		
-        this.database.insert(TABLE_NAME, null, values);
+		_database.insert(TABLE_NAME, null, values);
     }
     
 	public Child getChild(long id) {
-		Cursor cursor =  this.database.query(TABLE_NAME, new String[] { ID, NAME, FIRSTNAME, CLASSROOM },
+		Cursor cursor = _database.query(TABLE_NAME, new String[]{ID, NAME, FIRSTNAME, CLASSROOM},
 				ID + " = ?", new String[] { String.valueOf(id) }, null, null, null, null);
 		
 		if (cursor != null) {
@@ -53,7 +53,7 @@ public class ChildDAO extends DAOBase {
 		
 		String selectQuery = "SELECT * FROM " + TABLE_NAME;
 		
-		Cursor cursor =  this.database.rawQuery(selectQuery, null);
+		Cursor cursor = _database.rawQuery(selectQuery, null);
 		
 		if (cursor.moveToFirst()) {
 			do {
@@ -74,7 +74,7 @@ public class ChildDAO extends DAOBase {
 		
 		String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + CLASSROOM + " = '" + classroomName + "'";
 		
-		Cursor cursor = this.database.rawQuery(selectQuery, null);
+		Cursor cursor = _database.rawQuery(selectQuery, null);
 		
 		if (cursor.moveToFirst()) {
 			do {
@@ -94,7 +94,7 @@ public class ChildDAO extends DAOBase {
 		
 		String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + CLASSROOM + " != '" + classroomName + "'";
 		
-		Cursor cursor = this.database.rawQuery(selectQuery, null);
+		Cursor cursor = _database.rawQuery(selectQuery, null);
 		
 		if (cursor.moveToFirst()) {
 			do {
@@ -110,7 +110,7 @@ public class ChildDAO extends DAOBase {
 	}
 	
 	public void deleteChild(long id) {
-		this.database.delete(TABLE_NAME, ID + " = ?", new String[] {String.valueOf(id)});
+		_database.delete(TABLE_NAME, ID + " = ?", new String[]{String.valueOf(id)});
     }
     
 	public void updateChild(Child child) {
@@ -120,12 +120,12 @@ public class ChildDAO extends DAOBase {
 		values.put(FIRSTNAME, child.getFirstname());
 		values.put(CLASSROOM, child.getClassroom());
 		
-		this.database.update(TABLE_NAME, values, ID  + " = ?", new String[] {String.valueOf(child.getId())} );
+		_database.update(TABLE_NAME, values, ID + " = ?", new String[]{String.valueOf(child.getId())});
     }
     
 	public int getChildCount() {
         String countQuery = "SELECT * FROM " + TABLE_NAME;
-        Cursor cursor =  this.database.rawQuery(countQuery, null);
+		Cursor cursor = _database.rawQuery(countQuery, null);
 		int res =  cursor.getCount();
 		
 		cursor.close();
@@ -135,7 +135,7 @@ public class ChildDAO extends DAOBase {
     
     public int getNextId(){
 		String query = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + ID + " DESC LIMIT 1;";
-		Cursor cursor =  this.database.rawQuery(query, null);
+		Cursor cursor = _database.rawQuery(query, null);
 		
 		cursor.moveToFirst();
 	

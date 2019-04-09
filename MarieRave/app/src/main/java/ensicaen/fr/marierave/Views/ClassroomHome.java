@@ -29,7 +29,7 @@ import ensicaen.fr.marierave.Model.Classroom;
 import ensicaen.fr.marierave.R;
 import ensicaen.fr.marierave.Utils;
 
-public class HomeClassroom extends Fragment
+public class ClassroomHome extends Fragment
 {
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)

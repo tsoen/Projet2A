@@ -21,6 +21,8 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import ensicaen.fr.marierave.Controllers.ChildDAO;
@@ -198,6 +200,15 @@ public class AdministrationClassroom extends Fragment implements android.view.Vi
 			super();
 			_activity = activity;
 			_childList = childList;
+			
+			Collections.sort(_childList, new Comparator<Child>()
+			{
+				@Override
+				public int compare(Child o1, Child o2)
+				{
+					return o1.getName().compareToIgnoreCase(o2.getName());
+				}
+			});
 		}
 		
 		@Override
@@ -268,6 +279,15 @@ public class AdministrationClassroom extends Fragment implements android.view.Vi
 			super();
 			_activity = activity;
 			_teacherList = teacherList;
+			
+			Collections.sort(_teacherList, new Comparator<Teacher>()
+			{
+				@Override
+				public int compare(Teacher o1, Teacher o2)
+				{
+					return o1.getName().compareToIgnoreCase(o2.getName());
+				}
+			});
 		}
 		
 		@Override
@@ -298,17 +318,25 @@ public class AdministrationClassroom extends Fragment implements android.view.Vi
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent)
 		{
+			ViewHolder holder;
+			
 			if (convertView == null) {
 				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_classroom_guy_item, null);
-				ViewHolder holder = new ViewHolder();
+				
+				holder = new ViewHolder();
 				holder._profilePic = convertView.findViewById(R.id.imgProfilePicture);
 				holder._txtName = convertView.findViewById(R.id.txtName);
 				holder._txtFirstname = convertView.findViewById(R.id.txtSurname);
-
-				holder._profilePic.setImageResource(R.drawable.garcon_icon);
-				holder._txtName.setText(_teacherList.get(position).getName());
-				holder._txtFirstname.setText(_teacherList.get(position).getFirstname());
+				
+				convertView.setTag(holder);
 			}
+			else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+			
+			Picasso.get().load(R.drawable.garcon_icon).into(holder._profilePic);
+			holder._txtName.setText(_teacherList.get(position).getName());
+			holder._txtFirstname.setText(_teacherList.get(position).getFirstname());
 			
 			return convertView;
 		}

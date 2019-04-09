@@ -24,12 +24,12 @@ public class TeacherClassroomDAO extends DAOBase
 		values.put(CLASSROOMNAME, classroomName);
 		values.put(TEACHERID, teacherId);
 		
-		this.database.insert(TABLE_NAME, null, values);
+		_database.insert(TABLE_NAME, null, values);
 	}
 	
 	public List<Integer> getTeachersIdInClassroom(String classroomName)
 	{
-		Cursor cursor = this.database.query(true, TABLE_NAME, new String[]{TEACHERID}, CLASSROOMNAME + " = ?", new String[]{classroomName}, null, null, null, null);
+		Cursor cursor = _database.query(true, TABLE_NAME, new String[]{TEACHERID}, CLASSROOMNAME + " = ?", new String[]{classroomName}, null, null, null, null);
 		
 		List<Integer> teachersIdList = new ArrayList<>();
 		
@@ -54,7 +54,7 @@ public class TeacherClassroomDAO extends DAOBase
 	{
 		String countQuery = "SELECT DISTINCT " + TEACHERID + " FROM " + TABLE_NAME + " WHERE " + TEACHERID + " NOT IN (SELECT " + TEACHERID + " FROM " + TABLE_NAME + " "
 				+ "WHERE " + CLASSROOMNAME + " = '" + classroomName + "' )";
-		Cursor cursor = this.database.rawQuery(countQuery, null);
+		Cursor cursor = _database.rawQuery(countQuery, null);
 		
 		List<Integer> teachersIdList = new ArrayList<>();
 		
@@ -77,7 +77,7 @@ public class TeacherClassroomDAO extends DAOBase
 
 	public List<String> getClassroomsWithThisTeacher(Integer teacherId)
 	{
-		Cursor cursor = this.database.query(TABLE_NAME, new String[]{CLASSROOMNAME}, TEACHERID + " = ?", new String[]{teacherId.toString()}, null, null, null, null);
+		Cursor cursor = _database.query(TABLE_NAME, new String[]{CLASSROOMNAME}, TEACHERID + " = ?", new String[]{teacherId.toString()}, null, null, null, null);
 		
 		List<String> classroomList = new ArrayList<>();
 		
@@ -102,6 +102,6 @@ public class TeacherClassroomDAO extends DAOBase
 	
 	public void deleteTeacherFromCLassroom(String classroomName, Integer teacherId)
 	{
-		this.database.delete(TABLE_NAME, CLASSROOMNAME + " = ? AND " + TEACHERID + " = ?", new String[]{classroomName, teacherId.toString()});
+		_database.delete(TABLE_NAME, CLASSROOMNAME + " = ? AND " + TEACHERID + " = ?", new String[]{classroomName, teacherId.toString()});
 	}
 }

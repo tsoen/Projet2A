@@ -17,8 +17,8 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -40,8 +40,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.TreeSet;
 
 import ensicaen.fr.marierave.Controllers.ChildDAO;
 import ensicaen.fr.marierave.Controllers.SkillCommentDAO;
@@ -100,7 +101,7 @@ public class PrintPDF extends Fragment
 		txtSurname.setText(child.getClassroom());
 		
 		skillsListview = view.findViewById(R.id.listSkills);
-		reloadSkillListView(null);
+		reloadSkillListView();
 		skillsListview.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
 			@Override
@@ -167,25 +168,59 @@ public class PrintPDF extends Fragment
 		}
 	}
 	
-	public void reloadSkillListView(Subject filterSubject)
+	public void reloadSkillListView()
 	{
 		ListviewSkillAdapter skillsAdapter = new ListviewSkillAdapter(this);
-		List<Subject> subjectList = new ArrayList<>();
-		
-		if (filterSubject != null) {
-			subjectList.add(filterSubject);
-		}
-		else {
-			subjectList = new SubjectDAO(getContext()).getAllSubjects();
-		}
+		List<Subject> subjectList = new SubjectDAO(getContext()).getAllSubjects();
+		Collections.sort(subjectList, new Comparator<Subject>()
+		{
+			@Override
+			public int compare(Subject o1, Subject o2)
+			{
+				return o1.getName().compareToIgnoreCase(o2.getName());
+			}
+		});
 		
 		for (Subject subject : subjectList) {
-			skillsAdapter.addBigSectionHeaderItem(subject.getName());
+			skillsAdapter.addItem(subject);
 			
-			for (Skillheader skillheader : new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName())) {
-				skillsAdapter.addLittleSectionHeaderItem(skillheader.getName());
+			List<Skillheader> skillheaderList = new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName());
+			Collections.sort(skillheaderList, new Comparator<Skillheader>()
+			{
+				@Override
+				public int compare(Skillheader o1, Skillheader o2)
+				{
+					return o1.getName().compareToIgnoreCase(o2.getName());
+				}
+			});
+			
+			for (Skillheader skillheader : skillheaderList) {
+				skillsAdapter.addItem(skillheader);
 				
-				for (Skill skill : new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName())) {
+				List<Skill> skillList = new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName());
+				Collections.sort(skillList, new Comparator<Skill>()
+				{
+					@Override
+					public int compare(Skill o1, Skill o2)
+					{
+						String o1StringPart = o1.getCode().replaceAll("\\d", "");
+						String o2StringPart = o2.getCode().replaceAll("\\d", "");
+						
+						if (o1StringPart.equalsIgnoreCase(o2StringPart)) {
+							return extractInt(o1.getCode()) - extractInt(o2.getCode());
+						}
+						
+						return o1.getCode().compareTo(o2.getCode());
+					}
+					
+					int extractInt(String s)
+					{
+						String num = s.replaceAll("\\D", "");
+						return num.isEmpty() ? 0 : Integer.parseInt(num);
+					}
+				});
+				
+				for (Skill skill : skillList) {
 					skillsAdapter.addItem(skill);
 				}
 			}
@@ -262,7 +297,6 @@ public class PrintPDF extends Fragment
 		Point size = new Point();
 		display.getSize(size);
 		int verticalHght = size.x;
-		int horizontalWdth = size.y;
 		
 		ListAdapter adapter = skillsListview.getAdapter();
 		int itemscount = adapter.getCount();
@@ -360,62 +394,20 @@ public class PrintPDF extends Fragment
 	
 	private class ListviewSkillAdapter extends BaseAdapter
 	{
-		private static final int TYPE_ITEM = 0;
-		private static final int TYPE_BIG_SEPARATOR = 1;
-		private static final int TYPE_LITTLE_SEPARATOR = 2;
-		
 		private ArrayList<Object> _skillsAndHeaders = new ArrayList<>();
-		private TreeSet<Integer> _bigHeaders = new TreeSet<>();
-		private TreeSet<Integer> _littleHeaders = new TreeSet<>();
 		
-		private FragmentActivity _activity;
 		private PrintPDF _fragment;
 		
 		ListviewSkillAdapter(PrintPDF fragment)
 		{
 			super();
 			_fragment = fragment;
-			_activity = fragment.getActivity();
 		}
 		
-		void addItem(final Skill item)
+		void addItem(Object item)
 		{
 			_skillsAndHeaders.add(item);
 			notifyDataSetChanged();
-		}
-		
-		void addBigSectionHeaderItem(final String item)
-		{
-			_skillsAndHeaders.add(item);
-			_bigHeaders.add(_skillsAndHeaders.size() - 1);
-			notifyDataSetChanged();
-		}
-		
-		void addLittleSectionHeaderItem(final String item)
-		{
-			_skillsAndHeaders.add(item);
-			_littleHeaders.add(_skillsAndHeaders.size() - 1);
-			notifyDataSetChanged();
-		}
-		
-		@Override
-		public int getItemViewType(int position)
-		{
-			if (_bigHeaders.contains(position)) {
-				return TYPE_BIG_SEPARATOR;
-			}
-			
-			if (_littleHeaders.contains(position)) {
-				return TYPE_LITTLE_SEPARATOR;
-			}
-			
-			return TYPE_ITEM;
-		}
-		
-		@Override
-		public int getViewTypeCount()
-		{
-			return 3;
 		}
 		
 		@Override
@@ -436,6 +428,25 @@ public class PrintPDF extends Fragment
 			return position;
 		}
 		
+		@Override
+		public int getItemViewType(int position)
+		{
+			if (_skillsAndHeaders.get(position) instanceof Skill) {
+				return 0;
+			}
+			else if (_skillsAndHeaders.get(position) instanceof Subject) {
+				return 1;
+			}
+			
+			return 2;
+		}
+		
+		@Override
+		public int getViewTypeCount()
+		{
+			return 3;
+		}
+		
 		private class ViewHolder
 		{
 			private TextView _code;
@@ -452,60 +463,98 @@ public class PrintPDF extends Fragment
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent)
 		{
-			LayoutInflater mInflater = _activity.getLayoutInflater();
+			int viewType = getItemViewType(position);
 			
-			switch (getItemViewType(position)) {
-				case TYPE_ITEM:
-					ViewHolder holder = new ViewHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_pdf_item, null);
+			switch (viewType) {
+				case 0:
+					ViewHolder holder1;
 					
-					holder._code = convertView.findViewById(R.id.txtCode);
-					holder._result = convertView.findViewById(R.id.txtResult);
-					holder._name = convertView.findViewById(R.id.txtSkill);
-					holder._comment = convertView.findViewById(R.id.textView46);
+					View tempView1 = convertView;
+					if (tempView1 == null) {
+						tempView1 = _fragment.getLayoutInflater().inflate(R.layout.listview_skill_pdf_item, null);
+						
+						holder1 = new ViewHolder();
+						holder1._code = tempView1.findViewById(R.id.txtCode);
+						holder1._result = tempView1.findViewById(R.id.txtResult);
+						holder1._name = tempView1.findViewById(R.id.txtSkill);
+						holder1._comment = tempView1.findViewById(R.id.textView46);
+						
+						tempView1.setTag(holder1);
+					}
+					else {
+						holder1 = (ViewHolder) tempView1.getTag();
+					}
 					
 					final Skill item = (Skill) _skillsAndHeaders.get(position);
-					holder._code.setText(item.getCode());
-					holder._name.setText(item.getName());
+					holder1._code.setText(item.getCode());
+					holder1._name.setText(item.getName());
 					switch (new SkillMarkDAO(getContext()).getSkillMark(_childId, item.getCode())) {
 						case "A":
-							holder._result.setBackgroundColor(Color.parseColor("#088A08"));
+							holder1._result.setBackgroundColor(Color.parseColor("#088A08"));
 							break;
 						
 						case "B":
-							holder._result.setBackgroundColor(Color.parseColor("#00FF40"));
+							holder1._result.setBackgroundColor(Color.parseColor("#00FF40"));
 							break;
 						
 						case "C":
-							holder._result.setBackgroundColor(Color.parseColor("#FFD500"));
+							holder1._result.setBackgroundColor(Color.parseColor("#FFD500"));
 							break;
 						
 						case "D":
-							holder._result.setBackgroundColor(Color.parseColor("#FF0000"));
+							holder1._result.setBackgroundColor(Color.parseColor("#FF0000"));
 							break;
 						
 						default:
+							holder1._result.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.cell_shape_noside, null));
 							break;
 					}
 					
-					holder._comment.setText(new SkillCommentDAO(getContext()).getSkillcomment(_childId, item.getCode()));
+					holder1._comment.setText(new SkillCommentDAO(getContext()).getSkillcomment(_childId, item.getCode()));
 					
-					break;
+					return tempView1;
 				
-				case TYPE_BIG_SEPARATOR:
-					HeaderHolder holderBigHeader = new HeaderHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_subject_pdf_item, null);
-					holderBigHeader._header = convertView.findViewById(R.id.txtBigHeader);
-					holderBigHeader._header.setText((String) _skillsAndHeaders.get(position));
-					break;
+				case 1:
+					HeaderHolder holder2;
+					
+					View tempView2 = convertView;
+					if (tempView2 == null) {
+						tempView2 = _fragment.getLayoutInflater().inflate(R.layout.listview_skill_subject_pdf_item, null);
+						
+						holder2 = new HeaderHolder();
+						holder2._header = tempView2.findViewById(R.id.txtBigHeader);
+						
+						tempView2.setTag(holder2);
+					}
+					else {
+						holder2 = (HeaderHolder) tempView2.getTag();
+					}
+					
+					Subject subject = (Subject) _skillsAndHeaders.get(position);
+					holder2._header.setText(subject.getName());
+					
+					return tempView2;
 				
-				case TYPE_LITTLE_SEPARATOR:
-					HeaderHolder holderHeader = new HeaderHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_skillheader_pdf_item, null);
-					holderHeader._header = convertView.findViewById(R.id.txtLittleHeader);
-					holderHeader._header.setText((String) _skillsAndHeaders.get(position));
-					convertView.setTag(holderHeader);
-					break;
+				case 2:
+					HeaderHolder holder3;
+					
+					View tempView3 = convertView;
+					if (tempView3 == null) {
+						tempView3 = _fragment.getLayoutInflater().inflate(R.layout.listview_skill_skillheader_pdf_item, null);
+						
+						holder3 = new HeaderHolder();
+						holder3._header = tempView3.findViewById(R.id.txtLittleHeader);
+						
+						tempView3.setTag(holder3);
+					}
+					else {
+						holder3 = (HeaderHolder) tempView3.getTag();
+					}
+					
+					Skillheader skillheader = (Skillheader) _skillsAndHeaders.get(position);
+					holder3._header.setText(skillheader.getName());
+					
+					return tempView3;
 				
 				default:
 					break;

@@ -6,11 +6,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DataBaseHandler extends SQLiteOpenHelper {
 	
-	private static DataBaseHandler mInstance = null;
+	private static DataBaseHandler _instance = null;
 	
 	private final static int VERSION = 1;
 	
-	private final static String NOM = "database";
+	private final static String NOM = "_database";
 	
 	private DataBaseHandler(Context context)
 	{
@@ -20,11 +20,11 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 	public static DataBaseHandler getInstance(Context ctx)
 	{
 		
-		if (mInstance == null) {
-			mInstance = new DataBaseHandler(ctx.getApplicationContext());
+		if (_instance == null) {
+			_instance = new DataBaseHandler(ctx.getApplicationContext());
 		}
 		
-		return mInstance;
+		return _instance;
 	}
     
     @Override

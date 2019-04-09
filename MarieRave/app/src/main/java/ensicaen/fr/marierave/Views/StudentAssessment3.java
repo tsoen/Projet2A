@@ -10,9 +10,15 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 import ensicaen.fr.marierave.Controllers.SkillMarkDAO;
 import ensicaen.fr.marierave.R;
+import ensicaen.fr.marierave.Utils;
 
 public class StudentAssessment3 extends Fragment
 {
@@ -29,6 +35,9 @@ public class StudentAssessment3 extends Fragment
 	
 		final Bundle args = getArguments();
 	
+		ImageView profilePicture = view.findViewById(R.id.image2);
+		Picasso.get().load(new File(Utils.getChildPersonnalPicturePath(getContext(), args.getInt("ChildId")))).into(profilePicture);
+		
 		TextView textWelcome = view.findViewById(R.id.welcome2);
 		textWelcome.setText("Bienvenue " + args.getString("Prénom"));
 	
@@ -86,6 +95,8 @@ public class StudentAssessment3 extends Fragment
 				}
 			
 				new SkillMarkDAO(getContext()).addSkillMark(args.getInt("ChildId"), args.getString("Skill"), mark);
+				
+				Toast.makeText(getContext(), "Ton évaluation a bien été enregistrée !", Toast.LENGTH_SHORT).show();
 			}
 		});
         

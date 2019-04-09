@@ -24,12 +24,12 @@ public class SkillMarkDAO extends DAOBase
 		values.put(SKILLCODE, skillCode);
 		values.put(MARK, mark);
 		
-		this.database.insert(TABLE_NAME, null, values);
+		_database.insert(TABLE_NAME, null, values);
 	}
 	
 	public String getSkillMark(Integer childId, String skillCode)
 	{
-		Cursor cursor = this.database
+		Cursor cursor = _database
 				.query(TABLE_NAME, new String[]{MARK}, CHILDID + " = ? AND " + SKILLCODE + " = ?", new String[]{childId.toString(), skillCode}, null, null, null, null);
 		
 		if (cursor != null) {
@@ -48,7 +48,7 @@ public class SkillMarkDAO extends DAOBase
 	
 	public boolean skillMarkExists(Integer childId, String skillCode)
 	{
-		Cursor cursor = this.database
+		Cursor cursor = _database
 				.query(TABLE_NAME, new String[]{MARK}, CHILDID + " = ? AND " + SKILLCODE + " = ?", new String[]{childId.toString(), skillCode}, null, null, null, null);
 		
 		if (cursor == null || cursor.getCount() == 0) {
@@ -61,7 +61,7 @@ public class SkillMarkDAO extends DAOBase
 	
 	public void deleteSkillMark(Integer childId, String skillCode)
 	{
-		this.database.delete(TABLE_NAME, CHILDID + " = ? AND " + SKILLCODE + " = ?", new String[]{childId.toString(), skillCode});
+		_database.delete(TABLE_NAME, CHILDID + " = ? AND " + SKILLCODE + " = ?", new String[]{childId.toString(), skillCode});
 	}
 	
 	public void updateSkillMark(Integer childId, String skillCode, String mark)
@@ -71,13 +71,13 @@ public class SkillMarkDAO extends DAOBase
 		values.put(SKILLCODE, skillCode);
 		values.put(MARK, mark);
 		
-		this.database.update(TABLE_NAME, values, CHILDID + " = ? AND " + SKILLCODE + " = ?", new String[]{childId.toString(), skillCode});
+		_database.update(TABLE_NAME, values, CHILDID + " = ? AND " + SKILLCODE + " = ?", new String[]{childId.toString(), skillCode});
 	}
 	
 	public int getSkillMarkCount()
 	{
 		String countQuery = "SELECT * FROM " + TABLE_NAME;
-		Cursor cursor = this.database.rawQuery(countQuery, null);
+		Cursor cursor = _database.rawQuery(countQuery, null);
 		int res = cursor.getCount();
 		
 		cursor.close();

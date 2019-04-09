@@ -16,6 +16,9 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,12 +43,16 @@ public class StudentAssessment2 extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
 		_activity = getActivity();
+	
+		final Bundle args = getArguments();
 		
 		final GridView gridview = view.findViewById(R.id.gridview_skills);
 	
+		ImageView profilePicture = view.findViewById(R.id.image);
+		Picasso.get().load(new File(Utils.getChildPersonnalPicturePath(getContext(), args.getInt("Id")))).into(profilePicture);
+		
 		TextView textWelcome = view.findViewById(R.id.welcome);
 	
-		final Bundle args = getArguments();
         textWelcome.setText("Bienvenue " + args.getString("Prénom"));
 	
 		final List<Skill> skillList = new SkillDAO(getContext()).getAllSkills();

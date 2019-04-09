@@ -144,7 +144,7 @@ public class TeacherHome extends Fragment
 				Bundle bundle = new Bundle();
                 TextView className = view.findViewById(R.id.className);
 				bundle.putString("classroomName", className.getText().toString());
-				Utils.replaceFragments(HomeClassroom.class, getActivity(), bundle, true);
+				Utils.replaceFragments(ClassroomHome.class, getActivity(), bundle, true);
 			}
 		});
 	}

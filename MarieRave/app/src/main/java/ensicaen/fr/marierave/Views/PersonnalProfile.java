@@ -8,7 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.TreeSet;
 
 import ensicaen.fr.marierave.Controllers.ChildDAO;
 import ensicaen.fr.marierave.Controllers.SkillDAO;
@@ -43,6 +44,8 @@ public class PersonnalProfile extends Fragment
 	private Integer _childId;
 	
 	private ListView skillsListview;
+	
+	private Subject _currentFilter;
 	
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -84,7 +87,7 @@ public class PersonnalProfile extends Fragment
 		txtSurname.setText(child.getFirstname());
 		
 		skillsListview = view.findViewById(R.id.listSkills);
-		reloadSkillListView(null);
+		reloadSkillListView();
 		skillsListview.setOnItemClickListener(new AdapterView.OnItemClickListener()
 		{
 			@Override
@@ -113,7 +116,8 @@ public class PersonnalProfile extends Fragment
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 			{
-				reloadSkillListView((Subject) parent.getAdapter().getItem(position));
+				_currentFilter = (Subject) parent.getAdapter().getItem(position);
+				reloadSkillListView();
 			}
 		});
 		
@@ -189,25 +193,67 @@ public class PersonnalProfile extends Fragment
 		}
 	}
 	
-	public void reloadSkillListView(Subject filterSubject)
+	public void reloadSkillListView()
 	{
 		ListviewSkillAdapter skillsAdapter = new ListviewSkillAdapter(this);
 		List<Subject> subjectList = new ArrayList<>();
 		
-		if (filterSubject != null) {
-			subjectList.add(filterSubject);
+		if (_currentFilter != null) {
+			subjectList.add(_currentFilter);
 		}
 		else {
 			subjectList = new SubjectDAO(getContext()).getAllSubjects();
+			
+			Collections.sort(subjectList, new Comparator<Subject>()
+			{
+				@Override
+				public int compare(Subject o1, Subject o2)
+				{
+					return o1.getName().compareToIgnoreCase(o2.getName());
+				}
+			});
 		}
 		
 		for (Subject subject : subjectList) {
-			skillsAdapter.addBigSectionHeaderItem(subject.getName());
+			skillsAdapter.addItem(subject);
 			
-			for (Skillheader skillheader : new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName())) {
-				skillsAdapter.addLittleSectionHeaderItem(skillheader.getName());
+			List<Skillheader> skillheaderList = new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName());
+			Collections.sort(skillheaderList, new Comparator<Skillheader>()
+			{
+				@Override
+				public int compare(Skillheader o1, Skillheader o2)
+				{
+					return o1.getName().compareToIgnoreCase(o2.getName());
+				}
+			});
+			
+			for (Skillheader skillheader : skillheaderList) {
+				skillsAdapter.addItem(skillheader);
 				
-				for (Skill skill : new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName())) {
+				List<Skill> skillList = new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName());
+				Collections.sort(skillList, new Comparator<Skill>()
+				{
+					@Override
+					public int compare(Skill o1, Skill o2)
+					{
+						String o1StringPart = o1.getCode().replaceAll("\\d", "");
+						String o2StringPart = o2.getCode().replaceAll("\\d", "");
+						
+						if (o1StringPart.equalsIgnoreCase(o2StringPart)) {
+							return extractInt(o1.getCode()) - extractInt(o2.getCode());
+						}
+						
+						return o1.getCode().compareTo(o2.getCode());
+					}
+					
+					int extractInt(String s)
+					{
+						String num = s.replaceAll("\\D", "");
+						return num.isEmpty() ? 0 : Integer.parseInt(num);
+					}
+				});
+				
+				for (Skill skill : skillList) {
 					skillsAdapter.addItem(skill);
 				}
 			}
@@ -217,64 +263,27 @@ public class PersonnalProfile extends Fragment
 		skillsAdapter.notifyDataSetChanged();
 	}
 	
+	public void scrollTo(int position)
+	{
+		skillsListview.setSelection(position);
+	}
+	
 	private class ListviewSkillAdapter extends BaseAdapter
 	{
-		private static final int TYPE_ITEM = 0;
-		private static final int TYPE_BIG_SEPARATOR = 1;
-		private static final int TYPE_LITTLE_SEPARATOR = 2;
-		
 		private ArrayList<Object> _skillsAndHeaders = new ArrayList<>();
-		private TreeSet<Integer> _bigHeaders = new TreeSet<>();
-		private TreeSet<Integer> _littleHeaders = new TreeSet<>();
 		
-		private FragmentActivity _activity;
 		private PersonnalProfile _fragment;
 		
 		ListviewSkillAdapter(PersonnalProfile fragment)
 		{
 			super();
 			_fragment = fragment;
-			_activity = fragment.getActivity();
 		}
 		
-		void addItem(final Skill item)
+		void addItem(Object item)
 		{
 			_skillsAndHeaders.add(item);
 			notifyDataSetChanged();
-		}
-		
-		void addBigSectionHeaderItem(final String item)
-		{
-			_skillsAndHeaders.add(item);
-			_bigHeaders.add(_skillsAndHeaders.size() - 1);
-			notifyDataSetChanged();
-		}
-		
-		void addLittleSectionHeaderItem(final String item)
-		{
-			_skillsAndHeaders.add(item);
-			_littleHeaders.add(_skillsAndHeaders.size() - 1);
-			notifyDataSetChanged();
-		}
-		
-		@Override
-		public int getItemViewType(int position)
-		{
-			if (_bigHeaders.contains(position)) {
-				return TYPE_BIG_SEPARATOR;
-			}
-			
-			if (_littleHeaders.contains(position)) {
-				return TYPE_LITTLE_SEPARATOR;
-			}
-			
-			return TYPE_ITEM;
-		}
-		
-		@Override
-		public int getViewTypeCount()
-		{
-			return 3;
 		}
 		
 		@Override
@@ -295,6 +304,25 @@ public class PersonnalProfile extends Fragment
 			return position;
 		}
 		
+		@Override
+		public int getItemViewType(int position)
+		{
+			if (_skillsAndHeaders.get(position) instanceof Skill) {
+				return 0;
+			}
+			else if (_skillsAndHeaders.get(position) instanceof Subject) {
+				return 1;
+			}
+			
+			return 2;
+		}
+		
+		@Override
+		public int getViewTypeCount()
+		{
+			return 3;
+		}
+		
 		private class ViewHolder
 		{
 			private TextView _code;
@@ -309,45 +337,57 @@ public class PersonnalProfile extends Fragment
 		}
 		
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent)
+		public View getView(final int position, View convertView, ViewGroup parent)
 		{
-			LayoutInflater mInflater = _activity.getLayoutInflater();
 			
-			switch (getItemViewType(position)) {
-				case TYPE_ITEM:
-					ViewHolder holder = new ViewHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_item, null);
+			int viewType = getItemViewType(position);
+			
+			switch (viewType) {
+				case 0:
+					ViewHolder holder1;
 					
-					holder._code = convertView.findViewById(R.id.txtCode);
-					holder._result = convertView.findViewById(R.id.txtResult);
-					holder._name = convertView.findViewById(R.id.txtSkill);
-					holder._btnEdit = convertView.findViewById(R.id.btnEdit);
+					View tempView1 = convertView;
+					if (tempView1 == null) {
+						tempView1 = _fragment.getLayoutInflater().inflate(R.layout.listview_skill_item, null);
+						
+						holder1 = new ViewHolder();
+						holder1._code = tempView1.findViewById(R.id.txtCode);
+						holder1._result = tempView1.findViewById(R.id.txtResult);
+						holder1._name = tempView1.findViewById(R.id.txtSkill);
+						holder1._btnEdit = tempView1.findViewById(R.id.btnEdit);
+						
+						tempView1.setTag(holder1);
+					}
+					else {
+						holder1 = (ViewHolder) tempView1.getTag();
+					}
 					
 					final Skill item = (Skill) _skillsAndHeaders.get(position);
-					holder._code.setText(item.getCode());
-					holder._name.setText(item.getName());
-                    switch (new SkillMarkDAO(getContext()).getSkillMark(_childId, item.getCode())) {
-                        case "A":
-                            holder._result.setBackgroundColor(Color.parseColor("#088A08"));
-                            break;
-
-                        case "B":
-                            holder._result.setBackgroundColor(Color.parseColor("#00FF40"));
-                            break;
-
-                        case "C":
-                            holder._result.setBackgroundColor(Color.parseColor("#FFD500"));
-                            break;
-
-                        case "D":
-                            holder._result.setBackgroundColor(Color.parseColor("#FF0000"));
-                            break;
-
-                        default:
+					holder1._code.setText(item.getCode());
+					holder1._name.setText(item.getName());
+					switch (new SkillMarkDAO(getContext()).getSkillMark(_childId, item.getCode())) {
+						case "A":
+							holder1._result.setBackgroundColor(Color.parseColor("#088A08"));
 							break;
-                    }
-
-					holder._btnEdit.setOnClickListener(new View.OnClickListener()
+						
+						case "B":
+							holder1._result.setBackgroundColor(Color.parseColor("#00FF40"));
+							break;
+						
+						case "C":
+							holder1._result.setBackgroundColor(Color.parseColor("#FFD500"));
+							break;
+						
+						case "D":
+							holder1._result.setBackgroundColor(Color.parseColor("#FF0000"));
+							break;
+						
+						default:
+							holder1._result.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.cell_shape_noside, null));
+							break;
+					}
+					
+					holder1._btnEdit.setOnClickListener(new View.OnClickListener()
 					{
 						@Override
 						public void onClick(View v)
@@ -355,29 +395,58 @@ public class PersonnalProfile extends Fragment
 							Bundle bundle = new Bundle();
 							bundle.putInt("ChildId", _childId);
 							bundle.putString("Skill", item.getCode());
+							bundle.putInt("SkillPosition", position);
 							
 							EditEvaluationAndCommentDialog dialog = new EditEvaluationAndCommentDialog();
 							dialog.setArguments(bundle);
 							dialog.setTargetFragment(_fragment, 0);
-							dialog.show(_activity.getSupportFragmentManager(), "editEvaluation");
+							dialog.show(getActivity().getSupportFragmentManager(), "editEvaluation");
 						}
 					});
-					break;
 					
-				case TYPE_BIG_SEPARATOR:
-					HeaderHolder holderBigHeader = new HeaderHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_subject_item, null);
-					holderBigHeader._header = convertView.findViewById(R.id.txtBigHeader);
-					holderBigHeader._header.setText((String) _skillsAndHeaders.get(position));
-					break;
+					return tempView1;
 				
-				case TYPE_LITTLE_SEPARATOR:
-					HeaderHolder holderHeader = new HeaderHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_skillheader_item, null);
-					holderHeader._header = convertView.findViewById(R.id.txtLittleHeader);
-					holderHeader._header.setText((String) _skillsAndHeaders.get(position));
-					convertView.setTag(holderHeader);
-					break;
+				case 1:
+					HeaderHolder holder2;
+					
+					View tempView2 = convertView;
+					if (tempView2 == null) {
+						tempView2 = _fragment.getLayoutInflater().inflate(R.layout.listview_skill_subject_item, null);
+						
+						holder2 = new HeaderHolder();
+						holder2._header = tempView2.findViewById(R.id.txtBigHeader);
+						
+						tempView2.setTag(holder2);
+					}
+					else {
+						holder2 = (HeaderHolder) tempView2.getTag();
+					}
+					
+					Subject subject = (Subject) _skillsAndHeaders.get(position);
+					holder2._header.setText(subject.getName());
+					
+					return tempView2;
+				
+				case 2:
+					HeaderHolder holder3;
+					
+					View tempView3 = convertView;
+					if (tempView3 == null) {
+						tempView3 = _fragment.getLayoutInflater().inflate(R.layout.listview_skill_skillheader_item, null);
+						
+						holder3 = new HeaderHolder();
+						holder3._header = tempView3.findViewById(R.id.txtLittleHeader);
+						
+						tempView3.setTag(holder3);
+					}
+					else {
+						holder3 = (HeaderHolder) tempView3.getTag();
+					}
+					
+					Skillheader skillheader = (Skillheader) _skillsAndHeaders.get(position);
+					holder3._header.setText(skillheader.getName());
+					
+					return tempView3;
 				
 				default:
 					break;
@@ -425,12 +494,21 @@ public class PersonnalProfile extends Fragment
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent)
 		{
+			ViewHolder holder;
+			
 			if (convertView == null) {
-				ViewHolder holder = new ViewHolder();
-				convertView =  _activity.getLayoutInflater().inflate(R.layout.listview_topic_item, null);
+				convertView = _activity.getLayoutInflater().inflate(R.layout.listview_topic_item, null);
+				
+				holder = new ViewHolder();
 				holder._txtTopic = convertView.findViewById(R.id.txtTopic);
-				holder._txtTopic.setText(_topicList.get(position).getName());
+				
+				convertView.setTag(holder);
 			}
+			else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+			
+			holder._txtTopic.setText(_topicList.get(position).getName());
 			
 			return convertView;
 		}

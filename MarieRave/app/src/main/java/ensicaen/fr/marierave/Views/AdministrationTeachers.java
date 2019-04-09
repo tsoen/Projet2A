@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import ensicaen.fr.marierave.Controllers.TeacherDAO;
@@ -115,6 +117,21 @@ public class AdministrationTeachers extends Fragment
 			super();
 			_activity = activity;
 			_teacherList = teacherList;
+			
+			Collections.sort(_teacherList, new Comparator<Teacher>()
+			{
+				@Override
+				public int compare(Teacher o1, Teacher o2)
+				{
+					int value1 = o1.getName().compareToIgnoreCase(o2.getName());
+					
+					if (value1 == 0) {
+						return o1.getFirstname().compareToIgnoreCase(o2.getFirstname());
+					}
+					
+					return value1;
+				}
+			});
 		}
 		
 		@Override
@@ -154,9 +171,12 @@ public class AdministrationTeachers extends Fragment
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent)
 		{
+			ViewHolder holder;
+			
 			if (convertView == null) {
 				convertView = _activity.getLayoutInflater().inflate(R.layout.listview_admin_teachers_item, null);
-				ViewHolder holder = new ViewHolder();
+				
+				holder = new ViewHolder();
 				holder._name = convertView.findViewById(R.id.textView22);
 				holder._surname = convertView.findViewById(R.id.textView21);
 				holder._idConnection = convertView.findViewById(R.id.textView20);
@@ -164,61 +184,69 @@ public class AdministrationTeachers extends Fragment
 				holder._btnEdit = convertView.findViewById(R.id.button);
 				holder._btnDelete = convertView.findViewById(R.id.button20);
 				
-				final Teacher teacher = _teacherList.get(position);
-				
-				holder._btnEdit.setOnClickListener(new View.OnClickListener()
+				convertView.setTag(holder);
+			}
+			else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+			
+			final Teacher teacher = _teacherList.get(position);
+			
+			holder._btnEdit.setOnClickListener(new View.OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
 				{
-					@Override
-					public void onClick(View v)
-					{
-						Bundle bundle = new Bundle();
-						bundle.putInt("teacherId", teacher.getId());
-						
-						FragmentManager fm = getActivity().getSupportFragmentManager();
-						DialogFragment dialog = new EditTeacherDialog();
-						dialog.setArguments(bundle);
-						dialog.setTargetFragment(fm.findFragmentById(R.id.fragment_container), 0);
-						dialog.show(fm, "editTeacher");
-					}
-				});
-				
-				holder._btnDelete.setOnClickListener(new View.OnClickListener()
-				{
-					@Override
-					public void onClick(View v)
-					{
-						AlertDialog.Builder builder = new AlertDialog.Builder(_activity);
-						builder.setMessage("Etes-vous sûr de vouloir supprimer cet enseignant de l'école ? Cette action est irréversible");
-						builder.setCancelable(true);
-						builder.setPositiveButton("Oui", new DialogInterface.OnClickListener()
-						{
-							public void onClick(DialogInterface dialog, int id)
-							{
-								new TeacherDAO(_activity).deleteTeacher(_teacherList.get(position).getId());
-								removeItem(teacher);
-								dialog.cancel();
-							}
-						});
-						builder.setNegativeButton("Non", new DialogInterface.OnClickListener()
-						{
-							public void onClick(DialogInterface dialog, int id)
-							{
-								dialog.cancel();
-							}
-						});
-						
-						builder.create().show();
-					}
-				});
-				
-				holder._name.setText(_teacherList.get(position).getName());
-				holder._surname.setText(_teacherList.get(position).getFirstname());
-				holder._idConnection.setText(_teacherList.get(position).getIdConnection());
-				holder._password.setText(_teacherList.get(position).getPassword());
-				
-				if (position % 2 == 0) {
-					convertView.setBackgroundResource(R.color.listPaircolor);
+					Bundle bundle = new Bundle();
+					bundle.putInt("teacherId", teacher.getId());
+					
+					FragmentManager fm = getActivity().getSupportFragmentManager();
+					DialogFragment dialog = new EditTeacherDialog();
+					dialog.setArguments(bundle);
+					dialog.setTargetFragment(fm.findFragmentById(R.id.fragment_container), 0);
+					dialog.show(fm, "editTeacher");
 				}
+			});
+			
+			holder._btnDelete.setOnClickListener(new View.OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+					AlertDialog.Builder builder = new AlertDialog.Builder(_activity);
+					builder.setMessage("Etes-vous sûr de vouloir supprimer cet enseignant de l'école ? Cette action est irréversible");
+					builder.setCancelable(true);
+					builder.setPositiveButton("Oui", new DialogInterface.OnClickListener()
+					{
+						public void onClick(DialogInterface dialog, int id)
+						{
+							new TeacherDAO(_activity).deleteTeacher(_teacherList.get(position).getId());
+							removeItem(teacher);
+							dialog.cancel();
+						}
+					});
+					builder.setNegativeButton("Non", new DialogInterface.OnClickListener()
+					{
+						public void onClick(DialogInterface dialog, int id)
+						{
+							dialog.cancel();
+						}
+					});
+					
+					builder.create().show();
+				}
+			});
+			
+			holder._name.setText(_teacherList.get(position).getName());
+			holder._surname.setText(_teacherList.get(position).getFirstname());
+			holder._idConnection.setText(_teacherList.get(position).getIdConnection());
+			holder._password.setText(_teacherList.get(position).getPassword());
+			
+			if (position % 2 == 0) {
+				convertView.setBackgroundResource(R.color.listPaircolor);
+			}
+			else {
+				convertView.setBackgroundColor(0x00000000);
 			}
 			
 			return convertView;

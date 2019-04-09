@@ -29,7 +29,7 @@ public class TeacherTakesOrQuitsClassroomDialog extends DialogFragment implement
 {
     private GridView _classroomsGridview;
 	
-	private String mode;
+	private String _mode;
     
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class TeacherTakesOrQuitsClassroomDialog extends DialogFragment implement
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         setCancelable(false);
 	
-		mode = getArguments().getString("mode");
+		_mode = getArguments().getString("mode");
         
         Button btnValidate = view.findViewById(R.id.button24);
         btnValidate.setOnClickListener(this);
@@ -50,13 +50,13 @@ public class TeacherTakesOrQuitsClassroomDialog extends DialogFragment implement
 	
 		List<Classroom> classroomList = new ArrayList<>();
 	
-		if (mode.equals("add")) {
+		if (_mode.equals("add")) {
 			classroomList = new ClassroomDAO(getContext()).getAllClassrooms();
 			for (String name : classroomNames) {
 				classroomList.remove(new Classroom(name));
 			}
 		}
-		else if (mode.equals("delete")) {
+		else if (_mode.equals("delete")) {
 			for (String name : classroomNames) {
 				classroomList.add(new Classroom(name));
 			}
@@ -92,11 +92,11 @@ public class TeacherTakesOrQuitsClassroomDialog extends DialogFragment implement
 					Classroom classroom = (Classroom) _classroomsGridview.getAdapter().getItem(((GridViewAdapter) _classroomsGridview.getAdapter())._selectedPositions);
 		
 					TeacherClassroomDAO teacherClassroomDAO = new TeacherClassroomDAO(getContext());
-		
-					if (mode.equals("add")) {
+					
+					if (_mode.equals("add")) {
 						teacherClassroomDAO.addTeacherToClassroom(classroom.getName(), Utils.teacherLoggedInId);
 					}
-					else if (mode.equals("delete")) {
+					else if (_mode.equals("delete")) {
 						teacherClassroomDAO.deleteTeacherFromCLassroom(classroom.getName(), Utils.teacherLoggedInId);
 					}
 		
@@ -147,16 +147,24 @@ public class TeacherTakesOrQuitsClassroomDialog extends DialogFragment implement
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+			ViewHolder viewHolder;
+        	
             if (convertView == null) {
                 convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_classroom_class_item, null);
-
-                ViewHolder holder = new ViewHolder();
-                holder._txtClassroomName = convertView.findViewById(R.id.textView35);
-
-                holder._txtClassroomName.setText(_classroomList.get(position).getName());
-            }
-
-            if (_selectedPositions == position) {
+	
+				viewHolder = new ViewHolder();
+				viewHolder._txtClassroomName = convertView.findViewById(R.id.textView35);
+	
+				convertView.setTag(viewHolder);
+	
+			}
+			else {
+				viewHolder = (ViewHolder) convertView.getTag();
+			}
+	
+			viewHolder._txtClassroomName.setText(_classroomList.get(position).getName());
+	
+			if (_selectedPositions == position) {
                 convertView.setBackgroundColor(Color.GRAY);
             } else {
                 convertView.setBackgroundColor(Color.TRANSPARENT);

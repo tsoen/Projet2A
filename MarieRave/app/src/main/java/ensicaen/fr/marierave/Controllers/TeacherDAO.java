@@ -41,13 +41,13 @@ public class TeacherDAO extends DAOBase {
 			values.put(PASSWORD, teacher.getName() + nextId);
 		}
 		
-        this.database.insert(TABLE_NAME, null, values);
+		_database.insert(TABLE_NAME, null, values);
 		
 		new TeacherClassroomDAO(_context).addTeacherToClassroom("Ecole", nextId);
 	}
     
 	public Teacher getTeacher(long id) {
-		Cursor cursor = this.database.query(TABLE_NAME, new String[]{ID, NAME, FIRSTNAME, IDCONNECTION, PASSWORD},
+		Cursor cursor = _database.query(TABLE_NAME, new String[]{ID, NAME, FIRSTNAME, IDCONNECTION, PASSWORD},
 				ID + " = ?", new String[] { String.valueOf(id) }, null, null, null, null);
 		
 		if (cursor != null) {
@@ -63,7 +63,7 @@ public class TeacherDAO extends DAOBase {
 	
 	public Teacher getTeacher(String idConnection)
 	{
-		Cursor cursor = this.database
+		Cursor cursor = _database
 				.query(TABLE_NAME, new String[]{ID, NAME, FIRSTNAME, IDCONNECTION, PASSWORD}, IDCONNECTION + " = ?", new String[]{idConnection}, null, null, null, null);
 		
 		if (cursor != null) {
@@ -82,7 +82,7 @@ public class TeacherDAO extends DAOBase {
 		
 		String selectQuery = "SELECT * FROM " + TABLE_NAME;
 		
-		Cursor cursor =  this.database.rawQuery(selectQuery, null);
+		Cursor cursor = _database.rawQuery(selectQuery, null);
 		
 		if (cursor.moveToFirst()) {
 			do {
@@ -98,7 +98,7 @@ public class TeacherDAO extends DAOBase {
 	}
 	
 	public void deleteTeacher(long id) {
-		this.database.delete(TABLE_NAME, ID + " = ?", new String[] {String.valueOf(id)});
+		_database.delete(TABLE_NAME, ID + " = ?", new String[]{String.valueOf(id)});
     }
     
 	public void updateTeacher(Teacher teacher) {
@@ -109,12 +109,12 @@ public class TeacherDAO extends DAOBase {
 		values.put(IDCONNECTION, teacher.getIdConnection());
 		values.put(PASSWORD, teacher.getPassword());
 		
-		this.database.update(TABLE_NAME, values, ID  + " = ?", new String[] {String.valueOf(teacher.getId())} );
+		_database.update(TABLE_NAME, values, ID + " = ?", new String[]{String.valueOf(teacher.getId())});
     }
     
 	public int getTeacherCount() {
         String countQuery = "SELECT * FROM " + TABLE_NAME;
-        Cursor cursor =  this.database.rawQuery(countQuery, null);
+		Cursor cursor = _database.rawQuery(countQuery, null);
 		int res =  cursor.getCount();
 		
 		cursor.close();
@@ -129,7 +129,7 @@ public class TeacherDAO extends DAOBase {
 	public int getLastId()
 	{
 		String query = "SELECT * FROM " + TABLE_NAME + " ORDER BY " + ID + " DESC LIMIT 1;";
-		Cursor cursor =  this.database.rawQuery(query, null);
+		Cursor cursor = _database.rawQuery(query, null);
 		
 		int next = 0;
 		
@@ -145,7 +145,7 @@ public class TeacherDAO extends DAOBase {
 	
 	public boolean teacherExists(String idConnection, String password)
 	{
-		Cursor cursor = this.database
+		Cursor cursor = _database
 				.query(TABLE_NAME, new String[]{ID}, IDCONNECTION + " = ? AND " + PASSWORD + " = ?", new String[]{idConnection, password}, null, null, null, null);
 		
 		if (cursor == null || cursor.getCount() == 0) {

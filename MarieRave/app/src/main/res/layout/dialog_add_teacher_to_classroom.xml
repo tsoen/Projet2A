@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    style="@style/dialogLayoutPadding">
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             style="@style/dialogLayoutPadding"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent">
 
     <GridView
         android:id="@+id/gridview_teachersToAdd"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:numColumns="5"
         android:verticalSpacing="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline33"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView15"/>
@@ -22,46 +23,53 @@
         android:text="Tout sélectionner"
         app:layout_constraintBottom_toBottomOf="@+id/textView13"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView13" />
+        app:layout_constraintTop_toTopOf="@+id/textView13"/>
 
-        <TextView
-            android:id="@+id/textView13"
-            style="@style/textStyle1"
-            android:layout_marginEnd="8dp"
-            android:text="enseignants(s) sélectionné(s)"
-            app:layout_constraintBottom_toBottomOf="@+id/textView15"
-            app:layout_constraintEnd_toStartOf="@+id/checkBox"
-            app:layout_constraintTop_toTopOf="@+id/textView15"/>
+    <TextView
+        android:id="@+id/textView13"
+        style="@style/textStyle1"
+        android:layout_marginEnd="8dp"
+        android:text="enseignants(s) sélectionné(s)"
+        app:layout_constraintBottom_toBottomOf="@+id/textView15"
+        app:layout_constraintEnd_toStartOf="@+id/checkBox"
+        app:layout_constraintTop_toTopOf="@+id/textView15"/>
 
-        <TextView
-            android:id="@+id/textView14"
-            style="@style/textStyle1"
-            android:layout_marginEnd="8dp"
-            android:text="0"
-            app:layout_constraintBottom_toBottomOf="@+id/textView13"
-            app:layout_constraintEnd_toStartOf="@+id/textView13"
-            app:layout_constraintTop_toTopOf="@+id/textView13"/>
+    <TextView
+        android:id="@+id/textView14"
+        style="@style/textStyle1"
+        android:layout_marginEnd="8dp"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/textView13"
+        app:layout_constraintEnd_toStartOf="@+id/textView13"
+        app:layout_constraintTop_toTopOf="@+id/textView13"/>
 
     <TextView
         android:id="@+id/textView15"
         style="@style/textStyle1"
         android:text="Sélectionnez les enseignants à ajouter à la classe"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <Button
         android:id="@+id/btn_validate"
         style="@style/dialogButton"
         android:text="Valider"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btn_cancel" />
+        app:layout_constraintTop_toTopOf="@+id/btn_cancel"/>
 
     <Button
         android:id="@+id/btn_cancel"
         style="@style/dialogButton"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Annuler"
         app:layout_constraintEnd_toStartOf="@+id/btn_validate"
-        app:layout_constraintTop_toBottomOf="@+id/gridview_teachersToAdd" />
+        app:layout_constraintTop_toTopOf="@+id/guideline33"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9"/>
+
 </android.support.constraint.ConstraintLayout>

@@ -22,17 +22,21 @@ public class SkillDAO extends DAOBase {
     }
     
 	public void addSkill(Skill skill) {
+		if (skillExists(skill.getCode())) {
+			return;
+		}
+    	
         ContentValues values = new ContentValues();
 		values.put(CODE, skill.getCode());
 		values.put(NAME, skill.getName());
 		values.put(SKILLHEADER, skill.getSkillheader());
 		
-        this.database.insert(TABLE_NAME, null, values);
+		_database.insert(TABLE_NAME, null, values);
     }
 	
 	public boolean skillExists(String code)
 	{
-		Cursor cursor = this.database.query(TABLE_NAME, new String[]{CODE, NAME, SKILLHEADER}, CODE + " = ?", new String[]{code}, null, null, null, null);
+		Cursor cursor = _database.query(TABLE_NAME, new String[]{CODE, NAME, SKILLHEADER}, CODE + " = ?", new String[]{code}, null, null, null, null);
 		
 		if (cursor == null || cursor.getCount() == 0) {
 			return false;
@@ -43,7 +47,7 @@ public class SkillDAO extends DAOBase {
 	}
  
 	public Skill getSkill(String code) {
-		Cursor cursor = this.database.query(TABLE_NAME, new String[]{CODE, NAME, SKILLHEADER},
+		Cursor cursor = _database.query(TABLE_NAME, new String[]{CODE, NAME, SKILLHEADER},
 				CODE + " = ?", new String[] { code }, null, null, null, null);
 		
 		
@@ -63,7 +67,7 @@ public class SkillDAO extends DAOBase {
 		
 		String selectQuery = "SELECT * FROM " + TABLE_NAME;
 		
-		Cursor cursor =  this.database.rawQuery(selectQuery, null);
+		Cursor cursor = _database.rawQuery(selectQuery, null);
 		
 		if (cursor.moveToFirst()) {
 			do {
@@ -84,7 +88,7 @@ public class SkillDAO extends DAOBase {
 		
 		String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + SKILLHEADER + " = '" + skillheaderName + "'";
 		
-		Cursor cursor = this.database.rawQuery(selectQuery, null);
+		Cursor cursor = _database.rawQuery(selectQuery, null);
 		
 		if (cursor.moveToFirst()) {
 			do {
@@ -100,26 +104,30 @@ public class SkillDAO extends DAOBase {
 	}
 	
 	public void deleteSkill(String code) {
-		this.database.delete(TABLE_NAME, CODE + " = ?", new String[] { code });
+		_database.delete(TABLE_NAME, CODE + " = ?", new String[]{code});
     }
 
 	public void deleteAllSkillsInHeader(String skillheaderName) {
-		this.database.delete(TABLE_NAME, SKILLHEADER + " = ?", new String[] { skillheaderName });
+		_database.delete(TABLE_NAME, SKILLHEADER + " = ?", new String[]{skillheaderName});
 	}
 	
 	public void updateSkill(String oldSkillCode, Skill skill)
 	{
+		if (skillExists(skill.getCode())) {
+			return;
+		}
+		
 		ContentValues values = new ContentValues();
 		values.put(CODE, skill.getCode());
 		values.put(NAME, skill.getName());
 		values.put(SKILLHEADER, skill.getSkillheader());
 		
-		this.database.update(TABLE_NAME, values, CODE + " = ?", new String[]{oldSkillCode});
+		_database.update(TABLE_NAME, values, CODE + " = ?", new String[]{oldSkillCode});
     }
     
 	public int getSkillCount() {
         String countQuery = "SELECT * FROM " + TABLE_NAME;
-        Cursor cursor =  this.database.rawQuery(countQuery, null);
+		Cursor cursor = _database.rawQuery(countQuery, null);
 		int res =  cursor.getCount();
 		
 		cursor.close();

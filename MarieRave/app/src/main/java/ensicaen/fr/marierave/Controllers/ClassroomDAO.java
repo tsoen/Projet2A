@@ -21,14 +21,18 @@ public class ClassroomDAO extends DAOBase {
     }
     
 	public void addClassroom(Classroom classroom) {
+		if (classroomExists(classroom.getName())) {
+			return;
+		}
+    	
         ContentValues values = new ContentValues();
 		values.put(NAME, classroom.getName());
 		
-        this.database.insert(TABLE_NAME, null, values);
+		_database.insert(TABLE_NAME, null, values);
     }
     
 	public Classroom getClassroom(String name) {
-		Cursor cursor =  this.database.query(TABLE_NAME, new String[] { NAME },
+		Cursor cursor = _database.query(TABLE_NAME, new String[]{NAME},
 				NAME + " = ?", new String[] { name }, null, null, null, null);
 		
 		if (cursor != null) {
@@ -47,7 +51,7 @@ public class ClassroomDAO extends DAOBase {
 		
 		String selectQuery = "SELECT * FROM " + TABLE_NAME;
 		
-		Cursor cursor =  this.database.rawQuery(selectQuery, null);
+		Cursor cursor = _database.rawQuery(selectQuery, null);
 		
 		if (cursor.moveToFirst()) {
 			do {
@@ -64,19 +68,23 @@ public class ClassroomDAO extends DAOBase {
 	}
 	
 	public void deleteClassroom(String name) {
-		this.database.delete(TABLE_NAME, NAME + " = ?", new String[] { name });
+		_database.delete(TABLE_NAME, NAME + " = ?", new String[]{name});
     }
     
 	public void updateClassroom(Classroom classroom) {
+		if (classroomExists(classroom.getName())) {
+			return;
+		}
+  
 		ContentValues values = new ContentValues();
 		values.put(NAME, classroom.getName());
 		
-		this.database.update(TABLE_NAME, values, NAME  + " = ?", new String[] { classroom.getName() } );
+		_database.update(TABLE_NAME, values, NAME + " = ?", new String[]{classroom.getName()});
     }
     
 	public int getClassroomCount() {
         String countQuery = "SELECT * FROM " + TABLE_NAME;
-        Cursor cursor =  this.database.rawQuery(countQuery, null);
+		Cursor cursor = _database.rawQuery(countQuery, null);
 		int res =  cursor.getCount();
 		
 		cursor.close();
@@ -86,7 +94,7 @@ public class ClassroomDAO extends DAOBase {
 	
 	public boolean classroomExists(String name)
 	{
-		Cursor cursor = this.database.query(TABLE_NAME, new String[]{NAME}, NAME + " = ?", new String[]{name}, null, null, null, null);
+		Cursor cursor = _database.query(TABLE_NAME, new String[]{NAME}, NAME + " = ?", new String[]{name}, null, null, null, null);
 		
 		boolean exists = cursor.getCount() != 0;
 		

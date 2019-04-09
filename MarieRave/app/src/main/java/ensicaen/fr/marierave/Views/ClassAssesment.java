@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.TreeSet;
 
 import ensicaen.fr.marierave.Controllers.ClassroomDAO;
 import ensicaen.fr.marierave.Controllers.SkillDAO;
@@ -127,15 +127,57 @@ public class ClassAssesment extends Fragment
 		}
 		else {
 			subjectList = new SubjectDAO(getContext()).getAllSubjects();
+			
+			Collections.sort(subjectList, new Comparator<Subject>()
+			{
+				@Override
+				public int compare(Subject o1, Subject o2)
+				{
+					return o1.getName().compareToIgnoreCase(o2.getName());
+				}
+			});
 		}
 		
 		for (Subject subject : subjectList) {
-			skillsAdapter.addBigSectionHeaderItem(subject.getName());
+			skillsAdapter.addItem(subject);
 			
-			for (Skillheader skillheader : new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName())) {
-				skillsAdapter.addLittleSectionHeaderItem(skillheader.getName());
+			List<Skillheader> skillheaderList = new SkillheaderDAO(getContext()).getSkillheadersInSubject(subject.getName());
+			Collections.sort(skillheaderList, new Comparator<Skillheader>()
+			{
+				@Override
+				public int compare(Skillheader o1, Skillheader o2)
+				{
+					return o1.getName().compareToIgnoreCase(o2.getName());
+				}
+			});
+			
+			for (Skillheader skillheader : skillheaderList) {
+				skillsAdapter.addItem(skillheader);
 				
-				for (Skill skill : new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName())) {
+				List<Skill> skillList = new SkillDAO(getContext()).getSkillsInHeader(skillheader.getName());
+				Collections.sort(skillList, new Comparator<Skill>()
+				{
+					@Override
+					public int compare(Skill o1, Skill o2)
+					{
+						String o1StringPart = o1.getCode().replaceAll("\\d", "");
+						String o2StringPart = o2.getCode().replaceAll("\\d", "");
+						
+						if (o1StringPart.equalsIgnoreCase(o2StringPart)) {
+							return extractInt(o1.getCode()) - extractInt(o2.getCode());
+						}
+						
+						return o1.getCode().compareTo(o2.getCode());
+					}
+					
+					int extractInt(String s)
+					{
+						String num = s.replaceAll("\\D", "");
+						return num.isEmpty() ? 0 : Integer.parseInt(num);
+					}
+				});
+				
+				for (Skill skill : skillList) {
 					skillsAdapter.addItem(skill);
 				}
 			}
@@ -147,62 +189,20 @@ public class ClassAssesment extends Fragment
 	
 	private class ListviewSkillAdapter extends BaseAdapter
 	{
-		private static final int TYPE_ITEM = 0;
-		private static final int TYPE_BIG_SEPARATOR = 1;
-		private static final int TYPE_LITTLE_SEPARATOR = 2;
+		private List<Object> _skillsAndHeaders = new ArrayList<>();
 		
-		private ArrayList<Object> _skillsAndHeaders = new ArrayList<>();
-		private TreeSet<Integer> _bigHeaders = new TreeSet<>();
-		private TreeSet<Integer> _littleHeaders = new TreeSet<>();
-		
-		private FragmentActivity _activity;
 		private ClassAssesment _fragment;
 		
 		ListviewSkillAdapter(ClassAssesment fragment)
 		{
 			super();
 			_fragment = fragment;
-			_activity = fragment.getActivity();
 		}
 		
-		void addItem(final Skill item)
+		void addItem(Object item)
 		{
 			_skillsAndHeaders.add(item);
 			notifyDataSetChanged();
-		}
-		
-		void addBigSectionHeaderItem(final String item)
-		{
-			_skillsAndHeaders.add(item);
-			_bigHeaders.add(_skillsAndHeaders.size() - 1);
-			notifyDataSetChanged();
-		}
-		
-		void addLittleSectionHeaderItem(final String item)
-		{
-			_skillsAndHeaders.add(item);
-			_littleHeaders.add(_skillsAndHeaders.size() - 1);
-			notifyDataSetChanged();
-		}
-		
-		@Override
-		public int getItemViewType(int position)
-		{
-			if (_bigHeaders.contains(position)) {
-				return TYPE_BIG_SEPARATOR;
-			}
-			
-			if (_littleHeaders.contains(position)) {
-				return TYPE_LITTLE_SEPARATOR;
-			}
-			
-			return TYPE_ITEM;
-		}
-		
-		@Override
-		public int getViewTypeCount()
-		{
-			return 3;
 		}
 		
 		@Override
@@ -223,6 +223,25 @@ public class ClassAssesment extends Fragment
 			return position;
 		}
 		
+		@Override
+		public int getItemViewType(int position)
+		{
+			if (_skillsAndHeaders.get(position) instanceof Skill) {
+				return 0;
+			}
+			else if (_skillsAndHeaders.get(position) instanceof Subject) {
+				return 1;
+			}
+			
+			return 2;
+		}
+		
+		@Override
+		public int getViewTypeCount()
+		{
+			return 3;
+		}
+		
 		private class ViewHolder
 		{
 			private TextView _code;
@@ -232,28 +251,38 @@ public class ClassAssesment extends Fragment
 		
 		private class HeaderHolder
 		{
-			private TextView _header;
+			private TextView _name;
 		}
 		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent)
 		{
-			LayoutInflater mInflater = _activity.getLayoutInflater();
+			int viewType = getItemViewType(position);
 			
-			switch (getItemViewType(position)) {
-				case TYPE_ITEM:
-					ViewHolder holder = new ViewHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_assesment_item, null);
+			switch (viewType) {
+				case 0:
+					ViewHolder holder1;
 					
-					holder._code = convertView.findViewById(R.id.txtCode);
-					holder._name = convertView.findViewById(R.id.txtSkill);
-					holder._btnEdit = convertView.findViewById(R.id.btnEdit);
+					View tempView1 = convertView;
+					if (tempView1 == null) {
+						tempView1 = _fragment.getLayoutInflater().inflate(R.layout.listview_skill_assesment_item, null);
+						
+						holder1 = new ViewHolder();
+						holder1._code = tempView1.findViewById(R.id.txtCode);
+						holder1._name = tempView1.findViewById(R.id.txtSkill);
+						holder1._btnEdit = tempView1.findViewById(R.id.btnEdit);
+						
+						tempView1.setTag(holder1);
+					}
+					else {
+						holder1 = (ViewHolder) tempView1.getTag();
+					}
 					
 					final Skill item = (Skill) _skillsAndHeaders.get(position);
-					holder._code.setText(item.getCode());
-					holder._name.setText(item.getName());
+					holder1._code.setText(item.getCode());
+					holder1._name.setText(item.getName());
 					
-					holder._btnEdit.setOnClickListener(new View.OnClickListener()
+					holder1._btnEdit.setOnClickListener(new View.OnClickListener()
 					{
 						@Override
 						public void onClick(View v)
@@ -265,26 +294,54 @@ public class ClassAssesment extends Fragment
 							MarkMultipleChildsDialog dialog = new MarkMultipleChildsDialog();
 							dialog.setArguments(bundle);
 							dialog.setTargetFragment(_fragment, 0);
-							dialog.show(_activity.getSupportFragmentManager(), "editEvaluation");
+							dialog.show(getActivity().getSupportFragmentManager(), "editEvaluation");
 						}
 					});
-					break;
+					
+					return tempView1;
 				
-				case TYPE_BIG_SEPARATOR:
-					HeaderHolder holderBigHeader = new HeaderHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_subject_item, null);
-					holderBigHeader._header = convertView.findViewById(R.id.txtBigHeader);
-					holderBigHeader._header.setText((String) _skillsAndHeaders.get(position));
-					break;
+				case 1:
+					HeaderHolder holder2;
+					
+					View tempView2 = convertView;
+					if (tempView2 == null) {
+						tempView2 = _fragment.getLayoutInflater().inflate(R.layout.listview_skill_subject_item, null);
+						
+						holder2 = new HeaderHolder();
+						holder2._name = tempView2.findViewById(R.id.txtBigHeader);
+						
+						tempView2.setTag(holder2);
+					}
+					else {
+						holder2 = (HeaderHolder) tempView2.getTag();
+					}
+					
+					Subject subject = (Subject) _skillsAndHeaders.get(position);
+					holder2._name.setText(subject.getName());
+					
+					return tempView2;
 				
-				case TYPE_LITTLE_SEPARATOR:
-					HeaderHolder holderHeader = new HeaderHolder();
-					convertView = mInflater.inflate(R.layout.listview_skill_skillheader_item, null);
-					holderHeader._header = convertView.findViewById(R.id.txtLittleHeader);
-					holderHeader._header.setText((String) _skillsAndHeaders.get(position));
-					convertView.setTag(holderHeader);
-					break;
-				
+				case 2:
+					HeaderHolder holder3;
+					
+					View tempView3 = convertView;
+					if (tempView3 == null) {
+						tempView3 = _fragment.getLayoutInflater().inflate(R.layout.listview_skill_skillheader_item, null);
+						
+						holder3 = new HeaderHolder();
+						holder3._name = tempView3.findViewById(R.id.txtLittleHeader);
+						
+						tempView3.setTag(holder3);
+					}
+					else {
+						holder3 = (HeaderHolder) tempView3.getTag();
+					}
+					
+					Skillheader skillheader = (Skillheader) _skillsAndHeaders.get(position);
+					holder3._name.setText(skillheader.getName());
+					
+					return tempView3;
+					
 				default:
 					break;
 			}
@@ -295,26 +352,26 @@ public class ClassAssesment extends Fragment
 	
 	private class ListviewTopicsAdapter extends BaseAdapter
 	{
-		private List<Subject> _topicList;
+		private List<Subject> _subjectList;
 		private Activity _activity;
 		
-		ListviewTopicsAdapter(Activity activity, List<Subject> productList)
+		ListviewTopicsAdapter(Activity activity, List<Subject> subjectList)
 		{
 			super();
 			_activity = activity;
-			_topicList = productList;
+			_subjectList = subjectList;
 		}
 		
 		@Override
 		public int getCount()
 		{
-			return _topicList.size();
+			return _subjectList.size();
 		}
 		
 		@Override
 		public Object getItem(int position)
 		{
-			return _topicList.get(position);
+			return _subjectList.get(position);
 		}
 		
 		@Override
@@ -331,12 +388,21 @@ public class ClassAssesment extends Fragment
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent)
 		{
+			ViewHolder holder;
+			
 			if (convertView == null) {
-				ViewHolder holder = new ViewHolder();
 				convertView = _activity.getLayoutInflater().inflate(R.layout.listview_topic_item, null);
+				
+				holder = new ViewHolder();
 				holder._txtTopic = convertView.findViewById(R.id.txtTopic);
-				holder._txtTopic.setText(_topicList.get(position).getName());
+				
+				convertView.setTag(holder);
 			}
+			else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+			
+			holder._txtTopic.setText(_subjectList.get(position).getName());
 			
 			return convertView;
 		}

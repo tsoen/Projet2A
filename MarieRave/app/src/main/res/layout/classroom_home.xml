@@ -36,40 +36,19 @@
     <Button
         android:id="@+id/btnResults"
         style="@style/simpleButton"
-        android:layout_width="0dp"
         android:text="Evaluation globale"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/openAssessment3"/>
-
-    <Button
-        android:id="@+id/btnGlobalResults"
-        style="@style/simpleButton"
-        android:layout_width="0dp"
-        android:text="Bilan"
-        app:layout_constraintBottom_toBottomOf="@+id/btnResults"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toTopOf="@+id/btnResults"/>
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"/>
+        app:layout_constraintTop_toBottomOf="@+id/openAssessment3"/>
 
     <TextView
         android:id="@+id/txtClassroomName"
         style="@style/textStyle1"
-        android:layout_marginTop="8dp"
         android:text="Nom de la classe"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/btnGlobalResults"/>
+        app:layout_constraintBottom_toBottomOf="@+id/btnResults"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnResults"/>
 
     <GridView
         android:id="@+id/gridviewProfiles"
@@ -82,6 +61,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtClassroomName"/>
+        app:layout_constraintTop_toBottomOf="@+id/btnResults"/>
 
 </android.support.constraint.ConstraintLayout>

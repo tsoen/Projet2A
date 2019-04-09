@@ -23,12 +23,12 @@ public class SkillCommentDAO extends DAOBase
 		values.put(SKILLCODE, skillCode);
 		values.put(COMMENT, comment);
 		
-		this.database.insert(TABLE_NAME, null, values);
+		_database.insert(TABLE_NAME, null, values);
 	}
 	
 	public String getSkillcomment(Integer childId, String skillCode)
 	{
-		Cursor cursor = this.database
+		Cursor cursor = _database
 				.query(TABLE_NAME, new String[]{COMMENT}, CHILDID + " = ? AND " + SKILLCODE + " = ?", new String[]{childId.toString(), skillCode}, null, null, null,
 						null);
 		
@@ -48,7 +48,7 @@ public class SkillCommentDAO extends DAOBase
 	
 	public boolean skillCommentExists(Integer childId, String skillCode)
 	{
-		Cursor cursor = this.database
+		Cursor cursor = _database
 				.query(TABLE_NAME, new String[]{COMMENT}, CHILDID + " = ? AND " + SKILLCODE + " = ?", new String[]{childId.toString(), skillCode}, null, null, null,
 						null);
 		
@@ -62,7 +62,7 @@ public class SkillCommentDAO extends DAOBase
 	
 	public void deleteSkillcomment(Integer childId, String skillCode)
 	{
-		this.database.delete(TABLE_NAME, CHILDID + " = ? AND " + SKILLCODE + " = ?", new String[]{childId.toString(), skillCode});
+		_database.delete(TABLE_NAME, CHILDID + " = ? AND " + SKILLCODE + " = ?", new String[]{childId.toString(), skillCode});
 	}
 	
 	public void updateSkillcomment(Integer childId, String skillCode, String comment)
@@ -72,13 +72,13 @@ public class SkillCommentDAO extends DAOBase
 		values.put(SKILLCODE, skillCode);
 		values.put(COMMENT, comment);
 		
-		this.database.update(TABLE_NAME, values, CHILDID + " = ? AND " + SKILLCODE + " = ?", new String[]{childId.toString(), skillCode});
+		_database.update(TABLE_NAME, values, CHILDID + " = ? AND " + SKILLCODE + " = ?", new String[]{childId.toString(), skillCode});
 	}
 	
 	public int getSkillcommentCount()
 	{
 		String countQuery = "SELECT * FROM " + TABLE_NAME;
-		Cursor cursor = this.database.rawQuery(countQuery, null);
+		Cursor cursor = _database.rawQuery(countQuery, null);
 		int res = cursor.getCount();
 		
 		cursor.close();

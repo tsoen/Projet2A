@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:padding="5dp">
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:layout_width="wrap_content"
+                                             android:layout_height="wrap_content"
+                                             android:padding="5dp">
 
     <ImageView
         android:id="@+id/imgProfilePicture"
         style="@style/childPicture"
         app:layout_constraintEnd_toEndOf="@+id/txtSurname"
         app:layout_constraintStart_toStartOf="@+id/txtSurname"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txtName"
-        style="@style/textStyle1"
-        android:text="Nom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgProfilePicture" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/txtSurname"
@@ -26,6 +18,15 @@
         android:text="Prenom"
         app:layout_constraintEnd_toEndOf="@+id/txtName"
         app:layout_constraintStart_toStartOf="@+id/txtName"
-        app:layout_constraintTop_toBottomOf="@+id/txtName" />
+        app:layout_constraintTop_toBottomOf="@+id/imgProfilePicture"/>
+
+    <TextView
+        android:id="@+id/txtName"
+        style="@style/textStyle1"
+        android:text="Nom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.565"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtSurname"/>
 
 </android.support.constraint.ConstraintLayout>

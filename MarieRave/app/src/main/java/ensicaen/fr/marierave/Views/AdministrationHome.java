@@ -19,6 +19,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import ensicaen.fr.marierave.Controllers.ClassroomDAO;
@@ -175,6 +177,15 @@ public class AdministrationHome extends Fragment
 			super();
 			_activity = activity;
 			_classList = classList;
+			
+			Collections.sort(_classList, new Comparator<Classroom>()
+			{
+				@Override
+				public int compare(Classroom o1, Classroom o2)
+				{
+					return o1.getName().compareToIgnoreCase(o2.getName());
+				}
+			});
 		}
 		
 		@Override
@@ -203,12 +214,21 @@ public class AdministrationHome extends Fragment
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent)
 		{
+			ViewHolder holder;
+			
 			if (convertView == null) {
 				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_list_classes_item, null);
-				final ViewHolder holder = new ViewHolder();
+				
+				holder = new ViewHolder();
                 holder._className = convertView.findViewById(R.id.className);
-                holder._className.setText(_classList.get(position).getName());
+				
+				convertView.setTag(holder);
 			}
+			else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+			
+			holder._className.setText(_classList.get(position).getName());
 			
 			return convertView;
 		}

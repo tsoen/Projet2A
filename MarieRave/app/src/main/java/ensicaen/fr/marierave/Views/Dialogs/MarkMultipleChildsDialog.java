@@ -19,6 +19,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import ensicaen.fr.marierave.Controllers.ChildDAO;
@@ -165,6 +167,21 @@ public class MarkMultipleChildsDialog extends DialogFragment implements android.
 			super();
 			_activity = activity;
 			_childList = childList;
+			
+			Collections.sort(_childList, new Comparator<Child>()
+			{
+				@Override
+				public int compare(Child o1, Child o2)
+				{
+					int value1 = o1.getName().compareToIgnoreCase(o2.getName());
+					
+					if (value1 == 0) {
+						return o1.getFirstname().compareToIgnoreCase(o2.getFirstname());
+					}
+					
+					return value1;
+				}
+			});
 		}
 		
 		@Override
@@ -234,7 +251,7 @@ public class MarkMultipleChildsDialog extends DialogFragment implements android.
 					break;
 
 				default:
-					holder._txtMark.setBackgroundColor(0x00000000);
+					holder._txtMark.setBackgroundColor(Color.TRANSPARENT);
 					break;
 			}
 

@@ -22,15 +22,19 @@ public class SubjectDAO extends DAOBase
 	
 	public void addSubject(Subject subject)
 	{
+		if (subjectExists(subject.getName())) {
+			return;
+		}
+		
 		ContentValues values = new ContentValues();
 		values.put(NAME, subject.getName());
 		
-		this.database.insert(TABLE_NAME, null, values);
+		_database.insert(TABLE_NAME, null, values);
 	}
 	
 	public boolean subjectExists(String name)
 	{
-		Cursor cursor = this.database.query(TABLE_NAME, new String[]{NAME}, NAME + " = ?", new String[]{name}, null, null, null, null);
+		Cursor cursor = _database.query(TABLE_NAME, new String[]{NAME}, NAME + " = ?", new String[]{name}, null, null, null, null);
 		
 		if (cursor == null || cursor.getCount() == 0) {
 			return false;
@@ -42,7 +46,7 @@ public class SubjectDAO extends DAOBase
 	
 	public Subject getSubject(String name)
 	{
-		Cursor cursor = this.database.query(TABLE_NAME, new String[]{NAME}, NAME + " = ?", new String[]{name}, null, null, null, null);
+		Cursor cursor = _database.query(TABLE_NAME, new String[]{NAME}, NAME + " = ?", new String[]{name}, null, null, null, null);
 		
 		if (cursor != null) {
 			cursor.moveToFirst();
@@ -61,7 +65,7 @@ public class SubjectDAO extends DAOBase
 		
 		String selectQuery = "SELECT * FROM " + TABLE_NAME;
 		
-		Cursor cursor = this.database.rawQuery(selectQuery, null);
+		Cursor cursor = _database.rawQuery(selectQuery, null);
 		
 		if (cursor.moveToFirst()) {
 			do {
@@ -78,21 +82,25 @@ public class SubjectDAO extends DAOBase
 	
 	public void deleteSubject(String name)
 	{
-		this.database.delete(TABLE_NAME, NAME + " = ?", new String[]{name});
+		_database.delete(TABLE_NAME, NAME + " = ?", new String[]{name});
 	}
 	
 	public void updateSubject(String oldSubjectName, Subject subject)
 	{
+		if (subjectExists(subject.getName())) {
+			return;
+		}
+		
 		ContentValues values = new ContentValues();
 		values.put(NAME, subject.getName());
 		
-		this.database.update(TABLE_NAME, values, NAME + " = ?", new String[]{oldSubjectName});
+		_database.update(TABLE_NAME, values, NAME + " = ?", new String[]{oldSubjectName});
 	}
 	
 	public int getSubjectCount()
 	{
 		String countQuery = "SELECT * FROM " + TABLE_NAME;
-		Cursor cursor = this.database.rawQuery(countQuery, null);
+		Cursor cursor = _database.rawQuery(countQuery, null);
 		int res = cursor.getCount();
 		
 		cursor.close();

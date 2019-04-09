@@ -11,11 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -39,9 +45,10 @@ public class StudentAssessment1 extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
 	
-		final EditText editText = view.findViewById(R.id.student_name);
+		EditText editText = view.findViewById(R.id.student_name);
 		final GridView gridview = view.findViewById(R.id.gridviewProfiles);
 	
+		//TODO ?
 		//final Classroom classroom = new ClassroomDAO(getContext()).getClassroom(getArguments().getString("classroomName"));
 	
 		final List<Child> childList = new ChildDAO(getContext()).getAllChilds();
@@ -80,9 +87,9 @@ public class StudentAssessment1 extends Fragment
 										}
 									}
 									
-									GridViewAdapter adapt = new GridViewAdapter(getActivity(), childList);
-									gridview.setAdapter(adapt);
-									adapt.notifyDataSetChanged();
+									GridViewAdapter gridViewAdapter = new GridViewAdapter(getActivity(), childList);
+									gridview.setAdapter(gridViewAdapter);
+									gridViewAdapter.notifyDataSetChanged();
 								}
 							});
 						}
@@ -103,8 +110,8 @@ public class StudentAssessment1 extends Fragment
 			}
 		});
 	
-		ImageView openAssessment = view.findViewById(R.id.openAssessment2);
-		openAssessment.setOnClickListener(new View.OnClickListener()
+		Button switchToTeacherMode = view.findViewById(R.id.openAssessment2);
+		switchToTeacherMode.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
@@ -126,6 +133,21 @@ public class StudentAssessment1 extends Fragment
 			super();
 			_activity = activity;
 			_childList = childList;
+			
+			Collections.sort(_childList, new Comparator<Child>()
+			{
+				@Override
+				public int compare(Child o1, Child o2)
+				{
+					int value1 = o1.getFirstname().compareToIgnoreCase(o2.getFirstname());
+					
+					if (value1 == 0) {
+						return o1.getName().compareToIgnoreCase(o2.getName());
+					}
+					
+					return value1;
+				}
+			});
 		}
 		
 		@Override
@@ -156,18 +178,31 @@ public class StudentAssessment1 extends Fragment
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent)
 		{
+			ViewHolder holder;
+			
 			if (convertView == null) {
 				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_classroom_guy_item, null);
-				ViewHolder holder = new ViewHolder();
+				
+				holder = new ViewHolder();
 				holder._profilePic = convertView.findViewById(R.id.imgProfilePicture);
 				holder._txtName = convertView.findViewById(R.id.txtName);
 				holder._txtSurname = convertView.findViewById(R.id.txtSurname);
 				
-				holder._profilePic.setImageResource(R.mipmap.ic_launcher_round);
-				holder._txtName.setText(_childList.get(position).getName());
-				holder._txtSurname.setText(_childList.get(position).getFirstname());
-				
+				convertView.setTag(holder);
 			}
+			else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+			
+			if (Utils.getChildPersonnalPicture(getContext(), _childList.get(position).getId()) != null) {
+				Picasso.get().load(new File(Utils.getChildPersonnalPicturePath(getContext(), _childList.get(position).getId()))).into(holder._profilePic);
+			}
+			else {
+				Picasso.get().load(R.drawable.garcon_icon).into(holder._profilePic);
+			}
+			
+			holder._txtName.setText(_childList.get(position).getName());
+			holder._txtSurname.setText(_childList.get(position).getFirstname());
 			
 			return convertView;
 		}

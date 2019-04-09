@@ -26,6 +26,8 @@ public class EditEvaluationAndCommentDialog extends DialogFragment implements Vi
 	
 	private String _skillCode;
 	
+	private Integer _skillPositionInList;
+	
 	public EditEvaluationAndCommentDialog() { }
 	
 	@Override
@@ -41,6 +43,7 @@ public class EditEvaluationAndCommentDialog extends DialogFragment implements Vi
 		
 		_childId = args.getInt("ChildId");
 		_skillCode = args.getString("Skill");
+		_skillPositionInList = args.getInt("SkillPosition");
 		
 		TextView textView = view.findViewById(R.id.textView17);
 		textView.setText(new SkillCommentDAO(getContext()).getSkillcomment(_childId, _skillCode));
@@ -134,7 +137,8 @@ public class EditEvaluationAndCommentDialog extends DialogFragment implements Vi
 					skillCommentDAO.addSkillComment(_childId, _skillCode, textView.getText().toString());
 				}
 				
-				((PersonnalProfile) getTargetFragment()).reloadSkillListView(null);
+				((PersonnalProfile) getTargetFragment()).reloadSkillListView();
+				((PersonnalProfile) getTargetFragment()).scrollTo(_skillPositionInList);
 				dismiss();
 				break;
 			

@@ -99,8 +99,7 @@ public class ImportFileDialog extends DialogFragment implements android.view.Vie
 		}
 		
 		try {
-			String filename = "modeleCompetences.csv";
-			
+			String filename = "";
 			if (mode.equals("importSkill")) {
 				filename = "modeleCompetences.csv";
 			}

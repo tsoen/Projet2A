@@ -23,16 +23,20 @@ public class SkillheaderDAO extends DAOBase
 	
 	public void addSkillheader(Skillheader skillheader)
 	{
+		if (skillheaderExists(skillheader.getName())) {
+			return;
+		}
+		
 		ContentValues values = new ContentValues();
 		values.put(NAME, skillheader.getName());
 		values.put(SUBJECT, skillheader.getSubject());
 		
-		this.database.insert(TABLE_NAME, null, values);
+		_database.insert(TABLE_NAME, null, values);
 	}
 	
 	public boolean skillheaderExists(String name)
 	{
-		Cursor cursor = this.database.query(TABLE_NAME, new String[]{NAME, SUBJECT}, NAME + " = ?", new String[]{name}, null, null, null, null);
+		Cursor cursor = _database.query(TABLE_NAME, new String[]{NAME, SUBJECT}, NAME + " = ?", new String[]{name}, null, null, null, null);
 		
 		if (cursor == null || cursor.getCount() == 0) {
 			return false;
@@ -44,7 +48,7 @@ public class SkillheaderDAO extends DAOBase
 	
 	public Skillheader getSkillheader(String name)
 	{
-		Cursor cursor = this.database.query(TABLE_NAME, new String[]{NAME, SUBJECT}, NAME + " = ?", new String[]{name}, null, null, null, null);
+		Cursor cursor = _database.query(TABLE_NAME, new String[]{NAME, SUBJECT}, NAME + " = ?", new String[]{name}, null, null, null, null);
 		
 		if (cursor != null) {
 			cursor.moveToFirst();
@@ -63,7 +67,7 @@ public class SkillheaderDAO extends DAOBase
 		
 		String selectQuery = "SELECT * FROM " + TABLE_NAME;
 		
-		Cursor cursor = this.database.rawQuery(selectQuery, null);
+		Cursor cursor = _database.rawQuery(selectQuery, null);
 		
 		if (cursor.moveToFirst()) {
 			do {
@@ -84,7 +88,7 @@ public class SkillheaderDAO extends DAOBase
 		
 		String selectQuery = "SELECT * FROM " + TABLE_NAME + " WHERE " + SUBJECT + " = '" + subjectName + "'";
 		
-		Cursor cursor = this.database.rawQuery(selectQuery, null);
+		Cursor cursor = _database.rawQuery(selectQuery, null);
 		
 		if (cursor.moveToFirst()) {
 			do {
@@ -101,27 +105,31 @@ public class SkillheaderDAO extends DAOBase
 	
 	public void deleteSkillheader(String name)
 	{
-		this.database.delete(TABLE_NAME, NAME + " = ?", new String[]{name});
+		_database.delete(TABLE_NAME, NAME + " = ?", new String[]{name});
 	}
 
 	public void deleteAllSkillheadersInSubject(String subjectName)
 	{
-		this.database.delete(TABLE_NAME, SUBJECT + " = ?", new String[]{subjectName});
+		_database.delete(TABLE_NAME, SUBJECT + " = ?", new String[]{subjectName});
 	}
 	
 	public void updateSkillheader(String oldSkillheaderName, Skillheader skillheader)
 	{
+		if (skillheaderExists(skillheader.getName())) {
+			return;
+		}
+		
 		ContentValues values = new ContentValues();
 		values.put(NAME, skillheader.getName());
 		values.put(SUBJECT, skillheader.getSubject());
 		
-		this.database.update(TABLE_NAME, values, NAME + " = ?", new String[]{oldSkillheaderName});
+		_database.update(TABLE_NAME, values, NAME + " = ?", new String[]{oldSkillheaderName});
 	}
 	
 	public int getSkillheaderCount()
 	{
 		String countQuery = "SELECT * FROM " + TABLE_NAME;
-		Cursor cursor = this.database.rawQuery(countQuery, null);
+		Cursor cursor = _database.rawQuery(countQuery, null);
 		int res = cursor.getCount();
 		
 		cursor.close();

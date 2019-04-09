@@ -19,7 +19,11 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import ensicaen.fr.marierave.Controllers.TeacherClassroomDAO;
@@ -172,6 +176,21 @@ public class AddTeacherToClassroomDialog extends DialogFragment implements andro
 			super();
 			_activity = activity;
 			_teacherList = teacherList;
+			
+			Collections.sort(_teacherList, new Comparator<Teacher>()
+			{
+				@Override
+				public int compare(Teacher o1, Teacher o2)
+				{
+					int value1 = o1.getName().compareToIgnoreCase(o2.getName());
+					
+					if (value1 == 0) {
+						return o1.getFirstname().compareToIgnoreCase(o2.getFirstname());
+					}
+					
+					return value1;
+				}
+			});
 		}
 		
 		@Override
@@ -202,19 +221,25 @@ public class AddTeacherToClassroomDialog extends DialogFragment implements andro
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent)
 		{
+			ViewHolder holder;
+			
 			if (convertView == null) {
-				
 				convertView = _activity.getLayoutInflater().inflate(R.layout.gridview_classroom_guy_item, null);
 				
-				ViewHolder holder = new ViewHolder();
+				holder = new ViewHolder();
 				holder._profilePic = convertView.findViewById(R.id.imgProfilePicture);
 				holder._txtName = convertView.findViewById(R.id.txtName);
 				holder._txtSurname = convertView.findViewById(R.id.txtSurname);
 				
-				holder._profilePic.setImageResource(R.mipmap.ic_launcher_round);
-				holder._txtName.setText(_teacherList.get(position).getName());
-				holder._txtSurname.setText(_teacherList.get(position).getFirstname());
+				convertView.setTag(holder);
 			}
+			else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+			
+			Picasso.get().load(R.drawable.garcon_icon).into(holder._profilePic);
+			holder._txtName.setText(_teacherList.get(position).getName());
+			holder._txtSurname.setText(_teacherList.get(position).getFirstname());
 			
 			if (_selectedPositions.contains(position)) {
 				convertView.setBackgroundColor(Color.GRAY);
