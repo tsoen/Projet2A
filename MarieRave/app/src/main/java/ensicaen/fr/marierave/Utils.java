@@ -22,7 +22,8 @@ public class Utils
 	public static String teacherLoggedInLogin = "";
 	public static String tempFileUri = "";
 	
-	public static final String ANEC_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS) + File.separator + "ANEC" + File.separator;
+	public static final String ANEC_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+			.getAbsolutePath() + File.separator + "ANEC" + File.separator;
 	
 	/**
 	 * Switchs the fragment displayed in the application

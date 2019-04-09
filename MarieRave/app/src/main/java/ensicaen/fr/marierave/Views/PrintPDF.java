@@ -254,11 +254,11 @@ public class PrintPDF extends Fragment
 			Log.d("myapp", "ko");
 		}
 		
-		File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(), "myPdfFile.pdf");
+		File pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "myPdfFile.pdf");
 		
 		if (pdfFile.exists()) {
 			pdfFile.delete();
-			pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(), "myPdfFile.pdf");
+			pdfFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "myPdfFile.pdf");
 		}
 		
 		try {

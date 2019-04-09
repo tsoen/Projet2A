@@ -26,8 +26,6 @@ import java.io.OutputStream;
 
 import ensicaen.fr.marierave.R;
 
-import static ensicaen.fr.marierave.Utils.ANEC_PATH;
-
 public class ImportFileDialog extends DialogFragment implements android.view.View.OnClickListener
 {
 	private String mode;
@@ -102,7 +100,7 @@ public class ImportFileDialog extends DialogFragment implements android.view.Vie
 		
 		try {
 			String filename = "";
-			if (mode.equals("importSkill")) {
+			if (mode.equals("importSkills")) {
 				filename = "modeleCompetences.csv";
 			}
 			else if (mode.equals("importChilds")) {
@@ -111,7 +109,7 @@ public class ImportFileDialog extends DialogFragment implements android.view.Vie
 			
 			InputStream in = getActivity().getAssets().open(filename);
 			
-			OutputStream out = new FileOutputStream(ANEC_PATH + filename);
+			OutputStream out = new FileOutputStream(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + filename);
 			
 			byte[] buffer = new byte[512];
 			int read;
@@ -123,8 +121,7 @@ public class ImportFileDialog extends DialogFragment implements android.view.Vie
 			out.flush();
 			out.close();
 			
-			
-			File filelocation = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath(), filename);
+			File filelocation = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), filename);
 			Uri path = Uri.fromFile(filelocation);
 			Intent emailIntent = new Intent(Intent.ACTION_SEND);
 			emailIntent.setType("text/plain");

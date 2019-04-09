@@ -59,11 +59,7 @@ public class EditPersonnalPictureDialog extends DialogFragment implements View.O
 					
 					Child child = new ChildDAO(getContext()).getChild(getArguments().getInt("childId"));
 					
-					String fileName = child.getFirstname() + "_" + child.getName() + "_" + child.getId() + ".jpg";
-					
-					
-					File image = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-							.getAbsolutePath() + File.separator + "ANEC", fileName);
+					File image = new File(Utils.getChildPersonnalPicturePath(getContext(), child.getId()));
 					
 					Uri photoURI = Uri.fromFile(image);
 					Picasso.get().invalidate(photoURI);
@@ -84,8 +80,8 @@ public class EditPersonnalPictureDialog extends DialogFragment implements View.O
 				Child child = new ChildDAO(getContext()).getChild(getArguments().getInt("childId"));
 
 				String fileName = child.getFirstname() + "_" + child.getName() + "_" + child.getId() + ".jpg";
-
-				File image = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+				
+				File image = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
 						.getAbsolutePath() + File.separator + "ANEC", fileName);
 				
 				Picasso.get().invalidate(Uri.fromFile(image));
