@@ -8,10 +8,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -20,6 +23,8 @@ import android.widget.TextView;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import ensicaen.fr.marierave.Controllers.TeacherDAO;
 import ensicaen.fr.marierave.Model.Teacher;
@@ -96,6 +101,54 @@ public class AdministrationTeachers extends Fragment
 				FragmentManager fm = getActivity().getSupportFragmentManager();
 				dialog.setTargetFragment(fm.findFragmentById(R.id.fragment_container), 0);
 				dialog.show(fm, "newTeacher");
+			}
+		});
+		
+		final List<Teacher> teachers = new TeacherDAO(getContext()).getAllTeachers();
+		
+		EditText editText = view.findViewById(R.id.search_bar4);
+		editText.addTextChangedListener(new TextWatcher()
+		{
+			private Timer timer = new Timer();
+			private final long DELAY = 500;
+			
+			@Override
+			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+			
+			@Override
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+			
+			@Override
+			public void afterTextChanged(final Editable editable)
+			{
+				timer.cancel();
+				timer = new Timer();
+				timer.schedule(new TimerTask()
+				{
+					@Override
+					public void run()
+					{
+						if (getActivity() != null) {
+							getActivity().runOnUiThread(new Runnable()
+							{
+								@Override
+								public void run()
+								{
+									teachers.clear();
+									for (Teacher teacher : new TeacherDAO(getContext()).getAllTeachers()) {
+										if (teacher.getName().toUpperCase().startsWith(editable.toString().toUpperCase())) {
+											teachers.add(teacher);
+										}
+									}
+									
+									ListViewAdapter gridViewAdapter = new ListViewAdapter(getActivity(), teachers);
+									_teacherListview.setAdapter(gridViewAdapter);
+									gridViewAdapter.notifyDataSetChanged();
+								}
+							});
+						}
+					}
+				}, DELAY);
 			}
 		});
 	}

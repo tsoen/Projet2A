@@ -60,10 +60,11 @@
         android:id="@+id/textView28"
         style="@style/textStyle1"
         android:text="Mes classes"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/btnAdd_Class"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnAdd_Class" />
+        app:layout_constraintTop_toTopOf="@+id/btnAdd_Class"/>
 
     <ImageView
         android:id="@+id/imageView2"

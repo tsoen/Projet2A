@@ -129,7 +129,7 @@
         android:layout_height="wrap_content"
         android:drawableStart="@android:drawable/ic_menu_search"
         android:drawablePadding="5dp"
-        android:hint="Rechercher un enseignant"
+        android:hint="Rechercher un enseignant par son nom"
         app:layout_constraintEnd_toStartOf="@+id/guideline31"
         app:layout_constraintStart_toStartOf="@+id/guideline18"
         app:layout_constraintTop_toTopOf="@+id/backButton"/>
@@ -161,13 +161,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.35"/>
+        app:layout_constraintGuide_percent="0.3"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline31"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.65"/>
+        app:layout_constraintGuide_percent="0.7"/>
 
 </android.support.constraint.ConstraintLayout>

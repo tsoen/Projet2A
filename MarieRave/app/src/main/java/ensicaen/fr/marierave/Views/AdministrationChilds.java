@@ -8,11 +8,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -21,6 +24,8 @@ import android.widget.TextView;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import ensicaen.fr.marierave.Controllers.ChildDAO;
 import ensicaen.fr.marierave.Model.Child;
@@ -116,6 +121,54 @@ public class AdministrationChilds extends Fragment
 				dialog.setArguments(bundle);
 				dialog.setTargetFragment(fm.findFragmentById(R.id.fragment_container), 0);
 				dialog.show(fm, "importChild");
+			}
+		});
+		
+		final List<Child> childList = new ChildDAO(getContext()).getAllChilds();
+		
+		EditText editText = view.findViewById(R.id.search_bar);
+		editText.addTextChangedListener(new TextWatcher()
+		{
+			private Timer timer = new Timer();
+			private final long DELAY = 500;
+			
+			@Override
+			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+			
+			@Override
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+			
+			@Override
+			public void afterTextChanged(final Editable editable)
+			{
+				timer.cancel();
+				timer = new Timer();
+				timer.schedule(new TimerTask()
+				{
+					@Override
+					public void run()
+					{
+						if (getActivity() != null) {
+							getActivity().runOnUiThread(new Runnable()
+							{
+								@Override
+								public void run()
+								{
+									childList.clear();
+									for (Child c : new ChildDAO(getContext()).getAllChilds()) {
+										if (c.getName().toUpperCase().startsWith(editable.toString().toUpperCase())) {
+											childList.add(c);
+										}
+									}
+									
+									ListViewAdapter gridViewAdapter = new ListViewAdapter(getActivity(), childList);
+									listview.setAdapter(gridViewAdapter);
+									gridViewAdapter.notifyDataSetChanged();
+								}
+							});
+						}
+					}
+				}, DELAY);
 			}
 		});
 	}

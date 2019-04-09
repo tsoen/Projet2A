@@ -89,6 +89,7 @@
         android:id="@+id/textView19"
         style="@style/textStyle1"
         android:text="Classes de l'école"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/button7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>

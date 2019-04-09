@@ -45,7 +45,6 @@ public class StudentAssessment1 extends Fragment
     {
         super.onViewCreated(view, savedInstanceState);
 	
-		EditText editText = view.findViewById(R.id.student_name);
 		final GridView gridview = view.findViewById(R.id.gridviewProfiles);
 	
 		//TODO ?
@@ -53,6 +52,7 @@ public class StudentAssessment1 extends Fragment
 	
 		final List<Child> childList = new ChildDAO(getContext()).getAllChilds();
 	
+		EditText editText = view.findViewById(R.id.student_name);
 		editText.addTextChangedListener(new TextWatcher()
 		{
 			private Timer timer = new Timer();
