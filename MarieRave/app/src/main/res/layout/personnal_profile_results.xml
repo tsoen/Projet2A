@@ -12,59 +12,44 @@
 
     <ImageView
         android:id="@+id/imgPersonnalPicture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/ic_launcher"
+        style="@style/childPicture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/txtName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="REY"
+        style="@style/textStyle1"
+        android:text="Nom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtSurname"/>
+
+    <TextView
+        android:id="@+id/txtSurname"
+        style="@style/textStyle1"
+        android:text="Prénom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgPersonnalPicture"/>
 
-    <TextView
-        android:id="@+id/txtSurname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Raphaël"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtName"/>
-
     <Button
         android:id="@+id/btnResults"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/simpleButton"
         android:text="Evaluations"
-        app:layout_constraintEnd_toStartOf="@+id/btnPDF"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <Button
-        android:id="@+id/btnPDF"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="PDF"
-        app:layout_constraintBottom_toBottomOf="@+id/btnResults"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnResults"
-        app:layout_constraintVertical_bias="1.0"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <ListView
         android:id="@+id/listviewResults"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtSurname"/>
+        app:layout_constraintTop_toBottomOf="@+id/txtName"/>
 
 </android.support.constraint.ConstraintLayout>

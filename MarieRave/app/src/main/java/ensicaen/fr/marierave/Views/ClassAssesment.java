@@ -147,7 +147,20 @@ public class ClassAssesment extends Fragment
 				@Override
 				public int compare(Skillheader o1, Skillheader o2)
 				{
-					return o1.getName().compareToIgnoreCase(o2.getName());
+					String o1StringPart = o1.getName().replaceAll("\\d", "");
+					String o2StringPart = o2.getName().replaceAll("\\d", "");
+					
+					if (o1StringPart.equalsIgnoreCase(o2StringPart)) {
+						return extractInt(o1.getName()) - extractInt(o2.getName());
+					}
+					
+					return o1.getName().compareTo(o2.getName());
+				}
+				
+				int extractInt(String s)
+				{
+					String num = s.replaceAll("\\D", "");
+					return num.isEmpty() ? 0 : Integer.parseInt(num);
 				}
 			});
 			

@@ -3,7 +3,6 @@ package ensicaen.fr.marierave.Views;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +19,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -127,7 +129,10 @@ public class PersonnalProfile extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				Utils.replaceFragments(PersonnalProfileResults.class, getActivity(), null, true);
+				Bundle bundle = new Bundle();
+				bundle.putInt("childId", _childId);
+				
+				Utils.replaceFragments(PersonnalProfileResults.class, getActivity(), bundle, true);
 			}
 		});
 		
@@ -187,9 +192,11 @@ public class PersonnalProfile extends Fragment
 	{
 		ImageView personnalPicture = getView().findViewById(R.id.imgPersonnalPicture);
 		
-		Bitmap img = Utils.getChildPersonnalPicture(getContext(), _childId);
-		if (img != null) {
-			personnalPicture.setImageBitmap(img);
+		if (Utils.getChildPersonnalPicture(getContext(), _childId) != null) {
+			Picasso.get().load(new File(Utils.getChildPersonnalPicturePath(getContext(), _childId))).into(personnalPicture);
+		}
+		else {
+			Picasso.get().load(R.drawable.garcon_icon).into(personnalPicture);
 		}
 	}
 	
@@ -223,7 +230,20 @@ public class PersonnalProfile extends Fragment
 				@Override
 				public int compare(Skillheader o1, Skillheader o2)
 				{
-					return o1.getName().compareToIgnoreCase(o2.getName());
+					String o1StringPart = o1.getName().replaceAll("\\d", "");
+					String o2StringPart = o2.getName().replaceAll("\\d", "");
+					
+					if (o1StringPart.equalsIgnoreCase(o2StringPart)) {
+						return extractInt(o1.getName()) - extractInt(o2.getName());
+					}
+					
+					return o1.getName().compareTo(o2.getName());
+				}
+				
+				int extractInt(String s)
+				{
+					String num = s.replaceAll("\\D", "");
+					return num.isEmpty() ? 0 : Integer.parseInt(num);
 				}
 			});
 			
