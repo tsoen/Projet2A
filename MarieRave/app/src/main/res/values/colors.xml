@@ -15,4 +15,10 @@
     <color name="matiereItem">#0060B1</color>
     <color name="categorieItem">#0078E6</color>
     <color name="listPaircolor">#95C4F5</color>
+
+    <color name="markColorA">#077007</color>
+    <color name="markColorB">#27CA27</color>
+    <color name="markColorC">#FFC107</color>
+    <color name="markColorD">#CE0101</color>
+
 </resources>

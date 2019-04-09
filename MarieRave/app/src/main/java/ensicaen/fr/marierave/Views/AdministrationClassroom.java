@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -109,6 +110,18 @@ public class AdministrationClassroom extends Fragment implements android.view.Vi
 		
 		ImageButton btnRemoveChild = view.findViewById(R.id.removeStudent);
 		btnRemoveChild.setOnClickListener(this);
+		
+		_childsGridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+			{
+				Bundle bundle = new Bundle();
+				bundle.putInt("childId", ((GridViewChildsAdapter) parent.getAdapter())._childList.get(position).getId());
+				
+				Utils.replaceFragments(PersonnalProfile.class, getActivity(), bundle, true);
+			}
+		});
 	}
 	
 	public void reloadTeachersGridview()
