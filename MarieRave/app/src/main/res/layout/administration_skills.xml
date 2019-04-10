@@ -84,22 +84,24 @@
     <ListView
         android:id="@+id/listSubjects"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginEnd="8dp"
         android:divider="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/textTopicsHeader3"
-        app:layout_constraintTop_toBottomOf="@+id/textTopicsHeader3"/>
+        app:layout_constraintTop_toBottomOf="@+id/textTopicsHeader3" />
 
     <ListView
         android:id="@+id/listCompetences"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@drawable/cell_shape_l"
         android:divider="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/skillsHeaderLayout"
         app:layout_constraintStart_toStartOf="@+id/skillsHeaderLayout"
-        app:layout_constraintTop_toBottomOf="@+id/skillsHeaderLayout"/>
+        app:layout_constraintTop_toBottomOf="@+id/skillsHeaderLayout" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline2"
